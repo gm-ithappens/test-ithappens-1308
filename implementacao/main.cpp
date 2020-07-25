@@ -1,15 +1,22 @@
 #include <QApplication>
 #include <QMainWindow>
 #include "ManagerWindow.h"
+#include "DataBase.h"
+
+#include <iostream>
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-  QApplication app(argc, argv);
+	QApplication app(argc, argv);
 
-  ManagerWindow window;
-  window.resize(900,600);
-  window.show();
+	// Database instance in singleton
+	DataBase * r = DataBase::getInstance();
 
-  return app.exec();
+	ManagerWindow window;
+	window.resize(900,600);
+	window.show();
+
+	return app.exec();
 
 }
