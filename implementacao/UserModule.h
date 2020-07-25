@@ -27,22 +27,31 @@ public:
 	void ProcessingOrder();
 
 public slots:
-	void newOrder_clickedSlot();
-	void branchChoosedChanged();
-	void operatorChoosedChanged();
+	void newOrder_clickedSlot          ();
+	void newProductSearch_clickedSlot  ();
+	void branchChoosedChanged          ();
+	void operatorChoosedChanged        ();
+	void searchModeChoosedChanged      ();
+	void cancelProductSelected         ();
 
 private:
 	QGridLayout *   mGridLayout;
 	QPushButton *   newOrderButton;
+	QPushButton *   cancelButton;
 	QLabel      *   mLabel;
 	QLabel      *   branchLabel;
 	QLabel      *   clientLabel;
 	QLabel      *   obsLabel;
 	QLabel      *   operatorLabel;
+	QLabel      *   dataSearchLabel;
+	QLabel      *   cancellProdutLabel;
 	QComboBox   *   branchs_comboBox;
 	QComboBox   *   operator_comboBox;
+	QComboBox   *   search_comboBox;
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
+	QLineEdit   *   searchData;
+	QLineEdit   *   cancelProduct;
 
 	DataBase * db_instance;
 

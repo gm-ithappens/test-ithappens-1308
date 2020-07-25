@@ -19,6 +19,7 @@ void UserModule::Execute()
         mGridLayout->removeWidget(mLabel);
         delete mLabel;
 
+	// New order
         newOrderButton       = new QPushButton(this);
         newOrderButton->setText("Novo Pedido");
 
@@ -29,6 +30,7 @@ void UserModule::Execute()
 	branchLabel = new QLabel("Escolha a filial: ");
 
 
+	// Options to branch company
 	branchs_comboBox = new QComboBox;
 
 	branchs_comboBox->addItem(tr(""));
@@ -43,7 +45,8 @@ void UserModule::Execute()
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
 
-	
+
+	// Operator in hardcode yet	
 	operator_comboBox = new QComboBox;
 	operator_comboBox->addItem(tr(""));
 	operator_comboBox->addItem(tr("Operador 1"));
@@ -57,9 +60,11 @@ void UserModule::Execute()
 	obsLabel    = new QLabel("Alguma observação? ");
 	operatorLabel    = new QLabel("Selecione o operador:");
 
+	// Field to input client informations
 	txtClientInfos = new QLineEdit(this);
         txtClientInfos->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+	// If there is some points about order
 	obsClientInfos = new QLineEdit(this);
         obsClientInfos->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
@@ -158,11 +163,50 @@ void UserModule::ProcessingOrder()
 	cout << " Operador : " << neworder->operator_field.toStdString()         << endl;
 	cout << " Cliente  : " << neworder->client_field.toStdString()           << endl;
 	cout << " Obs      : " << neworder->obs_client_lient_infos.toStdString() << endl;
-        show();
 
+	// Button to search
+        newOrderButton       = new QPushButton(this);
+        newOrderButton->setText("Buscar produto");
+
+        QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newProductSearch_clickedSlot()));
+        newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	// Search mode
+	search_comboBox = new QComboBox;
+	search_comboBox->addItem(tr(""));
+	search_comboBox->addItem(tr("Código do Produto"));
+	search_comboBox->addItem(tr("Descrição de Produto"));
+	search_comboBox->addItem(tr("Código de Barras"));
+        operator_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	connect(search_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(searchModeChoosedChanged()));
+
+	dataSearchLabel = new QLabel("Entre com a informação relacionada ao produto!");
+
+	// Product code, bar code or sequential
+	searchData = new QLineEdit(this);
+        searchData->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	cancellProdutLabel = new QLabel("Cancelar algum produto?");
+	cancelProduct = new QLineEdit(this);
+        cancelProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+
+        cancelButton       = new QPushButton(this);
+        cancelButton->setText("Cancelar produto");
+
+        QObject::connect(cancelButton, SIGNAL(clicked()),this, SLOT(cancelProductSelected()));
+        cancelButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+
+        mGridLayout->addWidget(search_comboBox);
+	mGridLayout->addWidget(dataSearchLabel);
+	mGridLayout->addWidget(searchData);
+        mGridLayout->addWidget(newOrderButton);
+	mGridLayout->addWidget(cancellProdutLabel);
+	mGridLayout->addWidget(cancelProduct);
+        mGridLayout->addWidget(cancelButton);
+        show();
 #if 0
-        QPushButton * newOrderButton       = new QPushButton(this);
-        newOrderButton->setText("kkkkkkkkkkkkkkkkkkkkkk");
 
 
         mGridLayout =  new QGridLayout(this);
@@ -173,4 +217,21 @@ void UserModule::ProcessingOrder()
 
         //show();
 #endif
+}
+
+void UserModule::searchModeChoosedChanged()
+{
+	QString text = search_comboBox->currentText();
+	cout << "Modo de procura escolhida: " << text.toStdString() << endl;
+
+}
+
+void UserModule::newProductSearch_clickedSlot()
+{
+	cout << "Procurar produto " << endl;
+}
+
+void UserModule::cancelProductSelected()
+{
+	cout << "Cancelar produto " << endl;
 }
