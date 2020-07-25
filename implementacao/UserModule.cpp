@@ -1,7 +1,7 @@
 #include "UserModule.h"
-
-
+#include "OrderModule.h"
 #include <iostream>
+
 using namespace std;
 
 UserModule::UserModule(void * previous, const QString & name, QWidget * parent)
@@ -14,11 +14,6 @@ UserModule::UserModule(void * previous, const QString & name, QWidget * parent)
 
 void UserModule::Execute()
 {
-
-        cout << "UserModule::Execute" << endl;
-	// necessário criar um pedido de estoque do tipo saída, escolhendo
-	// a filial, o usuário, o cliente e uma observação para entrega.
-
         mGridLayout->removeWidget(mLabel);
         delete mLabel;
 
@@ -124,4 +119,7 @@ void UserModule::newOrder_clickedSlot()
 		msgBox.setText("Necessário informar operador!");
 		msgBox.exec();
 	}
+
+	QString obs = obsClientInfos->text();
+	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, 0);
 }

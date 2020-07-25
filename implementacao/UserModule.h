@@ -11,6 +11,8 @@
 #include <QString>
 #include <QLineEdit>
 
+#include "OrderModule.h"
+
 class UserModule: public QWidget
 {
 	Q_OBJECT
@@ -38,6 +40,8 @@ private:
 	QComboBox   *   operator_comboBox;
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
+
+	OrderModule *   neworder;
 
 };
 #endif
