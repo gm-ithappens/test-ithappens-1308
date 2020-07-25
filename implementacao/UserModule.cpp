@@ -14,6 +14,8 @@ UserModule::UserModule(void * previous, const QString & name, QWidget * parent)
 
 void UserModule::Execute()
 {
+	db_instance = DataBase::getInstance();
+
         mGridLayout->removeWidget(mLabel);
         delete mLabel;
 
@@ -24,16 +26,22 @@ void UserModule::Execute()
 
         newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-        //QWidget* centralWidget = new QWidget(this);
-        //centralWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-
 	branchLabel = new QLabel("Escolha a filial: ");
 
+
+
 	branchs_comboBox = new QComboBox;
+
 	branchs_comboBox->addItem(tr(""));
-	branchs_comboBox->addItem(tr("Filial 1"));
-	branchs_comboBox->addItem(tr("Filial 2"));
-	branchs_comboBox->addItem(tr("Filial 3"));
+	vector<string> list = db_instance->getListBranchCompany();
+	vector<string>::const_iterator iter;
+	for (iter = list.begin(); iter != list.end(); ++iter)
+	{
+		string s;
+		s = *iter;
+		branchs_comboBox->addItem(tr(s.c_str()));
+		//cout << "Filial: " << s.c_str() << endl;
+	}
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
 

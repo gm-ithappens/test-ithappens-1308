@@ -13,6 +13,8 @@
 
 #include "OrderModule.h"
 
+#include "DataBase.h"
+
 class UserModule: public QWidget
 {
 	Q_OBJECT
@@ -41,6 +43,8 @@ private:
 	QComboBox   *   operator_comboBox;
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
+
+	DataBase * db_instance;
 
 	OrderModule *   neworder;
 
