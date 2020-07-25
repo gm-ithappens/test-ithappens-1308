@@ -77,4 +77,13 @@ void UserModule::newOrder_clickedSlot()
 {
 	QString text = txtClientInfos->text();
 	cout << "Cliente: " << text.toStdString() << endl;
+
+	QString branchs_field = branchs_comboBox->currentText();
+	if(branchs_field.isEmpty())
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle("AVISO!");
+		msgBox.setText("Necessário escolher uma filial!");
+		msgBox.exec();
+	}
 }
