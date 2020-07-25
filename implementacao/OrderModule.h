@@ -35,11 +35,10 @@ public:
 	int sequential;
 
 	int status;
-	int count;
-	int unit_value;
-	int total_value;
+	int count       = 0;
+	int unit_value  = 0;
+	int total_value = 0;
 };
-
 
 class OrderModule
 {
