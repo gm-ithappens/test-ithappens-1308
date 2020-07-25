@@ -4,6 +4,7 @@
 #include <sqlite3.h>
 #include <iostream>
 #include <vector>
+#include "OrderModule.h"
 
 using namespace std;
 
@@ -87,7 +88,7 @@ public:
 	/* Static access method. */
         static DataBase* getInstance();
 	vector<string> getListBranchCompany();
-	void searchProductOnBranch(string branch, string search_mode, string product);
+	Product * searchProductOnBranch(string branch, string search_mode, string product);
 
 };
 #endif
