@@ -29,7 +29,6 @@ void UserModule::Execute()
 	branchLabel = new QLabel("Escolha a filial: ");
 
 
-
 	branchs_comboBox = new QComboBox;
 
 	branchs_comboBox->addItem(tr(""));
@@ -40,7 +39,6 @@ void UserModule::Execute()
 		string s;
 		s = *iter;
 		branchs_comboBox->addItem(tr(s.c_str()));
-		//cout << "Filial: " << s.c_str() << endl;
 	}
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
