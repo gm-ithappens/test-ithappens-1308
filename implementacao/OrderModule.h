@@ -11,6 +11,36 @@
 #include <QString>
 #include <QLineEdit>
 
+#define STATUS_PRODUCT_ACTIVE		0
+#define STATUS_PRODUCT_CANCELED		1
+#define STATUS_PRODUCT_PROCESSED	2
+
+class Product
+{
+public:
+	void updateTotal(int added)
+	{
+		count       = count + added;
+		total_value = count * unit_value;
+	}
+
+	void cancell()
+	{
+		status = STATUS_PRODUCT_CANCELED;
+	}
+
+public:
+	QString description;
+	QString barcode;
+	int sequential;
+
+	int status;
+	int count;
+	int unit_value;
+	int total_value;
+};
+
+
 class OrderModule
 {
 public:
@@ -30,7 +60,6 @@ public:
 
 	void Execute();
 
-//private:
 public:
 	QString branchs_field;
 	QString client_field;
