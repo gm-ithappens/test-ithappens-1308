@@ -24,6 +24,7 @@ public:
 public slots:
 	void newOrder_clickedSlot();
 	void branchChoosedChanged();
+	void operatorChoosedChanged();
 
 
 private:
@@ -32,7 +33,9 @@ private:
 	QLabel      *   branchLabel;
 	QLabel      *   ClientLabel;
 	QLabel      *   obsLabel;
+	QLabel      *   operatorLabel;
 	QComboBox   *   branchs_comboBox;
+	QComboBox   *   operator_comboBox;
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
 

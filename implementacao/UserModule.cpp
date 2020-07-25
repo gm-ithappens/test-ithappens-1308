@@ -45,8 +45,19 @@ void UserModule::Execute()
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
 
+	
+	operator_comboBox = new QComboBox;
+	operator_comboBox->addItem(tr(""));
+	operator_comboBox->addItem(tr("Operador 1"));
+	operator_comboBox->addItem(tr("Operador 2"));
+	operator_comboBox->addItem(tr("Operador 3"));
+        operator_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	connect(operator_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(operatorChoosedChanged()));
+
+
 	ClientLabel = new QLabel("Entre com informações do cliente: ");
 	obsLabel    = new QLabel("Alguma observação? ");
+	operatorLabel    = new QLabel("Selecione o operador:");
 
 	txtClientInfos = new QLineEdit(this);
         txtClientInfos->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -57,6 +68,8 @@ void UserModule::Execute()
         mGridLayout->addWidget(newOrderButton);
         mGridLayout->addWidget(branchLabel);
         mGridLayout->addWidget(branchs_comboBox);
+        mGridLayout->addWidget(operatorLabel);
+        mGridLayout->addWidget(operator_comboBox);
         mGridLayout->addWidget(ClientLabel);
         mGridLayout->addWidget(txtClientInfos);
         mGridLayout->addWidget(obsLabel);
@@ -70,6 +83,13 @@ void UserModule::branchChoosedChanged()
 {
 	QString text = branchs_comboBox->currentText();
 	cout << "Filial escolhida: " << text.toStdString() << endl;
+
+}
+
+void UserModule::operatorChoosedChanged()
+{
+	QString text = operator_comboBox->currentText();
+	cout << "Operador escolhida: " << text.toStdString() << endl;
 
 }
 
@@ -93,6 +113,15 @@ void UserModule::newOrder_clickedSlot()
 		QMessageBox msgBox;
 		msgBox.setWindowTitle("AVISO!");
 		msgBox.setText("Necessário informar os dados do cliente!");
+		msgBox.exec();
+	}
+
+	QString operator_field = operator_comboBox->currentText();
+	if(operator_field.isEmpty())
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle("AVISO!");
+		msgBox.setText("Necessário informar operador!");
 		msgBox.exec();
 	}
 }
