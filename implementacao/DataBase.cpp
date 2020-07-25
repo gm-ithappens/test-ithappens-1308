@@ -149,12 +149,79 @@ vector<string> DataBase::getListBranchCompany()
 }
 
 
-void DataBase::searchProductOnBranch(string branch, string search_mode, string product)
+static int retrieveLineProduct(void* data, int argc, char** argv, char** azColName)
+{
+
+	Product * line_product = (Product * )data;
+	QString str1, str2;
+
+
+	int i;
+	for(i = 0; i < argc; i++)
+	{
+		str1="DESCRIPTION";
+		str2=argv[i];
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->description      = argv[i];
+			continue;
+		}
+
+		str1="BARCODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->barcode         = argv[i];
+			continue;
+		}
+
+		str1="SEQUENTIAL";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->sequential      = argv[i];
+			continue;
+		}
+
+		str1="COUNT";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->count           = argv[i];
+			continue;
+		}
+
+		str1="UNIT_VALUE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->unit_value      = argv[i];
+			continue;
+		}
+	}
+
+
+	return 0;
+}
+
+Product * DataBase::searchProductOnBranch(string branch, string search_mode, string product)
 {
 	char query[100];
+	int return_code;
+	char* messaggeError;
+
+	Product * line_product = new Product;
+
 	snprintf(query, 100, select_product_store_branch_company_sql, branch.c_str(), search_mode.c_str(), product.c_str());
 
 	cout << "DataBase::searchProductOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveLineProduct, 
+			(void *)line_product,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return line_product;
 }
 
 
