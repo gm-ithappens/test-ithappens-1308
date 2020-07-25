@@ -34,6 +34,59 @@ int DataBase::createBranchCompanyTable()
 	else
 		cout << "Table created Successfully" << endl; 
 
+
+	return_code = sqlite3_exec(db_instance, create_store_branch_company1_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
+
+
+	return_code = sqlite3_exec(db_instance, create_store_branch_company2_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
+
+
+	return_code = sqlite3_exec(db_instance, create_orders_branch_company1_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
+
+
+	return_code = sqlite3_exec(db_instance, create_orders_branch_company2_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
+
+
+	return_code = sqlite3_exec(db_instance, create_orders_products_branch_company1_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
+
+
+	return_code = sqlite3_exec(db_instance, create_orders_products_branch_company2_sql.c_str(), NULL, 0, &messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return;
+	} 
 	//sqlite3_close(db_instance); 
 }
 
@@ -51,14 +104,6 @@ void DataBase::populateBranchCompanyTable()
 	} 
 
 	return_code = sqlite3_exec(db_instance, populate_branch_company2_sql.c_str(), NULL, 0, &messaggeError);
-
-	if (return_code != SQLITE_OK)
-	{ 
-		sqlite3_free(messaggeError); 
-		return;
-	} 
-
-	return_code = sqlite3_exec(db_instance, populate_branch_company3_sql.c_str(), NULL, 0, &messaggeError);
 
 	if (return_code != SQLITE_OK)
 	{ 
