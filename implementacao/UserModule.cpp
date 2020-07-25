@@ -238,7 +238,6 @@ void UserModule::newProductSearch_clickedSlot()
 
 	QString search_mode = translate_search_option[idx];
 	cout << "Modo de procura escolhida: " << search_mode.toStdString() << endl;
-	//cout << "Modo de procura escolhida: " << translate_search_option[idx] << endl;
 
 	QString product = searchData->text();
 	cout << " Produto   : " << product.toStdString()          << endl;
@@ -252,7 +251,32 @@ void UserModule::newProductSearch_clickedSlot()
         }
 
 
-	db_instance->searchProductOnBranch(branch.toStdString(), search_mode.toStdString(), product.toStdString());
+	Product * line_product = db_instance->searchProductOnBranch(branch.toStdString(), search_mode.toStdString(), product.toStdString());
+	cout << "line_product->count: " << line_product->count << endl;
+
+        if(line_product->count < 0)
+        {
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("AVISO!");
+                msgBox.setText("Produto em falta!");
+                msgBox.exec();
+		return;
+        }
+
+	bool ok;
+	QString input_count = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+			 tr("Quantidade:"), QLineEdit::Normal, 0, &ok);
+
+	if(input_count.toInt() > line_product->count)
+	{
+		QString msg = QString("Insuficiente em estoque. Apenas %1").arg(line_product->count);
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("AVISO!");
+                msgBox.setText(msg);
+                msgBox.exec();
+		return;
+	}
+
 }
 
 void UserModule::cancelProductSelected()
