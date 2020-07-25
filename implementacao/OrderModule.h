@@ -30,7 +30,8 @@ public:
 
 	void Execute();
 
-private:
+//private:
+public:
 	QString branchs_field;
 	QString client_field;
 	QString operator_field;
