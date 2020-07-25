@@ -186,10 +186,11 @@ void UserModule::ProcessingOrder()
 	searchData = new QLineEdit(this);
         searchData->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+
+	// Cancel some product
 	cancellProdutLabel = new QLabel("Cancelar algum produto?");
 	cancelProduct = new QLineEdit(this);
         cancelProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-
 
         cancelButton       = new QPushButton(this);
         cancelButton->setText("Cancelar produto");
@@ -205,18 +206,8 @@ void UserModule::ProcessingOrder()
 	mGridLayout->addWidget(cancellProdutLabel);
 	mGridLayout->addWidget(cancelProduct);
         mGridLayout->addWidget(cancelButton);
+
         show();
-#if 0
-
-
-        mGridLayout =  new QGridLayout(this);
-
-	mGridLayout->addWidget(newOrderButton);
-
-	setLayout(mGridLayout);
-
-        //show();
-#endif
 }
 
 void UserModule::searchModeChoosedChanged()
@@ -228,7 +219,40 @@ void UserModule::searchModeChoosedChanged()
 
 void UserModule::newProductSearch_clickedSlot()
 {
+	char * translate_search_option[4] = {"","SEQUENTIAL", "DESCRIPTION", "BARCODE"};
+
 	cout << "Procurar produto " << endl;
+	QString branch = neworder->branchs_field;
+
+	cout << " Filial   : " << branch.toStdString()          << endl;
+
+	int idx  = search_comboBox->currentIndex();
+	if(idx == 0)
+	{
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("AVISO!");
+                msgBox.setText("Necessário informar o modo de procura");
+                msgBox.exec();
+		return;
+	}
+
+	QString search_mode = translate_search_option[idx];
+	cout << "Modo de procura escolhida: " << search_mode.toStdString() << endl;
+	//cout << "Modo de procura escolhida: " << translate_search_option[idx] << endl;
+
+	QString product = searchData->text();
+	cout << " Produto   : " << product.toStdString()          << endl;
+        if(product.isEmpty())
+        {
+                QMessageBox msgBox;
+                msgBox.setWindowTitle("AVISO!");
+                msgBox.setText("Necessário informar o produto");
+                msgBox.exec();
+		return;
+        }
+
+
+	db_instance->searchProductOnBranch(branch.toStdString(), search_mode.toStdString(), product.toStdString());
 }
 
 void UserModule::cancelProductSelected()
