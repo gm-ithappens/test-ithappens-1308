@@ -10,6 +10,7 @@
 #include <QComboBox>
 #include <QString>
 #include <QLineEdit>
+#include <QInputDialog>
 
 #include "OrderModule.h"
 
