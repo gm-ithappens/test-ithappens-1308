@@ -32,7 +32,7 @@ private:
 	QLabel      *   branchLabel;
 	QLabel      *   ClientLabel;
 	QLabel      *   obsLabel;
-	QComboBox   *   comboBox;
+	QComboBox   *   branchs_comboBox;
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
 

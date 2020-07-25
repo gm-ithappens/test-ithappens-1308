@@ -37,13 +37,13 @@ void UserModule::Execute()
 
 	branchLabel = new QLabel("Escolha a filial: ");
 
-	comboBox = new QComboBox;
-	comboBox->addItem(tr(""));
-	comboBox->addItem(tr("Filial 1"));
-	comboBox->addItem(tr("Filial 2"));
-	comboBox->addItem(tr("Filial 3"));
-        comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
+	branchs_comboBox = new QComboBox;
+	branchs_comboBox->addItem(tr(""));
+	branchs_comboBox->addItem(tr("Filial 1"));
+	branchs_comboBox->addItem(tr("Filial 2"));
+	branchs_comboBox->addItem(tr("Filial 3"));
+        branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
 
 	ClientLabel = new QLabel("Entre com informações do cliente: ");
 	obsLabel    = new QLabel("Alguma observação? ");
@@ -56,7 +56,7 @@ void UserModule::Execute()
 
         mGridLayout->addWidget(newOrderButton);
         mGridLayout->addWidget(branchLabel);
-        mGridLayout->addWidget(comboBox);
+        mGridLayout->addWidget(branchs_comboBox);
         mGridLayout->addWidget(ClientLabel);
         mGridLayout->addWidget(txtClientInfos);
         mGridLayout->addWidget(obsLabel);
@@ -68,7 +68,7 @@ void UserModule::Execute()
 
 void UserModule::branchChoosedChanged()
 {
-	QString text = comboBox->currentText();
+	QString text = branchs_comboBox->currentText();
 	cout << "Filial escolhida: " << text.toStdString() << endl;
 
 }
