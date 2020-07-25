@@ -86,4 +86,13 @@ void UserModule::newOrder_clickedSlot()
 		msgBox.setText("Necessário escolher uma filial!");
 		msgBox.exec();
 	}
+
+	QString client_field = txtClientInfos->text();
+	if(client_field.isEmpty())
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle("AVISO!");
+		msgBox.setText("Necessário informar os dados do cliente!");
+		msgBox.exec();
+	}
 }
