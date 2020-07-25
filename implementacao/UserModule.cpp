@@ -104,28 +104,22 @@ void UserModule::newOrder_clickedSlot()
 	QString branchs_field = branchs_comboBox->currentText();
 	if(branchs_field.isEmpty())
 	{
-		QMessageBox msgBox;
-		msgBox.setWindowTitle("AVISO!");
-		msgBox.setText("Necessário escolher uma filial!");
-		msgBox.exec();
+		warningMessage("Necessário escolher uma filial!");
+		return;
 	}
 
 	QString client_field = txtClientInfos->text();
 	if(client_field.isEmpty())
 	{
-		QMessageBox msgBox;
-		msgBox.setWindowTitle("AVISO!");
-		msgBox.setText("Necessário informar os dados do cliente!");
-		msgBox.exec();
+		warningMessage("Necessário informar os dados do cliente!");
+		return;
 	}
 
 	QString operator_field = operator_comboBox->currentText();
 	if(operator_field.isEmpty())
 	{
-		QMessageBox msgBox;
-		msgBox.setWindowTitle("AVISO!");
-		msgBox.setText("Necessário informar operador!");
-		msgBox.exec();
+		warningMessage("Necessário informar operador!");
+		return;
 	}
 
 	QString obs = obsClientInfos->text();
@@ -217,6 +211,14 @@ void UserModule::searchModeChoosedChanged()
 
 }
 
+UserModule::warningMessage(string str)
+{
+	QMessageBox msgBox;
+	msgBox.setWindowTitle("AVISO!");
+	msgBox.setText("Necessário informar o modo de procura");
+	msgBox.exec();
+}
+
 void UserModule::newProductSearch_clickedSlot()
 {
 	char * translate_search_option[4] = {"","SEQUENTIAL", "DESCRIPTION", "BARCODE"};
@@ -229,10 +231,7 @@ void UserModule::newProductSearch_clickedSlot()
 	int idx  = search_comboBox->currentIndex();
 	if(idx == 0)
 	{
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("AVISO!");
-                msgBox.setText("Necessário informar o modo de procura");
-                msgBox.exec();
+		warningMessage("Necessário informar o modo de procura");
 		return;
 	}
 
@@ -243,23 +242,20 @@ void UserModule::newProductSearch_clickedSlot()
 	cout << " Produto   : " << product.toStdString()          << endl;
         if(product.isEmpty())
         {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("AVISO!");
-                msgBox.setText("Necessário informar o produto");
-                msgBox.exec();
+		warningMessage("Necessário informar o produto");
 		return;
         }
 
 
-	Product * line_product = db_instance->searchProductOnBranch(branch.toStdString(), search_mode.toStdString(), product.toStdString());
+	Product * line_product = db_instance->searchProductOnBranch(branch.toStdString(), 
+								search_mode.toStdString(), 
+								product.toStdString());
+
 	cout << "line_product->count: " << line_product->count << endl;
 
         if(line_product->count < 0)
         {
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("AVISO!");
-                msgBox.setText("Produto em falta!");
-                msgBox.exec();
+                warningMessage("Produto em falta!");
 		return;
         }
 
@@ -270,10 +266,7 @@ void UserModule::newProductSearch_clickedSlot()
 	if(input_count.toInt() > line_product->count)
 	{
 		QString msg = QString("Insuficiente em estoque. Apenas %1").arg(line_product->count);
-                QMessageBox msgBox;
-                msgBox.setWindowTitle("AVISO!");
-                msgBox.setText(msg);
-                msgBox.exec();
+		warningMessage(msg.toStdString());
 		return;
 	}
 

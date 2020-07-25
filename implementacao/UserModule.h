@@ -26,6 +26,7 @@ public:
 
 	void Execute();
 	void ProcessingOrder();
+	warningMessage(string str);
 
 public slots:
 	void newOrder_clickedSlot          ();
