@@ -149,6 +149,16 @@ vector<string> DataBase::getListBranchCompany()
 }
 
 
+void DataBase::searchProductOnBranch(string branch, string search_mode, string product)
+{
+	char query[100];
+	snprintf(query, 100, select_product_store_branch_company_sql, branch.c_str(), search_mode.c_str(), product.c_str());
+
+	cout << "DataBase::searchProductOnBranch: " << query << endl;
+}
+
+
+
 DataBase * DataBase::instance = 0;
 
 DataBase * DataBase::getInstance()
