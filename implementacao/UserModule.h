@@ -22,18 +22,19 @@ public:
 	~ UserModule(){}
 
 	void Execute();
+	void ProcessingOrder();
 
 public slots:
 	void newOrder_clickedSlot();
 	void branchChoosedChanged();
 	void operatorChoosedChanged();
 
-
 private:
 	QGridLayout *   mGridLayout;
+	QPushButton *   newOrderButton;
 	QLabel      *   mLabel;
 	QLabel      *   branchLabel;
-	QLabel      *   ClientLabel;
+	QLabel      *   clientLabel;
 	QLabel      *   obsLabel;
 	QLabel      *   operatorLabel;
 	QComboBox   *   branchs_comboBox;
