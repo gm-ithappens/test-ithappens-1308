@@ -33,7 +33,7 @@ private:
 	      "ID INT PRIMARY KEY     NOT         NULL, "
 	      "DESCRIPTION            TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
-	      "SEQUENTIAL              INT    NOT NULL,"
+	      "SEQUENTIAL             TEXT    NOT NULL,"
 	      "UNIT_VALUE              INT    NOT NULL,"
 	      "COUNT                   INT    NOT NULL"
 	      ");";
@@ -76,6 +76,10 @@ private:
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL,"
 	      ");";
+
+
+	char * select_product_store_branch_company_sql = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE '%s' == '%s';";
+
 	int createBranchCompanyTable();
 	void populateBranchCompanyTable();
 
@@ -83,6 +87,7 @@ public:
 	/* Static access method. */
         static DataBase* getInstance();
 	vector<string> getListBranchCompany();
+	void searchProductOnBranch(string branch, string search_mode, string product);
 
 };
 #endif
