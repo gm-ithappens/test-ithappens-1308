@@ -35,6 +35,11 @@ public:
 		total_value           = count_requested * unit_value;
 	}
 
+	void updateCanceledTotal()
+	{
+		count_canceled        = count_requested;
+	}
+
 	void cancell()
 	{
 		status = STATUS_PRODUCT_CANCELED;
@@ -50,6 +55,7 @@ public:
 	int unit_value       = 0;
 	int total_value      = 0;
 	int count_requested  = 0;
+	int count_canceled  = 0;
 };
 
 class OrderModule
