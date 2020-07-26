@@ -153,14 +153,15 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 {
 
 	Product * line_product = (Product * )data;
-	QString str1, str2;
+	QString str1, str2, tmp;
 
 
 	int i;
 	for(i = 0; i < argc; i++)
 	{
 		str1="DESCRIPTION";
-		str2=argv[i];
+		str2=azColName[i];
+		cout << str1.toStdString() << " : "  << str2.toStdString() << endl;
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
 			line_product->description      = argv[i];
@@ -177,21 +178,24 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 		str1="SEQUENTIAL";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->sequential      = str2.toInt();
+			tmp = argv[i];
+			line_product->sequential      = tmp.toInt();
 			continue;
 		}
 
-		str1="COUNT";
+		str1="COUNT_AVAILABLE";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->count_available = str2.toInt();
+			tmp = argv[i];
+			line_product->count_available = tmp.toInt();
 			continue;
 		}
 
 		str1="UNIT_VALUE";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->unit_value      = str2.toInt();
+			tmp = argv[i];
+			line_product->unit_value      = tmp.toInt();
 			continue;
 		}
 	}
