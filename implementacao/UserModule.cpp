@@ -147,8 +147,15 @@ void UserModule::finishOrder_clickedSlot()
 						product->count_requested,
 						product->count_canceled,
 						product->total_value);
+		// Update store products
+		product->updateNewCount();
+		db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(), 
+						product->barcode.toStdString(),
+						product->count_available);
+
 	}
-	// Decrementar todos os produtos vendidos
+
+
 
 }
 
