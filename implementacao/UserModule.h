@@ -55,7 +55,7 @@ private:
 	QLineEdit   *   txtClientInfos;
 	QLineEdit   *   obsClientInfos;
 	QLineEdit   *   searchData;
-	QLineEdit   *   cancelProduct;
+	QLineEdit   *   cancelThisProduct;
 
 	DataBase * db_instance;
 
