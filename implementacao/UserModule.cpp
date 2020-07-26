@@ -435,6 +435,7 @@ void UserModule::cancelProductSelected()
 	}
 
         line_product->status = STATUS_PRODUCT_CANCELED;
+	line_product->updateCanceledTotal();
 
 	neworder->Products[product] = line_product;
 }
