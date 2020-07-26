@@ -19,7 +19,7 @@ DataBase::DataBase()
 }
 
 
-int DataBase::createBranchCompanyTable()
+void DataBase::createBranchCompanyTable()
 {
 	int return_code;
 	char* messaggeError;
@@ -177,21 +177,21 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 		str1="SEQUENTIAL";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->sequential      = argv[i];
+			line_product->sequential      = str2.toInt();
 			continue;
 		}
 
 		str1="COUNT";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->count           = argv[i];
+			line_product->count_available = str2.toInt();
 			continue;
 		}
 
 		str1="UNIT_VALUE";
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
-			line_product->unit_value      = argv[i];
+			line_product->unit_value      = str2.toInt();
 			continue;
 		}
 	}
