@@ -27,6 +27,7 @@ public:
 	void Execute();
 	void ProcessingOrder();
 	void warningMessage(string str);
+	int hash_order();
 
 public slots:
 	void newOrder_clickedSlot          ();

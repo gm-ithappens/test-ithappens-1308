@@ -123,6 +123,10 @@ void UserModule::finishOrder_clickedSlot()
 	}
 	
 	// Registrar o pedido na tabela de pedidos da filial
+	db_instance->registerOrderOnBranch(neworder->branchs_field.toStdString(), 
+					neworder->hash_session.toStdString(), 
+					neworder->order_type, 
+					neworder->payment_mode);
 
 	// Registrar todos os produtos ja vendidos em cada pedido
 
@@ -130,6 +134,13 @@ void UserModule::finishOrder_clickedSlot()
 
 }
 
+
+int UserModule::hash_order()
+{
+    struct timespec tm;
+    clock_gettime(CLOCK_REALTIME, &tm);
+    return tm.tv_nsec;
+}
 
 void UserModule::newOrder_clickedSlot()
 {
@@ -158,7 +169,10 @@ void UserModule::newOrder_clickedSlot()
 	}
 
 	QString obs = obsClientInfos->text();
+
 	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, 0);
+	neworder->hash_session = QString("%1").arg(hash_order());
+	neworder->order_type = OUTPUT_ORDER;
 
 	ProcessingOrder();
 }
@@ -258,6 +272,7 @@ void UserModule::warningMessage(string str)
 	msgBox.setText(str.c_str());
 	msgBox.exec();
 }
+
 
 void UserModule::newProductSearch_clickedSlot()
 {
