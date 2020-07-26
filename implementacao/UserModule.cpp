@@ -86,14 +86,12 @@ void UserModule::branchChoosedChanged()
 {
 	QString text = branchs_comboBox->currentText();
 	cout << "Filial escolhida: " << text.toStdString() << endl;
-
 }
 
 void UserModule::operatorChoosedChanged()
 {
 	QString text = operator_comboBox->currentText();
 	cout << "Operador escolhida: " << text.toStdString() << endl;
-
 }
 
 void UserModule::newOrder_clickedSlot()
@@ -183,7 +181,7 @@ void UserModule::ProcessingOrder()
 
 	// Cancel some product
 	cancellProdutLabel = new QLabel("Cancelar algum produto?");
-	cancelProduct = new QLineEdit(this);
+	cancelProduct      = new QLineEdit(this);
         cancelProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         cancelButton       = new QPushButton(this);
@@ -191,7 +189,6 @@ void UserModule::ProcessingOrder()
 
         QObject::connect(cancelButton, SIGNAL(clicked()),this, SLOT(cancelProductSelected()));
         cancelButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-
 
         mGridLayout->addWidget(search_comboBox);
 	mGridLayout->addWidget(dataSearchLabel);
@@ -221,7 +218,7 @@ UserModule::warningMessage(string str)
 
 void UserModule::newProductSearch_clickedSlot()
 {
-	char * translate_search_option[4] = {"","SEQUENTIAL", "DESCRIPTION", "BARCODE"};
+	const char * translate_search_option[4] = {"","SEQUENTIAL", "DESCRIPTION", "BARCODE"};
 
 	cout << "Procurar produto " << endl;
 	QString branch = neworder->branchs_field;
@@ -247,13 +244,20 @@ void UserModule::newProductSearch_clickedSlot()
         }
 
 
-	Product * line_product = db_instance->searchProductOnBranch(branch.toStdString(), 
+	// Verify if already exists in a hashtable Products of new order
+	Product * line_product;
+	if (neworder->Products.contains(product))
+	{
+		line_product = neworder->Products[product];
+	}    
+	else
+	{
+		line_product = db_instance->searchProductOnBranch(branch.toStdString(), 
 								search_mode.toStdString(), 
 								product.toStdString());
+	}
 
-	cout << "line_product->count: " << line_product->count << endl;
-
-        if(line_product->count < 0)
+        if(line_product->count_available == 0)
         {
                 warningMessage("Produto em falta!");
 		return;
@@ -263,16 +267,65 @@ void UserModule::newProductSearch_clickedSlot()
 	QString input_count = QInputDialog::getText(this, tr("QInputDialog::getText()"),
 			 tr("Quantidade:"), QLineEdit::Normal, 0, &ok);
 
-	if(input_count.toInt() > line_product->count)
+	// New requested count plus already requested cant higher than count available
+	if(line_product->count_available > (line_product->count_requested + input_count.toInt()))
 	{
-		QString msg = QString("Insuficiente em estoque. Apenas %1").arg(line_product->count);
+		QString msg = QString("Insuficiente em estoque. Solicitado %1 -  Disponivel %2").arg(
+						line_product->count_requested + input_count.toInt()).arg(
+						line_product->count_available);
+
 		warningMessage(msg.toStdString());
 		return;
 	}
 
+	line_product->count_requested = line_product->count_requested + input_count.toInt();
+
+	neworder->Products[product] = line_product;
 }
 
 void UserModule::cancelProductSelected()
 {
 	cout << "Cancelar produto " << endl;
+	const char * translate_search_option[4] = {"","SEQUENTIAL", "DESCRIPTION", "BARCODE"};
+
+	cout << "Procurar produto " << endl;
+	QString branch = neworder->branchs_field;
+
+	cout << " Filial   : " << branch.toStdString()          << endl;
+
+	int idx  = search_comboBox->currentIndex();
+	if(idx == 0)
+	{
+		warningMessage("Necessário informar o modo de procura");
+		return;
+	}
+
+	QString search_mode = translate_search_option[idx];
+	cout << "Modo de procura escolhida: " << search_mode.toStdString() << endl;
+
+	QString product = searchData->text();
+	cout << " Produto   : " << product.toStdString()          << endl;
+        if(product.isEmpty())
+        {
+		warningMessage("Necessário informar o produto");
+		return;
+        }
+
+
+	// Verify if already exists in a hashtable Products of new order
+	Product * line_product;
+	if (neworder->Products.contains(product))
+	{
+		line_product = neworder->Products[product];
+	}    
+	else
+	{
+		QString msg = QString("Produto %1 não solicitado ainda").arg(product);
+		warningMessage(msg.toStdString());
+		return;
+	}
+
+        line_product->status = STATUS_PRODUCT_CANCELED;
+
+	neworder->Products[product] = line_product;
 }
