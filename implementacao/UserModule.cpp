@@ -23,14 +23,10 @@ void UserModule::Execute()
         newOrderButton       = new QPushButton(this);
         newOrderButton->setText("Novo Pedido");
 
-	finishOrderButton    = new QPushButton(this);
-	finishOrderButton->setText("Finalizar Pedido");
 
         QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
-	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
 
         newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-	finishOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	branchLabel = new QLabel("Escolha a filial: ");
 
@@ -101,6 +97,12 @@ void UserModule::operatorChoosedChanged()
 
 void UserModule::finishOrder_clickedSlot()
 {
+	// Registrar o pedido na tabela de pedidos da filial
+
+	// Registrar todos os produtos ja vendidos em cada pedido
+
+	// Decrementar todos os produtos vendidos
+
 }
 
 
@@ -173,6 +175,11 @@ void UserModule::ProcessingOrder()
         QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newProductSearch_clickedSlot()));
         newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+	finishOrderButton    = new QPushButton(this);
+	finishOrderButton->setText("Finalizar Pedido");
+	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
+	finishOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
 	// Search mode
 	search_comboBox = new QComboBox;
 	search_comboBox->addItem(tr(""));
@@ -191,8 +198,8 @@ void UserModule::ProcessingOrder()
 
 	// Cancel some product
 	cancellProdutLabel = new QLabel("Cancelar algum produto?");
-	cancelProduct      = new QLineEdit(this);
-        cancelProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	cancelThisProduct      = new QLineEdit(this);
+        cancelThisProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         cancelButton       = new QPushButton(this);
         cancelButton->setText("Cancelar produto");
@@ -205,8 +212,9 @@ void UserModule::ProcessingOrder()
 	mGridLayout->addWidget(searchData);
         mGridLayout->addWidget(newOrderButton);
 	mGridLayout->addWidget(cancellProdutLabel);
-	mGridLayout->addWidget(cancelProduct);
+	mGridLayout->addWidget(cancelThisProduct);
         mGridLayout->addWidget(cancelButton);
+        mGridLayout->addWidget(finishOrderButton);
 
         show();
 }
@@ -288,7 +296,7 @@ void UserModule::newProductSearch_clickedSlot()
 		return;
 	}
 
-	line_product->count_requested = line_product->count_requested + input_count.toInt();
+	line_product->updateRequestedTotal(input_count.toInt());
 
 	neworder->Products[product] = line_product;
 }
