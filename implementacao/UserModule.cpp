@@ -311,7 +311,7 @@ void UserModule::newProductSearch_clickedSlot()
 			 tr("Quantidade:"), QLineEdit::Normal, 0, &ok);
 
 	// New requested count plus already requested cant higher than count available
-	if(line_product->count_available > (line_product->count_requested + input_count.toInt()))
+	if(line_product->count_available < (line_product->count_requested + input_count.toInt()))
 	{
 		QString msg = QString("Insuficiente em estoque. Solicitado %1 -  Disponivel %2").arg(
 						line_product->count_requested + input_count.toInt()).arg(
