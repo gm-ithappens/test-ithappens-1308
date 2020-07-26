@@ -7,7 +7,6 @@ using namespace std;
 UserModule::UserModule(void * previous, const QString & name, QWidget * parent)
         : QWidget(parent)
         , mGridLayout(new QGridLayout(this))
-        , mLabel(new QLabel(name, this))
 {
 	Execute();
 }
@@ -15,9 +14,6 @@ UserModule::UserModule(void * previous, const QString & name, QWidget * parent)
 void UserModule::Execute()
 {
 	db_instance = DataBase::getInstance();
-
-        mGridLayout->removeWidget(mLabel);
-        delete mLabel;
 
 	// New order
         newOrderButton       = new QPushButton(this);
@@ -43,6 +39,8 @@ void UserModule::Execute()
 		s = *iter;
 		branchs_comboBox->addItem(tr(s.c_str()));
 	}
+	list.clear();
+
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
 
@@ -161,6 +159,9 @@ void UserModule::finishOrder_clickedSlot()
 
 void UserModule::destroyOrder()
 {
+	cout << "** Fim de venda! ** "  << endl;
+	warningMessage("Venda concuida com sucesso!");
+
         mGridLayout->removeWidget(search_comboBox);
 	mGridLayout->removeWidget(dataSearchLabel);
 	mGridLayout->removeWidget(searchData);
@@ -179,8 +180,7 @@ void UserModule::destroyOrder()
         delete cancelButton;
         delete finishOrderButton;
 
-	cout << "** Fim de venda! ** "  << endl;
-        show();
+	Execute();
 }
 
 
