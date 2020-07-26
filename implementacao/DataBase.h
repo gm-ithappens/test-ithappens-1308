@@ -94,7 +94,7 @@ private:
 									"('HASHORDER','BARCODE','PROCESSED_COUNT','CANCELED_COUNT',TOTAL_VALUE)"
 								       	"VALUES ('%s', %s, %d, %d, %d, %d);";
 
-	const char * update_product_store_branch_company_sql         = "UPDATE   INTO '%s_ORDERS_BRANCHS_COMPANY' ('BARCODE') VALUES (%d) WHERE BARCORDE == '%s';";
+	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
 
 	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
