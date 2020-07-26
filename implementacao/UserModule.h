@@ -26,7 +26,7 @@ public:
 
 	void Execute();
 	void ProcessingOrder();
-	warningMessage(string str);
+	void warningMessage(string str);
 
 public slots:
 	void newOrder_clickedSlot          ();
@@ -35,11 +35,13 @@ public slots:
 	void operatorChoosedChanged        ();
 	void searchModeChoosedChanged      ();
 	void cancelProductSelected         ();
+	void finishOrder_clickedSlot       ();
 
 private:
 	QGridLayout *   mGridLayout;
 	QPushButton *   newOrderButton;
 	QPushButton *   cancelButton;
+	QPushButton *   finishOrderButton;
 	QLabel      *   mLabel;
 	QLabel      *   branchLabel;
 	QLabel      *   clientLabel;
