@@ -94,6 +94,8 @@ private:
 									"('HASHORDER','BARCODE','PROCESSED_COUNT','CANCELED_COUNT',TOTAL_VALUE)"
 								       	"VALUES ('%s', %s, %d, %d, %d, %d);";
 
+	const char * update_product_store_branch_company_sql         = "UPDATE   INTO '%s_ORDERS_BRANCHS_COMPANY' ('BARCODE') VALUES (%d) WHERE BARCORDE == '%s';";
+
 	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
 
@@ -105,6 +107,7 @@ public:
 	void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, 
                                              int count_requested, int count_canceled, int total_value);
+	void updateProductOnBranch(string branch, string barcode, int count_available);
 
 };
 #endif

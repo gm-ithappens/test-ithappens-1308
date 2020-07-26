@@ -281,6 +281,33 @@ void DataBase::registerOrderProductsOnBranch(string branch, string hashorder, st
 
 }
 
+void DataBase::updateProductOnBranch(string branch, string barcode, int count_available)
+{
+	char query[100];
+	int return_code;
+	char* messaggeError;
+
+	Product * line_product = new Product;
+
+	snprintf(query, 100, update_product_store_branch_company_sql, 
+							branch.c_str(),
+							count_available,
+							barcode.c_str());
+
+	cout << "DataBase::updateProductOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			0, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+}
+
+
 DataBase * DataBase::instance = 0;
 
 DataBase * DataBase::getInstance()
