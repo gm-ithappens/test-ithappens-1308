@@ -35,6 +35,11 @@ public:
 		total_value           = count_requested * unit_value;
 	}
 
+	void updateNewCount()
+	{
+		count_available = count_available - count_requested;
+	}
+
 	void updateCanceledTotal()
 	{
 		count_canceled        = count_requested;
