@@ -22,6 +22,10 @@
 #define MONEY_PAYMENTMODE		1
 #define ORDER_PAYMENTMODE		2
 
+// Order types
+#define INPUT_ORDER	0
+#define OUTPUT_ORDER	1
+
 class Product
 {
 public:
