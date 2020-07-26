@@ -43,6 +43,7 @@ public:
 	void updateCanceledTotal()
 	{
 		count_canceled        = count_requested;
+		count_requested       = 0;
 	}
 
 	void cancell()
