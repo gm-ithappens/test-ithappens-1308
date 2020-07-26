@@ -10,6 +10,7 @@
 #include <QComboBox>
 #include <QString>
 #include <QLineEdit>
+#include <QHash>
 
 #define STATUS_PRODUCT_ACTIVE		0
 #define STATUS_PRODUCT_CANCELED		1
@@ -18,10 +19,10 @@
 class Product
 {
 public:
-	void updateTotal(int added)
+	void updateRequestedTotal(int added)
 	{
-		count       = count + added;
-		total_value = count * unit_value;
+		count_requested       = count_requested + added;
+		total_value           = count_requested * unit_value;
 	}
 
 	void cancell()
@@ -35,9 +36,10 @@ public:
 	int sequential;
 
 	int status;
-	int count       = 0;
-	int unit_value  = 0;
-	int total_value = 0;
+	int count_available  = 0;
+	int unit_value       = 0;
+	int total_value      = 0;
+	int count_requested  = 0;
 };
 
 class OrderModule
@@ -65,6 +67,8 @@ public:
 	QString operator_field;
 	QString obs_client_lient_infos;
 	int order_type;
+
+	QHash<QString, Product *> Products;
 
 };
 #endif
