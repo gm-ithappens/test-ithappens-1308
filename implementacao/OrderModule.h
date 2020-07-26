@@ -78,10 +78,19 @@ public:
 		operator_field          = operatorfield;
 		obs_client_lient_infos  = obsclientlientinfos;
 		order_type              = ordertype;
+
+		hash_session            =  QString("%1").arg(hash_order());
 	}
 	~ OrderModule(){}
 
 	void Execute();
+
+	int hash_order()
+	{
+	    struct timespec tm;
+	    clock_gettime(CLOCK_REALTIME, &tm);
+	    return tm.tv_nsec;
+	}
 
 public:
 	QString branchs_field;
