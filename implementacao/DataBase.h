@@ -36,7 +36,7 @@ private:
 	      "BARCODE                TEXT    NOT NULL,"
 	      "SEQUENTIAL             TEXT    NOT NULL,"
 	      "UNIT_VALUE              INT    NOT NULL,"
-	      "COUNT                   INT    NOT NULL"
+	      "COUNT_AVAILABLE         INT    NOT NULL"
 	      ");";
 
 	string create_store_branch_company2_sql = "CREATE TABLE Centro_STORE_BRANCHS_COMPANY("
@@ -45,26 +45,26 @@ private:
 	      "BARCODE                TEXT    NOT NULL,"
 	      "SEQUENTIAL              INT    NOT NULL,"
 	      "UNIT_VALUE              INT    NOT NULL,"
-	      "COUNT                   INT    NOT NULL"
+	      "COUNT_AVAILABLE         INT    NOT NULL"
 	      ");";
 
 	string create_orders_branch_company1_sql = "CREATE TABLE Vinhais_ORDERS_BRANCHS_COMPANY("
 	      "ID INT PRIMARY KEY     NOT         NULL, "
 	      "HASH                   TEXT    NOT NULL,"
-	      "CODIGO                  INT    NOT NULL,"
+	      "CODE                    INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL,"
 	      ");";
 
 	string create_orders_branch_company2_sql = "CREATE TABLE Centro_ORDERS_BRANCHS_COMPANY("
 	      "ID INT PRIMARY KEY     NOT         NULL, "
 	      "HASH                   TEXT    NOT NULL,"
-	      "CODIGO                  INT    NOT NULL,"
+	      "CODE                    INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL,"
 	      ");";
 
 	string create_orders_products_branch_company1_sql = "CREATE TABLE Vinhais_ORDERS_PRODUCTS_BRANCHS_COMPANY("
 	      "ID INT PRIMARY KEY     NOT         NULL, "
-	      "HASH                   TEXT    NOT NULL,"
+	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL,"
@@ -72,14 +72,14 @@ private:
 
 	string create_orders_products_branch_company2_sql = "CREATE TABLE Centro_ORDERS_PRODUCTS_BRANCHS_COMPANY("
 	      "ID INT PRIMARY KEY     NOT         NULL, "
-	      "HASH                   TEXT    NOT NULL,"
+	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL,"
 	      ");";
 
 
-	const char * select_product_store_branch_company_sql = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE '%s' == '%s';";
+	const char * select_product_store_branch_company_sql = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == '%s';";
 
 	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
