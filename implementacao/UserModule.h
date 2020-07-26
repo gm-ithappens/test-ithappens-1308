@@ -37,6 +37,7 @@ public slots:
 	void searchModeChoosedChanged      ();
 	void cancelProductSelected         ();
 	void finishOrder_clickedSlot       ();
+	void UserModule::destroyOrder      ();
 
 private:
 	QGridLayout *   mGridLayout;

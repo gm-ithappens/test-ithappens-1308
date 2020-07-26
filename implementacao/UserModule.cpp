@@ -150,13 +150,37 @@ void UserModule::finishOrder_clickedSlot()
 		// Update store products
 		product->updateNewCount();
 		db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(), 
-						product->barcode.toStdString(),
-						product->count_available);
+						   product->barcode.toStdString(),
+						   product->count_available);
 
 	}
 
+	destroyOrder();
+}
 
 
+void UserModule::destroyOrder()
+{
+        mGridLayout->removeWidget(search_comboBox);
+	mGridLayout->removeWidget(dataSearchLabel);
+	mGridLayout->removeWidget(searchData);
+        mGridLayout->removeWidget(newOrderButton);
+	mGridLayout->removeWidget(cancellProdutLabel);
+	mGridLayout->removeWidget(cancelThisProduct);
+        mGridLayout->removeWidget(cancelButton);
+        mGridLayout->removeWidget(finishOrderButton);
+
+        delete search_comboBox;
+	delete dataSearchLabel;
+	delete searchData;
+        delete newOrderButton;
+	delete cancellProdutLabel;
+	delete cancelThisProduct;
+        delete cancelButton;
+        delete finishOrderButton;
+
+	cout << "** Fim de venda! ** "  << endl;
+        show();
 }
 
 
@@ -340,6 +364,7 @@ void UserModule::newProductSearch_clickedSlot()
 								product.toStdString());
 	}
 
+	cout << "Quantidade de " << product.toStdString() << " disponivel " << line_product->count_available  << endl;
         if(line_product->count_available == 0)
         {
                 warningMessage("Produto em falta!");
@@ -362,6 +387,7 @@ void UserModule::newProductSearch_clickedSlot()
 	}
 
 	line_product->updateRequestedTotal(input_count.toInt());
+	cout << "Depois de informar desejado -  Quantidade de " << product.toStdString() << " pedidos " << line_product->count_requested  << endl;
 
 	neworder->Products[product] = line_product;
 }
