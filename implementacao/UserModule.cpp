@@ -69,7 +69,6 @@ void UserModule::Execute()
 	obsClientInfos = new QLineEdit(this);
         obsClientInfos->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-        mGridLayout->addWidget(newOrderButton);
         mGridLayout->addWidget(branchLabel);
         mGridLayout->addWidget(branchs_comboBox);
         mGridLayout->addWidget(operatorLabel);
@@ -78,6 +77,7 @@ void UserModule::Execute()
         mGridLayout->addWidget(txtClientInfos);
         mGridLayout->addWidget(obsLabel);
         mGridLayout->addWidget(obsClientInfos);
+        mGridLayout->addWidget(newOrderButton);
 
         show();
 
@@ -97,6 +97,31 @@ void UserModule::operatorChoosedChanged()
 
 void UserModule::finishOrder_clickedSlot()
 {
+	// Payment method
+	QMessageBox msgBox;
+	msgBox.setText("Escolher a forma de pagamento!");
+	msgBox.setInformativeText("Qual forma?");
+	QPushButton *ccButton    = msgBox.addButton(tr("Cartão de Crédito"), QMessageBox::ActionRole);
+	QPushButton *orderButton = msgBox.addButton(tr("Boleto"), QMessageBox::ActionRole);
+	QPushButton *moneyButton = msgBox.addButton(tr("A vista"), QMessageBox::ActionRole);
+	int ret = msgBox.exec();
+
+	if (msgBox.clickedButton() == ccButton)
+	{
+		cout << "Cartão de credito " << endl;
+		neworder->payment_mode = CREDITCARD_PAYMENT_MODE;
+	}
+	else if(msgBox.clickedButton() == orderButton)
+	{
+		cout << "Boleto " << endl;
+		neworder->payment_mode = ORDER_PAYMENTMODE;
+	}
+	else if(msgBox.clickedButton() == moneyButton)
+	{
+		cout << "A vista " << endl;
+		neworder->payment_mode = MONEY_PAYMENTMODE;
+	}
+	
 	// Registrar o pedido na tabela de pedidos da filial
 
 	// Registrar todos os produtos ja vendidos em cada pedido
@@ -230,7 +255,7 @@ void UserModule::warningMessage(string str)
 {
 	QMessageBox msgBox;
 	msgBox.setWindowTitle("AVISO!");
-	msgBox.setText("Necessário informar o modo de procura");
+	msgBox.setText(str.c_str());
 	msgBox.exec();
 }
 
