@@ -79,9 +79,9 @@ private:
 	      ");";
 
 
-	char * select_product_store_branch_company_sql = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE '%s' == '%s';";
+	const char * select_product_store_branch_company_sql = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE '%s' == '%s';";
 
-	int createBranchCompanyTable();
+	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
 
 public:
