@@ -73,6 +73,7 @@ private:
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
+	      "CANCELED_COUNT          INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL"
 	      ");";
 
@@ -81,6 +82,7 @@ private:
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
+	      "CANCELED_COUNT          INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL"
 	      ");";
 
@@ -91,8 +93,8 @@ private:
 									"VALUES ('%s', %d, %d);";
 
 	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
-									"('HASHORDER','BARCODE','PROCESSED_COUNT','CANCELED_COUNT',TOTAL_VALUE)"
-								       	"VALUES ('%s', %s, %d, %d, %d, %d);";
+									"(HASHORDER,BARCODE,PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE)"
+								       	"VALUES ('%s', %s, %d, %d, %d);";
 
 	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
 
