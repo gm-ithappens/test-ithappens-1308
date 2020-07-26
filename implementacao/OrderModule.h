@@ -12,9 +12,15 @@
 #include <QLineEdit>
 #include <QHash>
 
+// Status of products
 #define STATUS_PRODUCT_ACTIVE		0
 #define STATUS_PRODUCT_CANCELED		1
 #define STATUS_PRODUCT_PROCESSED	2
+
+// Payment modes
+#define CREDITCARD_PAYMENT_MODE		0
+#define MONEY_PAYMENTMODE		1
+#define ORDER_PAYMENTMODE		2
 
 class Product
 {
@@ -66,6 +72,8 @@ public:
 	QString client_field;
 	QString operator_field;
 	QString obs_client_lient_infos;
+	QString hash_session;
+	int payment_mode;
 	int order_type;
 
 	QHash<QString, Product *> Products;
