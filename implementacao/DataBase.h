@@ -85,8 +85,14 @@ private:
 	      ");";
 
 
-	const char * select_product_store_branch_company_sql = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == '%s';";
-	const char * insert_order_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','CODE','PAYMENT_MODE') VALUES ('%s', %d, %d);";
+	const char * select_product_store_branch_company_sql         = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == '%s';";
+
+	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','CODE','PAYMENT_MODE') "
+									"VALUES ('%s', %d, %d);";
+
+	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
+									"('HASHORDER','BARCODE','PROCESSED_COUNT','CANCELED_COUNT',TOTAL_VALUE)"
+								       	"VALUES ('%s', %s, %d, %d, %d, %d);";
 
 	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
@@ -97,6 +103,8 @@ public:
 	vector<string> getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
 	void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
+	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, 
+                                             int count_requested, int count_canceled, int total_value);
 
 };
 #endif
