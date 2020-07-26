@@ -184,13 +184,6 @@ void UserModule::destroyOrder()
 }
 
 
-int UserModule::hash_order()
-{
-    struct timespec tm;
-    clock_gettime(CLOCK_REALTIME, &tm);
-    return tm.tv_nsec;
-}
-
 void UserModule::newOrder_clickedSlot()
 {
 	QString text = txtClientInfos->text();
@@ -219,9 +212,7 @@ void UserModule::newOrder_clickedSlot()
 
 	QString obs = obsClientInfos->text();
 
-	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, 0);
-	neworder->hash_session = QString("%1").arg(hash_order());
-	neworder->order_type = OUTPUT_ORDER;
+	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, OUTPUT_ORDER);
 
 	ProcessingOrder();
 }
