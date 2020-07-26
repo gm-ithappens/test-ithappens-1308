@@ -23,9 +23,14 @@ void UserModule::Execute()
         newOrderButton       = new QPushButton(this);
         newOrderButton->setText("Novo Pedido");
 
+	finishOrderButton    = new QPushButton(this);
+	finishOrderButton->setText("Finalizar Pedido");
+
         QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
+	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
 
         newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	finishOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	branchLabel = new QLabel("Escolha a filial: ");
 
@@ -93,6 +98,11 @@ void UserModule::operatorChoosedChanged()
 	QString text = operator_comboBox->currentText();
 	cout << "Operador escolhida: " << text.toStdString() << endl;
 }
+
+void UserModule::finishOrder_clickedSlot()
+{
+}
+
 
 void UserModule::newOrder_clickedSlot()
 {
@@ -208,7 +218,7 @@ void UserModule::searchModeChoosedChanged()
 
 }
 
-UserModule::warningMessage(string str)
+void UserModule::warningMessage(string str)
 {
 	QMessageBox msgBox;
 	msgBox.setWindowTitle("AVISO!");
