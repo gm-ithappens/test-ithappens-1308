@@ -248,7 +248,10 @@ void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, 
 			&messaggeError);
 
 	if (return_code != SQLITE_OK)
+	{
+		cout << "erro ao inserir pedido:  " << messaggeError << endl;
 		sqlite3_free(messaggeError); 
+	}
 
 }
 
@@ -277,7 +280,10 @@ void DataBase::registerOrderProductsOnBranch(string branch, string hashorder, st
 			&messaggeError);
 
 	if (return_code != SQLITE_OK)
+	{
+		cout << "erro ao atualizar os produtos " << messaggeError << endl;
 		sqlite3_free(messaggeError); 
+	}
 
 }
 
