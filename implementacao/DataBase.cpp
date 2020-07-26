@@ -283,13 +283,13 @@ void DataBase::registerOrderProductsOnBranch(string branch, string hashorder, st
 
 void DataBase::updateProductOnBranch(string branch, string barcode, int count_available)
 {
-	char query[100];
+	char query[256];
 	int return_code;
 	char* messaggeError;
 
 	Product * line_product = new Product;
 
-	snprintf(query, 100, update_product_store_branch_company_sql, 
+	snprintf(query, 256, update_product_store_branch_company_sql, 
 							branch.c_str(),
 							count_available,
 							barcode.c_str());
@@ -303,7 +303,10 @@ void DataBase::updateProductOnBranch(string branch, string barcode, int count_av
 			&messaggeError);
 
 	if (return_code != SQLITE_OK)
+	{
+		cout << "erro ao atualizar os produtos " << messaggeError << endl;
 		sqlite3_free(messaggeError); 
+	}
 
 }
 
