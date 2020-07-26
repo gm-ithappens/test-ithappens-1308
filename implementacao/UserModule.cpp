@@ -122,14 +122,32 @@ void UserModule::finishOrder_clickedSlot()
 		neworder->payment_mode = MONEY_PAYMENTMODE;
 	}
 	
-	// Registrar o pedido na tabela de pedidos da filial
+	//Register order in a table of orders of the branch company
 	db_instance->registerOrderOnBranch(neworder->branchs_field.toStdString(), 
 					neworder->hash_session.toStdString(), 
 					neworder->order_type, 
 					neworder->payment_mode);
 
-	// Registrar todos os produtos ja vendidos em cada pedido
+	//Register all products of the current order in a table especific
+	// Need made a loop in a hash table of products of order
+	QHashIterator<QString, Product *> iter(neworder->Products);
+	Product * product;
+	QString key;
+	while (iter.hasNext())
+	{
+		iter.next();
+		product = (Product *) iter.value();
+		key     = (QString) iter.key();
 
+		cout << key.toStdString() << ": " << product->count_requested << endl;
+
+		db_instance->registerOrderProductsOnBranch(neworder->branchs_field.toStdString(), 
+						neworder->hash_session.toStdString(), 
+						product->barcode.toStdString(),
+						product->count_requested,
+						product->count_canceled,
+						product->total_value);
+	}
 	// Decrementar todos os produtos vendidos
 
 }
