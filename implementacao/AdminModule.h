@@ -1,5 +1,9 @@
 #ifndef ADMINMODULE_H
 #define ADMINMODULE_H
+
+#include "OrderModule.h"
+#include "DataBase.h"
+
 #include <QPushButton>
 #include <QMessageBox>
 #include <QMainWindow>
@@ -7,6 +11,10 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QComboBox>
+#include <QString>
+#include <QLineEdit>
+#include <QInputDialog>
 
 class AdminModule: public QWidget
 {
@@ -17,21 +25,47 @@ public:
 	~ AdminModule(){}
 
 	void Execute();
+	void warningMessage(string str);
+	void ProcessingOrder();
 
 public slots:
-	void newbranch_clickedSlot();
-	void AdminModule::deletebranch_clickedSlot();
-	void AdminModule::listall_clickedSlot();
-	void AdminModule::selectbranch_clickedSlot();
+	void branchManagement_clickedSlot  ();
+	void storeManagement_clickedSlot   ();
+	void reportOrders_clickedSlot      ();
+	void exit_clickedSlot              ();
+	void newOrder_clickedSlot          ();
+
 
 private:
 	QGridLayout *   mGridLayout;
 	QLabel      *   mLabel;
-#if 0
-	QPushButton * newBranchButton;
-	QPushButton * deleteButton;
-	QPushButton * listAllBranch;
-	QPushButton * selectEspecificBranch;
-#endif
+	QLabel      *   clientLabel;
+	QLabel      *   countProdLabel;
+	QLabel      *   valueProdLabel;
+	QLabel      *   barcodeLabel;
+	QLabel      *   branchLabel;
+	QLabel      *   operatorLabel;
+	QLabel      *   operationLabel;
+	QLabel      *   descProdLabel;
+
+	QPushButton * branchManagementButton;
+	QPushButton * productsManagementButton;
+	QPushButton * reportsManagementButton;
+	QPushButton * exitButton;
+	QPushButton * finishOrderButton;
+
+        QComboBox   *   branchs_comboBox;
+        QComboBox   *   operator_comboBox;
+        QComboBox   *   operation_comboBox;
+
+	QLineEdit   *   txtClientInfos;
+        QLineEdit   *   descProduct;
+        QLineEdit   *   barcodeProduct;
+        QLineEdit   *   countProduct;
+        QLineEdit   *   valueProduct;
+
+	DataBase * db_instance;
+
+	OrderModule *   neworder;
 };
 #endif
