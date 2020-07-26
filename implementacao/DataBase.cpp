@@ -57,6 +57,7 @@ void DataBase::createBranchCompanyTable()
 
 	if (return_code != SQLITE_OK)
 	{ 
+		cout << "erro ao criar a tabela create_orders_branch_company1_sql.c_str " << messaggeError << endl;
 		sqlite3_free(messaggeError); 
 		return;
 	} 
@@ -228,6 +229,28 @@ Product * DataBase::searchProductOnBranch(string branch, string search_mode, str
 	return line_product;
 }
 
+void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	Product * line_product = new Product;
+
+	snprintf(query, 256, insert_order_store_branch_company_sql, branch.c_str(), hashorder.c_str(), code, payment_mode);
+
+	cout << "DataBase::registerOrderOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			0, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+}
 
 
 DataBase * DataBase::instance = 0;
