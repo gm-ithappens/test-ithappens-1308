@@ -59,6 +59,10 @@ public slots:
 	void pre_branchManagement_clickedSlot();
 	void returnBranchManagement_clickedSlot();
 	void doCreateNewBranch_clickedSlot();
+	void returnlistOrdersPaymentManagement_clickedSlot();
+	void listOrdersPaymentManagement_clickedSlot();
+	void pre_listOrdersPaymentManagement_clickedSlot();
+	void reportSearchlistOrdersPayment_clickedSlot();
 
 
 private:
@@ -87,6 +91,7 @@ private:
 	QPushButton * execSearchlistOrders;
 	QPushButton * returnSearchlistOrders;
 	QPushButton * execTaskButton;
+	QPushButton * listManagPaymentButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
