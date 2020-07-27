@@ -88,6 +88,8 @@ private:
 
 
 	const char * select_product_store_branch_company_sql         = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == '%s';";
+	const char * select_product_store_branch_company_hsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE > %d;";
+	const char * select_product_store_branch_company_lsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE < %d;";
 
 	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','CODE','PAYMENT_MODE') "
 									"VALUES ('%s', %d, %d);";
@@ -107,12 +109,13 @@ public:
         static DataBase* getInstance();
 	vector<string> getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
-	void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
+	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, 
                                              int count_requested, int count_canceled, int total_value);
 	void updateProductOnBranch(string branch, string barcode, int count_available);
-	void DataBase::insertProductOnBranch(string branch, string barcode, string description,
+	void insertProductOnBranch(string branch, string barcode, string description,
                                      int count_available, int unit_value, int sequential);
+	QHash<QString, Product *> searchSuperProductOnBranch(string branch, int type, int count);
 
 };
 #endif
