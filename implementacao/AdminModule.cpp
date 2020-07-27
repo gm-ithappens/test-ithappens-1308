@@ -456,7 +456,7 @@ void AdminModule::listOrdersManagement_clickedSlot()
 	execSearchlistOrders                         = new QPushButton(this);
 	execSearchlistOrders->setText                ("Pesquisar");
 	execSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
+	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSearchlistOrders_clickedSlot()));
 
 	returnSearchlistOrders                         = new QPushButton(this);
 	returnSearchlistOrders->setText                ("Voltar");
@@ -558,6 +558,23 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	delete returnSearchSuperlative;
 
 	optionsGeneralListManagement_clickedSlot();
+}
+
+void AdminModule::reportSearchlistOrders_clickedSlot()
+{
+	QString branchs_field = branchs_comboBox->currentText();
+	if(branchs_field.isEmpty())
+	{
+		warningMessage("Necessário escolher uma filial!");
+		return;
+	}
+
+	QString sequential   = sequentialProduct->text();
+	if(sequential.isEmpty())
+	{
+		warningMessage("Necessário informar o código sequencial!");
+		return;
+	}
 }
 
 void AdminModule::reportSuperlativeSearch_clickedSlot()

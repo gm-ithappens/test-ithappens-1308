@@ -55,6 +55,7 @@ public slots:
 	void optionsGeneralListManagement_clickedSlot();
 	void listOrdersManagement_clickedSlot();
 	void returnSearchlistOrders_clickedSlot();
+	void reportSearchlistOrders_clickedSlot();
 
 
 private:
