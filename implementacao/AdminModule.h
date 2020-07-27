@@ -30,7 +30,7 @@ public:
 	~ AdminModule(){}
 
 	void Execute();
-	void warningMessage(string str);
+	//void warningMessage(string str);
 	void destroyInitialAdminScreen();
 	QGroupBox * createExclusiveGroup();
 
@@ -63,9 +63,7 @@ public slots:
 	void listOrdersPaymentManagement_clickedSlot();
 	void pre_listOrdersPaymentManagement_clickedSlot();
 	void reportSearchlistOrdersPayment_clickedSlot();
-	int isSettedVariable(QString branch, QString msgErr);
 	QComboBox   * mountComboBoxBranchNames();
-	QPushButton * mountButton(string msg);
 
 
 private:

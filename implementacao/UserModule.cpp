@@ -16,13 +16,8 @@ void UserModule::Execute()
 	db_instance = DataBase::getInstance();
 
 	// New order
-        newOrderButton       = new QPushButton(this);
-        newOrderButton->setText("Novo Pedido");
-
-
+	newOrderButton = mountButton("Novo Pedido");
         QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
-
-        newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	branchLabel = new QLabel("Escolha a filial: ");
 
@@ -159,25 +154,16 @@ void UserModule::newOrder_clickedSlot()
 	cout << "Cliente: " << text.toStdString() << endl;
 
 	QString branchs_field = branchs_comboBox->currentText();
-	if(branchs_field.isEmpty())
-	{
-		warningMessage("Necessário escolher uma filial!");
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!") == 0)
 		return;
-	}
 
 	QString client_field = txtClientInfos->text();
-	if(client_field.isEmpty())
-	{
-		warningMessage("Necessário informar os dados do cliente!");
+	if(isSettedVariable(client_field, "Necessário informar os dados do cliente!") == 0)
 		return;
-	}
 
 	QString operator_field = operator_comboBox->currentText();
-	if(operator_field.isEmpty())
-	{
-		warningMessage("Necessário informar operador!");
+	if(isSettedVariable(operator_field, "Necessário informar operador!") == 0)
 		return;
-	}
 
 	QString obs = obsClientInfos->text();
 
@@ -217,16 +203,11 @@ void UserModule::ProcessingOrder()
 	cout << " Obs      : " << neworder->obs_client_lient_infos.toStdString() << endl;
 
 	// Button to search
-        newOrderButton       = new QPushButton(this);
-        newOrderButton->setText("Buscar produto");
-
+	newOrderButton = mountButton("Buscar produto");
         QObject::connect(newOrderButton, SIGNAL(clicked()),this, SLOT(newProductSearch_clickedSlot()));
-        newOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-	finishOrderButton    = new QPushButton(this);
-	finishOrderButton->setText("Finalizar Pedido");
+	finishOrderButton    = mountButton("Finalizar Pedido");
 	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
-	finishOrderButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	// Search mode
 	search_comboBox = new QComboBox;
@@ -249,11 +230,8 @@ void UserModule::ProcessingOrder()
 	cancelThisProduct      = new QLineEdit(this);
         cancelThisProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-        cancelButton       = new QPushButton(this);
-        cancelButton->setText("Cancelar produto");
-
+	cancelButton = mountButton("Cancelar produto");
         QObject::connect(cancelButton, SIGNAL(clicked()),this, SLOT(cancelProductSelected()));
-        cancelButton->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
         mGridLayout->addWidget(search_comboBox);
 	mGridLayout->addWidget(dataSearchLabel);
@@ -273,15 +251,6 @@ void UserModule::searchModeChoosedChanged()
 	cout << "Modo de procura escolhida: " << text.toStdString() << endl;
 
 }
-
-void UserModule::warningMessage(string str)
-{
-	QMessageBox msgBox;
-	msgBox.setWindowTitle("AVISO!");
-	msgBox.setText(str.c_str());
-	msgBox.exec();
-}
-
 
 void UserModule::newProductSearch_clickedSlot()
 {
@@ -304,11 +273,8 @@ void UserModule::newProductSearch_clickedSlot()
 
 	QString product = searchData->text();
 	cout << " Produto   : " << product.toStdString()          << endl;
-        if(product.isEmpty())
-        {
-		warningMessage("Necessário informar o produto");
+	if(isSettedVariable(product, "Necessário informar o produto") == 0)
 		return;
-        }
 
 
 	// Verify if already exists in a hashtable Products of new order
@@ -374,11 +340,8 @@ void UserModule::cancelProductSelected()
 
 	QString product = searchData->text();
 	cout << " Produto   : " << product.toStdString()          << endl;
-        if(product.isEmpty())
-        {
-		warningMessage("Necessário informar o produto");
+	if(isSettedVariable(product, "Necessário informar o produto") == 0)
 		return;
-        }
 
 
 	// Verify if already exists in a hashtable Products of new order

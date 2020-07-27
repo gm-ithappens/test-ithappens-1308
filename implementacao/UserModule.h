@@ -15,6 +15,7 @@
 #include "OrderModule.h"
 
 #include "DataBase.h"
+#include "Common.h"
 
 class UserModule: public QWidget
 {
@@ -26,7 +27,6 @@ public:
 
 	void Execute();
 	void ProcessingOrder();
-	void warningMessage(string str);
 
 public slots:
 	void newOrder_clickedSlot          ();

@@ -1,5 +1,6 @@
 #include "AdminModule.h"
 #include <iostream>
+#include "Common.h"
 
 using namespace std;
 
@@ -94,15 +95,6 @@ void AdminModule::returnBranchManagement_clickedSlot()
 
 	Execute();
 }
-
-void AdminModule::warningMessage(string str)
-{
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("AVISO!");
-        msgBox.setText(str.c_str());
-        msgBox.exec();
-}
-
 
 void AdminModule::newOrder_clickedSlot()
 {
@@ -561,16 +553,6 @@ void AdminModule::returnSearchlistOrders_clickedSlot()
 	optionsGeneralListManagement_clickedSlot();
 }
 
-QPushButton * AdminModule::mountButton(string msg)
-{
-	QPushButton * btn;
-	btn               = new QPushButton(this);
-	btn->setText      (msg.c_str());
-	btn->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-
-	return btn;
-}
-
 void AdminModule::pre_listSuperlativeManagement_clickedSlot()
 {
 	destroyOptionsGeneralListManagementScreen();
@@ -624,17 +606,6 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	delete returnButton;
 
 	optionsGeneralListManagement_clickedSlot();
-}
-
-int AdminModule::isSettedVariable(QString var, QString msgErr)
-{
-	if(var.isEmpty())
-	{
-		warningMessage(msgErr.toStdString().c_str());
-		return 0;
-	}
-
-	return 1;
 }
 
 void AdminModule::reportSearchlistOrders_clickedSlot()
