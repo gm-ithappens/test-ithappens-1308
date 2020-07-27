@@ -99,6 +99,13 @@ void AdminModule::newOrder_clickedSlot()
 		return;
 	}
 
+	QString seq_product    = sequentialProduct->text();
+	if(desc_product.isEmpty())
+	{
+		warningMessage("Necessário informar sequencial do produto!");
+		return;
+	}
+
 	QString barcode_product = barcodeProduct->text();
 	if(barcode_product.isEmpty())
 	{
@@ -113,11 +120,41 @@ void AdminModule::newOrder_clickedSlot()
 		return;
 	}
 
+	QString value_product   = valueProduct->text();
+	if(value_product.isEmpty())
+	{
+		warningMessage("Necessário informar a quantidade!");
+		return;
+	}
+
 	QString obs = "NECESSARIO TROCAR ISSO";
 
 	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, INPUT_ORDER);
 
-	ProcessingOrder();
+	Product * line_product = NULL;
+	QString search_mode = "BARCODE";
+	line_product = db_instance->searchProductOnBranch(neworder->branchs_field.toStdString(), 
+							search_mode.toStdString(), 
+							barcode_product.toStdString());
+
+	int processing_type = UPDATE_INPUT;
+	if(line_product->status_in_db == NOT_FOUND_IN_DB)
+	{
+		cout << "Vai ser criado um novo produto!" << endl;
+		Product * line_product = new Product();
+		processing_type        = NEW_INPUT;
+	}
+
+	line_product->description     = desc_product;
+	line_product->barcode         = barcode_product;
+	line_product->sequential      = seq_product.toInt();
+	line_product->count_available = count_product.toInt();
+	line_product->unit_value      = value_product.toInt();
+
+
+	neworder->Products[line_product->description] = line_product;
+
+	ProcessingOrder(processing_type);
 }
 
 
@@ -149,7 +186,7 @@ void AdminModule::storeManagement_clickedSlot()
         }
         list.clear();
 
-	operatorLabel = new QLabel("Tipo de operação: ");
+	operatorLabel = new QLabel("Selecione operador: ");
         // Operator in hardcode yet     
         operator_comboBox = new QComboBox;
         operator_comboBox->addItem(tr(""));
@@ -173,6 +210,11 @@ void AdminModule::storeManagement_clickedSlot()
         descProduct = new QLineEdit(this);
         descProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+	sequentialLabel = new QLabel("Entre com código sequencial: ");
+        sequentialProduct = new QLineEdit(this);
+	sequentialProduct->setInputMask("999999");
+	sequentialProduct->setMaxLength(6);
+        sequentialProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	barcodeLabel = new QLabel("Entre com código de barras: ");
         barcodeProduct = new QLineEdit(this);
@@ -204,12 +246,12 @@ void AdminModule::storeManagement_clickedSlot()
 	mGridLayout->addWidget(operator_comboBox);
 	mGridLayout->addWidget(operationLabel);
 	mGridLayout->addWidget(operation_comboBox);
-
 	mGridLayout->addWidget(clientLabel);
 	mGridLayout->addWidget(txtClientInfos);
-
 	mGridLayout->addWidget(descProdLabel);
 	mGridLayout->addWidget(descProduct);
+	mGridLayout->addWidget(sequentialLabel);
+	mGridLayout->addWidget(sequentialProduct);
 	mGridLayout->addWidget(barcodeLabel);
 	mGridLayout->addWidget(barcodeProduct);
 	mGridLayout->addWidget(countProdLabel);
@@ -221,10 +263,9 @@ void AdminModule::storeManagement_clickedSlot()
 	show();
 }
 
-void AdminModule::ProcessingOrder()
+void AdminModule::ProcessingOrder(int ordertype)
 {
 	warningMessage("Vai processar o pedido de entrada!");
-#if 0
         //Register order in a table of orders of the branch company
         db_instance->registerOrderOnBranch(neworder->branchs_field.toStdString(),
                                         neworder->hash_session.toStdString(),
@@ -251,13 +292,25 @@ void AdminModule::ProcessingOrder()
                                                 product->count_canceled,
                                                 product->total_value);
                 // Update store products
-                product->updateNewCount();
-                db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(),
-                                                   product->barcode.toStdString(),
-                                                   product->count_available);
+		if(ordertype == UPDATE_INPUT)
+		{
+			product->updateNewCount();
+			db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(),
+							   product->barcode.toStdString(),
+							   product->count_available);
+		}
+		else
+		{
+			//(string branch, string barcode, string description, int count_available, int unit_value, int sequential)
+			db_instance->insertProductOnBranch(neworder->branchs_field.toStdString(),
+							   product->barcode.toStdString(),
+							   product->description.toStdString(),
+							   product->count_available,
+							   product->unit_value,
+							   product->sequential);
+		}
 
         }
-#endif
 }
 
 void AdminModule::reportOrders_clickedSlot()
