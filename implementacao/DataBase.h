@@ -26,13 +26,9 @@ private:
 
 	string select_branch_company_sql = "SELECT NAME FROM 'BRANCHS_COMPANY';";
 
-	// Used only for tests purposes
-	string populate_branch_company1_sql = "INSERT INTO BRANCHS_COMPANY ('NAME')  VALUES ('Vinhais');";
-	string populate_branch_company2_sql = "INSERT INTO BRANCHS_COMPANY ('NAME')  VALUES ('Centro');";
+	const char * populate_branch_company_sql = "INSERT INTO BRANCHS_COMPANY ('NAME')  VALUES ('%s');";
 
-	// Querys to create Store in each branch company  (hardcode)
-	// TODO: Implent screen and tools for registre new branchs company
-	string create_store_branch_company1_sql = "CREATE TABLE Vinhais_STORE_BRANCHS_COMPANY("
+	const char * create_store_branch_company_sql = "CREATE TABLE %s_STORE_BRANCHS_COMPANY("
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "DESCRIPTION            TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
@@ -41,47 +37,14 @@ private:
 	      "COUNT_AVAILABLE         INT    NOT NULL"
 	      ");";
 
-	string create_store_branch_company2_sql = "CREATE TABLE Centro_STORE_BRANCHS_COMPANY("
-	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
-	      "DESCRIPTION            TEXT    NOT NULL,"
-	      "BARCODE                TEXT    NOT NULL,"
-	      "SEQUENTIAL              INT    NOT NULL,"
-	      "UNIT_VALUE              INT    NOT NULL,"
-	      "COUNT_AVAILABLE         INT    NOT NULL"
-	      ");";
-
-	// Querys to create Orders in each branch company (hardcode)
-	// TODO: Implent screen and tools for registre new order at branchs company
-	string create_orders_branch_company1_sql = "CREATE TABLE Vinhais_ORDERS_BRANCHS_COMPANY("
+	const char * create_orders_branch_company_sql = "CREATE TABLE %s_ORDERS_BRANCHS_COMPANY("
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "ORDERCODE               INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL"
 	      ");";
 
-	string create_orders_branch_company2_sql = "CREATE TABLE Centro_ORDERS_BRANCHS_COMPANY("
-	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
-	      "HASHORDER               TEXT    NOT NULL,"
-	      "ORDERCODE               INT    NOT NULL,"
-	      "PAYMENT_MODE            INT    NOT NULL"
-	      ");";
-
-	// Querys to create Orders in each branch company (hardcode)
-	// TODO: Implent screen and tools for registre new products list used in orders at branchs company
-	string create_orders_products_branch_company1_sql = "CREATE TABLE Vinhais_ORDERS_PRODUCTS_BRANCHS_COMPANY("
-	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
-	      "HASHORDER              TEXT    NOT NULL,"
-	      "BARCODE                TEXT    NOT NULL,"
-	      "DESCRIPTION            TEXT    NOT NULL,"
-	      "SEQUENTIAL              INT    NOT NULL,"
-	      "PROCESSED_COUNT         INT    NOT NULL,"
-	      "CANCELED_COUNT          INT    NOT NULL,"
-	      "TOTAL_VALUE             INT    NOT NULL,"
-	      "ORDERCODE               INT    NOT NULL,"
-	      "PAYMENT_MODE            INT    NOT NULL"
-	      ");";
-
-	string create_orders_products_branch_company2_sql = "CREATE TABLE Centro_ORDERS_PRODUCTS_BRANCHS_COMPANY("
+	const char * create_orders_products_branch_company_sql = "CREATE TABLE %s_ORDERS_PRODUCTS_BRANCHS_COMPANY("
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
@@ -108,14 +71,15 @@ private:
 								       	"VALUES ('%s', '%s', '%s', %d, %d, %d, %d, %d, %d);";
 
 	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
-	const char * insert_product_store_branch_company_sql         = "INSERT INTO '%s_STORE_BRANCHS_COMPANY' ('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) VALUES ('%s', '%s', %d, %d, %d);";
-
-	void createBranchCompanyTable();
-	void populateBranchCompanyTable();
+	const char * insert_product_store_branch_company_sql         = "INSERT INTO '%s_STORE_BRANCHS_COMPANY' "
+									"('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) "
+									"VALUES ('%s', '%s', %d, %d, %d);";
 
 public:
 	/* Static access method. */
         static DataBase* getInstance();
+	void createBranchCompanyTable(string branch_name);
+	void createBranchsCompanyTable();
 	vector<string> getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
 	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
