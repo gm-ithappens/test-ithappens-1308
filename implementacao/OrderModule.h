@@ -102,6 +102,8 @@ public:
 	    return tm.tv_nsec;
 	}
 
+	void ProcessingOrder(int ordertype);
+
 public:
 	QString branchs_field;
 	QString client_field;
