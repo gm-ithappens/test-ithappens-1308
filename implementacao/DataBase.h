@@ -72,6 +72,8 @@ private:
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
+	      "DESCRIPTION            TEXT    NOT NULL,"
+	      "SEQUENTIAL              INT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "CANCELED_COUNT          INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL"
@@ -81,6 +83,8 @@ private:
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "BARCODE                TEXT    NOT NULL,"
+	      "DESCRIPTION            TEXT    NOT NULL,"
+	      "SEQUENTIAL              INT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "CANCELED_COUNT          INT    NOT NULL,"
 	      "TOTAL_VALUE             INT    NOT NULL"
@@ -95,8 +99,8 @@ private:
 									"VALUES ('%s', %d, %d);";
 
 	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
-									"(HASHORDER,BARCODE,PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE)"
-								       	"VALUES ('%s', %s, %d, %d, %d);";
+									"(HASHORDER,BARCODE,DESCRIPTION,SEQUENTIAL, PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE)"
+								       	"VALUES ('%s', '%s', '%s', %d, %d, %d, %d);";
 
 	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
 	const char * insert_product_store_branch_company_sql         = "INSERT INTO '%s_STORE_BRANCHS_COMPANY' ('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) VALUES ('%s', '%s', %d, %d, %d);";
@@ -110,8 +114,8 @@ public:
 	vector<string> getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
 	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
-	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, 
-                                             int count_requested, int count_canceled, int total_value);
+	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
+                                            int sequential, int count_requested, int count_canceled, int total_value);
 	void updateProductOnBranch(string branch, string barcode, int count_available);
 	void insertProductOnBranch(string branch, string barcode, string description,
                                      int count_available, int unit_value, int sequential);
