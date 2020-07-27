@@ -63,6 +63,8 @@ private:
 	const char * select_product_store_branch_company_lsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE < %d;";
 	const char * select_order_branch_company_filter_seq_sql       = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE SEQUENTIAL == %d;" ;
 
+	const char * select_order_branch_company_filter_payment_sql   = "SELECT HASHORDER,PAYMENT_MODE FROM '%s_ORDERS_BRANCHS_COMPANY';";
+
 	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','ORDERCODE','PAYMENT_MODE') "
 									"VALUES ('%s', %d, %d);";
 
@@ -90,7 +92,8 @@ public:
 	void insertProductOnBranch(string branch, string barcode, string description,
                                      int count_available, int unit_value, int sequential);
 	QHash<QString, Product *> searchSuperProductOnBranch(string branch, int type, int count);
-	QHash<QString, ProductOfOrder *> DataBase::searchListOrdersOnBranch(string branch, int sequential);
+	QHash<QString, ProductOfOrder *> searchListOrdersOnBranch(string branch, int sequential);
+	QHash<QString, ProductOfOrder *> searchListOrderAndPaymentOnBranch(string branch);
 
 };
 #endif

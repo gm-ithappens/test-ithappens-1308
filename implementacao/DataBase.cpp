@@ -399,6 +399,28 @@ QHash<QString, ProductOfOrder *> DataBase::searchListOrdersOnBranch(string branc
 	return HTProductOfOrder;
 }
 
+QHash<QString, ProductOfOrder *> DataBase::searchListOrderAndPaymentOnBranch(string branch)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	HTProductOfOrder.clear();
+
+	snprintf(query, 256, select_order_branch_company_filter_payment_sql, branch.c_str());
+	cout << "DataBase::searchListOrdersOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveOrderListProduct, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return HTProductOfOrder;
+}
 
 void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
 {
