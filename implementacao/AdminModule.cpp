@@ -70,9 +70,7 @@ void AdminModule::branchManagement_clickedSlot()
 	execTaskButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
 	QObject::connect(execTaskButton, SIGNAL(clicked()),this, SLOT(doCreateNewBranch_clickedSlot()));
 
-	returnButton                         = new QPushButton(this);
-	returnButton->setText                ("Voltar");
-	returnButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	returnButton = mountButton("Voltar");
 	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnBranchManagement_clickedSlot()));
 
 	mGridLayout->addWidget(generalLabel);
@@ -283,9 +281,7 @@ void AdminModule::storeManagement_clickedSlot()
 	//QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishedOrder_clickedSlot()));
 	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
 
-	returnButton                         = new QPushButton(this);
-	returnButton->setText                ("Voltar");
-	returnButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	returnButton = mountButton("Voltar");
 	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnStoreManagement_clickedSlot_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
@@ -476,20 +472,16 @@ void AdminModule::listOrdersPaymentManagement_clickedSlot()
 
 	branchs_comboBox = mountComboBoxBranchNames();
 
-	execSearchlistOrders                         = new QPushButton(this);
-	execSearchlistOrders->setText                ("Pesquisar");
-	execSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSearchlistOrdersPayment_clickedSlot()));
+	execSearch = mountButton("Pesquisar");
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportSearchlistOrdersPayment_clickedSlot()));
 
-	returnSearchlistOrders                         = new QPushButton(this);
-	returnSearchlistOrders->setText                ("Voltar");
-	returnSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(returnSearchlistOrders, SIGNAL(clicked()),this, SLOT(returnlistOrdersPaymentManagement_clickedSlot()));
+	returnButton = mountButton("Voltar");
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnlistOrdersPaymentManagement_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
-	mGridLayout->addWidget(execSearchlistOrders);
-	mGridLayout->addWidget(returnSearchlistOrders);
+	mGridLayout->addWidget(execSearch);
+	mGridLayout->addWidget(returnButton);
 
 	show();
 }
@@ -498,13 +490,13 @@ void AdminModule::returnlistOrdersPaymentManagement_clickedSlot()
 {
 	mGridLayout->removeWidget(branchLabel);
 	mGridLayout->removeWidget(branchs_comboBox);
-	mGridLayout->removeWidget(execSearchlistOrders);
-	mGridLayout->removeWidget(returnSearchlistOrders);
+	mGridLayout->removeWidget(execSearch);
+	mGridLayout->removeWidget(returnButton);
 
 	delete branchLabel;
 	delete branchs_comboBox;
-	delete execSearchlistOrders;
-	delete returnSearchlistOrders;
+	delete execSearch;
+	delete returnButton;
 
 	optionsGeneralListManagement_clickedSlot();
 }
@@ -560,22 +552,18 @@ void AdminModule::listOrdersManagement_clickedSlot()
 	sequentialProduct->setMaxLength(6);
         sequentialProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-	execSearchlistOrders                         = new QPushButton(this);
-	execSearchlistOrders->setText                ("Pesquisar");
-	execSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSearchlistOrders_clickedSlot()));
+	execSearch = mountButton("Pesquisar");
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportSearchlistOrders_clickedSlot()));
 
-	returnSearchlistOrders                         = new QPushButton(this);
-	returnSearchlistOrders->setText                ("Voltar");
-	returnSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(returnSearchlistOrders, SIGNAL(clicked()),this, SLOT(returnSearchlistOrders_clickedSlot()));
+	returnButton = mountButton("Voltar");
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnSearchlistOrders_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
 	mGridLayout->addWidget(sequentialLabel);
 	mGridLayout->addWidget(sequentialProduct);
-	mGridLayout->addWidget(execSearchlistOrders);
-	mGridLayout->addWidget(returnSearchlistOrders);
+	mGridLayout->addWidget(execSearch);
+	mGridLayout->addWidget(returnButton);
 }
 
 void AdminModule::returnSearchlistOrders_clickedSlot()
@@ -584,17 +572,27 @@ void AdminModule::returnSearchlistOrders_clickedSlot()
 	mGridLayout->removeWidget(branchs_comboBox);
 	mGridLayout->removeWidget(sequentialLabel);
 	mGridLayout->removeWidget(sequentialProduct);
-	mGridLayout->removeWidget(execSearchlistOrders);
-	mGridLayout->removeWidget(returnSearchlistOrders);
+	mGridLayout->removeWidget(execSearch);
+	mGridLayout->removeWidget(returnButton);
 
 	delete branchLabel;
 	delete branchs_comboBox;
 	delete sequentialLabel;
 	delete sequentialProduct;
-	delete execSearchlistOrders;
-	delete returnSearchlistOrders;
+	delete execSearch;
+	delete returnButton;
 
 	optionsGeneralListManagement_clickedSlot();
+}
+
+QPushButton * AdminModule::mountButton(string msg)
+{
+	QPushButton * btn;
+	btn               = new QPushButton(this);
+	btn->setText      (msg.c_str());
+	btn->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	return btn;
 }
 
 void AdminModule::pre_listSuperlativeManagement_clickedSlot()
@@ -618,22 +616,18 @@ void AdminModule::listSuperlativeManagement_clickedSlot()
 	countProduct->setInputMask("999");
 	countProduct->setMaxLength(3);
 
-	execSearchSuperlative                         = new QPushButton(this);
-	execSearchSuperlative->setText                ("Pesquisar");
-	execSearchSuperlative->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(execSearchSuperlative, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
+	execSearch = mountButton("Pesquisar");
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
 
-	returnSearchSuperlative                         = new QPushButton(this);
-	returnSearchSuperlative->setText                ("Voltar");
-	returnSearchSuperlative->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(returnSearchSuperlative, SIGNAL(clicked()),this, SLOT(returnFromSuperlative_clickedSlot()));
+	returnButton = mountButton("Voltar");
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnFromSuperlative_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
 	mGridLayout->addWidget(groupBox);
 	mGridLayout->addWidget(countProduct);
-	mGridLayout->addWidget(execSearchSuperlative);
-	mGridLayout->addWidget(returnSearchSuperlative);
+	mGridLayout->addWidget(execSearch);
+	mGridLayout->addWidget(returnButton);
 
 }
 
@@ -643,15 +637,15 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	mGridLayout->removeWidget(branchs_comboBox);
 	mGridLayout->removeWidget(groupBox);
 	mGridLayout->removeWidget(countProduct);
-	mGridLayout->removeWidget(execSearchSuperlative);
-	mGridLayout->removeWidget(returnSearchSuperlative);
+	mGridLayout->removeWidget(execSearch);
+	mGridLayout->removeWidget(returnButton);
 
 	delete branchLabel;
 	delete branchs_comboBox;
 	delete groupBox;
 	delete countProduct;
-	delete execSearchSuperlative;
-	delete returnSearchSuperlative;
+	delete execSearch;
+	delete returnButton;
 
 	optionsGeneralListManagement_clickedSlot();
 }
