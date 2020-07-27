@@ -493,8 +493,6 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	optionsGeneralListManagement_clickedSlot();
 }
 
-// Escrever uma consulta que retorne todos os produtos com quantidade maior ou igual a 100
-// Escrever uma consulta que traga todos os produtos que têm estoque para a filial de código 60
 void AdminModule::reportSuperlativeSearch_clickedSlot()
 {
 	QHash<QString, Product *> HTProducts;
@@ -506,8 +504,17 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 		return;
 	}
 
-	//if(superlative_radio_option == BIGGER_THAN)
-	HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), BIGGER_THAN, 80);
+	QString count_product   = countProduct->text();
+	if(count_product.isEmpty())
+	{
+		warningMessage("Necessário informar a quantidade!");
+		return;
+	}
+
+	if(superlative_radio_option == BIGGER_THAN)
+		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), BIGGER_THAN, count_product.toInt());
+	else
+		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), LESS_THAN, count_product.toInt());
 
 	QString out;
 
@@ -523,8 +530,7 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 
                 cout << key.toStdString() << ": " << product->description.toStdString() << endl;
 		out.append(product->description.toStdString().c_str());
-		out.append("-");
-		//QString msg = String("%1").arg(product->count_available);
+		out.append("      -     ");
 		out.append(QString("%1").arg(product->count_available).toStdString().c_str());
 		out.append("\n");
 	}
