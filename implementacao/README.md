@@ -13,6 +13,24 @@ The software have three basics modules:
 3. Core Business
 	The core is a main loop that know about the system work.
 
+## Build and Run
+
+To build project only bring directory build, if do not exists create.
+```
+$ mkdir build
+```
+
+When into build directory:
+```
+$ cmake ..
+$ make
+```
+
+To run
+```
+$ ./system3S
+```
+
 ## Developer informations
 Developer: Raniere Machado
 email    : raniere.ee@gmail.com
