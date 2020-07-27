@@ -562,6 +562,10 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 
 void AdminModule::reportSearchlistOrders_clickedSlot()
 {
+	QHash<QString, ProductOfOrder *> HTProductOfOrder;
+	ProductOfOrder * order;
+	QString out;
+
 	QString branchs_field = branchs_comboBox->currentText();
 	if(branchs_field.isEmpty())
 	{
@@ -575,6 +579,39 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
 		warningMessage("Necessário informar o código sequencial!");
 		return;
 	}
+
+
+	HTProductOfOrder = db_instance->searchListOrdersOnBranch(
+							branchs_field.toStdString(),
+							sequential.toInt());
+
+	QHashIterator<QString, ProductOfOrder *> iter(HTProductOfOrder);
+
+        QString key;
+	out.append(" HASH  - DESCRIÇÃO - CÓD. BARRAS - QUANT. REQUISITADA  -  QUANT. CANCELADA - VAL. TOTAL\n");
+        while (iter.hasNext())
+        {
+                iter.next();
+                order   = (ProductOfOrder *) iter.value();
+                key     = (QString) iter.key();
+
+		out.append(order->hash_session.toStdString().c_str());
+		out.append("      -     ");
+		out.append(order->description.toStdString().c_str());
+		out.append("      -     ");
+		out.append(order->barcode.toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->count_requested).toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->count_canceled).toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->total_value).toStdString().c_str());
+		out.append("\n");
+	}
+
+	QMessageBox msgBox;
+	msgBox.setText(out.toStdString().c_str());
+	msgBox.exec();
 }
 
 void AdminModule::reportSuperlativeSearch_clickedSlot()
