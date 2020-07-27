@@ -223,7 +223,9 @@ void AdminModule::destroyOptionsGeneralListManagementScreen()
 	mGridLayout->removeWidget(productsManagementButton);
 	mGridLayout->removeWidget(listManagementButton);
 	mGridLayout->removeWidget(reportsManagementButton);
+	mGridLayout->removeWidget(listManagPaymentButton);
 
+	delete listManagPaymentButton;
 	delete productsManagementButton;
 	delete listManagementButton;
 	delete reportsManagementButton;
@@ -465,15 +467,116 @@ void AdminModule::optionsGeneralListManagement_clickedSlot()
 	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
 	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersManagement_clickedSlot()));
 
+	listManagPaymentButton                      = new QPushButton(this);
+	listManagPaymentButton->setText             ("Listar Pedidos e Forma de Pagamento");
+	listManagPaymentButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
+
+
 	reportsManagementButton                       = new QPushButton(this);
 	reportsManagementButton->setText              ("Consulta sumarizada");
 	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+	mGridLayout->addWidget(listManagPaymentButton);
 	mGridLayout->addWidget(productsManagementButton);
 	mGridLayout->addWidget(listManagementButton);
 	mGridLayout->addWidget(reportsManagementButton);
 
 	show();
+}
+
+void AdminModule::pre_listOrdersPaymentManagement_clickedSlot()
+{
+	destroyOptionsGeneralListManagementScreen();
+	listOrdersPaymentManagement_clickedSlot();
+}
+
+
+void AdminModule::listOrdersPaymentManagement_clickedSlot()
+{
+	branchLabel = new QLabel("Qual filial: ");
+
+        // Options to branch company
+        branchs_comboBox = new QComboBox;
+
+        branchs_comboBox->addItem(tr(""));
+        vector<string> list = db_instance->getListBranchCompany();
+        vector<string>::const_iterator iter;
+        for (iter = list.begin(); iter != list.end(); ++iter)
+        {
+                string s;
+                s = *iter;
+                branchs_comboBox->addItem(tr(s.c_str()));
+        }
+        list.clear();
+
+	execSearchlistOrders                         = new QPushButton(this);
+	execSearchlistOrders->setText                ("Pesquisar");
+	execSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSearchlistOrdersPayment_clickedSlot()));
+
+	returnSearchlistOrders                         = new QPushButton(this);
+	returnSearchlistOrders->setText                ("Voltar");
+	returnSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(returnSearchlistOrders, SIGNAL(clicked()),this, SLOT(returnlistOrdersPaymentManagement_clickedSlot()));
+
+	mGridLayout->addWidget(branchLabel);
+	mGridLayout->addWidget(branchs_comboBox);
+	mGridLayout->addWidget(execSearchlistOrders);
+	mGridLayout->addWidget(returnSearchlistOrders);
+
+	show();
+}
+
+void AdminModule::returnlistOrdersPaymentManagement_clickedSlot()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(execSearchlistOrders);
+	mGridLayout->removeWidget(returnSearchlistOrders);
+
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete execSearchlistOrders;
+	delete returnSearchlistOrders;
+
+	optionsGeneralListManagement_clickedSlot();
+}
+
+void AdminModule::reportSearchlistOrdersPayment_clickedSlot()
+{
+	QHash<QString, ProductOfOrder *> HTOrder;
+	ProductOfOrder * order;
+	QString out;
+
+	QString branchs_field = branchs_comboBox->currentText();
+	if(branchs_field.isEmpty())
+	{
+		warningMessage("Necessário escolher uma filial!");
+		return;
+	}
+
+	HTOrder = db_instance->searchListOrderAndPaymentOnBranch(branchs_field.toStdString());
+
+	QHashIterator<QString, ProductOfOrder *> iter(HTOrder);
+
+        QString key;
+	out.append(" HASH   - PAGAMENTO\n");
+        while (iter.hasNext())
+        {
+                iter.next();
+                order   = (ProductOfOrder *) iter.value();
+                key     = (QString) iter.key();
+
+		out.append(order->hash_session.toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->payment_mode).toStdString().c_str());
+		out.append("\n");
+	}
+
+	QMessageBox msgBox;
+	msgBox.setText(out.toStdString().c_str());
+	msgBox.exec();
 }
 
 
