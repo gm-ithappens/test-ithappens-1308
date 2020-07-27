@@ -472,10 +472,10 @@ void AdminModule::optionsGeneralListManagement_clickedSlot()
 	listManagPaymentButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
 	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
 
-
 	reportsManagementButton                       = new QPushButton(this);
 	reportsManagementButton->setText              ("Consulta sumarizada");
 	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
 
 	mGridLayout->addWidget(listManagPaymentButton);
 	mGridLayout->addWidget(productsManagementButton);
@@ -574,9 +574,7 @@ void AdminModule::reportSearchlistOrdersPayment_clickedSlot()
 		out.append("\n");
 	}
 
-	QMessageBox msgBox;
-	msgBox.setText(out.toStdString().c_str());
-	msgBox.exec();
+	warningMessage(out.toStdString().c_str());
 }
 
 
@@ -818,9 +816,7 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 		out.append("\n");
 	}
 
-	QMessageBox msgBox;
-	msgBox.setText(out.toStdString().c_str());
-	msgBox.exec();
+	warningMessage(out.toStdString().c_str());
 }
 
 void AdminModule::reportOrders_clickedSlot()
