@@ -26,6 +26,12 @@ void AdminModule::Execute()
 	productsManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
 	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(storeManagement_clickedSlot()));
 
+	listManagementButton                      = new QPushButton(this);
+	listManagementButton->setText             ("Listagem Geral");
+	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(listManagement_clickedSlot()));
+
+
 	reportsManagementButton                       = new QPushButton(this);
 	reportsManagementButton->setText              ("Verificar Pedidos");
 	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -38,6 +44,7 @@ void AdminModule::Execute()
 
 	mGridLayout->addWidget(branchManagementButton);
 	mGridLayout->addWidget(productsManagementButton);
+	mGridLayout->addWidget(listManagementButton);
 	mGridLayout->addWidget(reportsManagementButton);
 	mGridLayout->addWidget(exitButton);
 
@@ -161,15 +168,7 @@ void AdminModule::newOrder_clickedSlot()
 
 void AdminModule::storeManagement_clickedSlot()
 {
-	mGridLayout->removeWidget(branchManagementButton);
-	mGridLayout->removeWidget(productsManagementButton);
-	mGridLayout->removeWidget(reportsManagementButton);
-	mGridLayout->removeWidget(exitButton);
-
-        delete branchManagementButton;
-        delete productsManagementButton;
-        delete reportsManagementButton;
-        delete exitButton;
+	destroyInitialAdminScreen();
 
 	branchLabel = new QLabel("Qual filial: ");
 
@@ -263,6 +262,27 @@ void AdminModule::storeManagement_clickedSlot()
 
 	show();
 }
+
+void AdminModule::destroyInitialAdminScreen()
+{
+	mGridLayout->removeWidget(branchManagementButton);
+	mGridLayout->removeWidget(productsManagementButton);
+	mGridLayout->removeWidget(reportsManagementButton);
+	mGridLayout->removeWidget(exitButton);
+	mGridLayout->removeWidget(listManagementButton);
+
+        delete branchManagementButton;
+        delete productsManagementButton;
+        delete reportsManagementButton;
+        delete exitButton;
+	delete listManagementButton;
+}
+void AdminModule::listManagement_clickedSlot()
+{
+	destroyInitialAdminScreen();
+
+}
+
 
 void AdminModule::reportOrders_clickedSlot()
 {
