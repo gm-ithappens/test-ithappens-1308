@@ -119,4 +119,20 @@ public:
 	QHash<QString, Product *> Products;
 
 };
+
+
+
+class ProductOfOrder
+{
+public:
+	QString hash_session;
+	QString barcode;
+	QString description;
+	int sequential;
+	int total_value      = 0;
+	int count_requested  = 0;
+	int count_canceled   = 0;
+};
+
+
 #endif
