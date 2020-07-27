@@ -207,6 +207,68 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 	return 0;
 }
 
+QHash<QString, Product *> HTProducts;
+
+static int retrieveAllLineProduct(void* data, int argc, char** argv, char** azColName)
+{
+	//QHash<QString, Product *> * HTProducts = (QHash<QString, Product *> * ) data;
+
+	QString str1, str2, tmp;
+	//Product * line_product = (Product * )data;
+	Product * line_product = new Product;
+
+	int i;
+	for(i = 0; i < argc; i++)
+	{
+		str1="DESCRIPTION";
+		str2=azColName[i];
+		//cout << str1.toStdString() << " : "  << str2.toStdString() << endl;
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->status_in_db      =   FOUND_IN_DB;
+
+			line_product->description      = argv[i];
+			continue;
+		}
+
+		str1="BARCODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_product->barcode         = argv[i];
+			continue;
+		}
+
+		str1="SEQUENTIAL";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_product->sequential      = tmp.toInt();
+			continue;
+		}
+
+		str1="COUNT_AVAILABLE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_product->count_available = tmp.toInt();
+			//cout << "COUNT_AVAILABLE -> " << line_product->count_available << endl; 
+			continue;
+		}
+
+		str1="UNIT_VALUE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_product->unit_value      = tmp.toInt();
+			continue;
+		}
+	}
+
+	HTProducts[line_product->description] = line_product;
+
+	return 0;
+}
+
 Product * DataBase::searchProductOnBranch(string branch, string search_mode, string product)
 {
 	char query[100];
@@ -230,6 +292,35 @@ Product * DataBase::searchProductOnBranch(string branch, string search_mode, str
 		sqlite3_free(messaggeError); 
 
 	return line_product;
+}
+
+
+QHash<QString, Product *> DataBase::searchSuperProductOnBranch(string branch, int type, int count)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	//Product * line_product = new Product;
+	//line_product->status_in_db      =   NOT_FOUND_IN_DB;
+
+	if(1)
+		snprintf(query, 256, select_product_store_branch_company_hsuper_sql, branch.c_str(), count);
+	else
+		snprintf(query, 256, select_product_store_branch_company_lsuper_sql, branch.c_str(), count);
+
+	cout << "DataBase::searchProductOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveAllLineProduct, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return HTProducts;
 }
 
 void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
