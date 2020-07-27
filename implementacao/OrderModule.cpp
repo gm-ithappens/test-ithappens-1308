@@ -1,7 +1,7 @@
 #include "OrderModule.h"
 #include "DataBase.h"
 
-void OrderModule::ProcessingOrder(int ordertype)
+void OrderModule::ProcessingOrder(int ordertype, int product_oper)
 {
 	DataBase * db_instance = DataBase::getInstance();
 
@@ -26,20 +26,23 @@ void OrderModule::ProcessingOrder(int ordertype)
                 db_instance->registerOrderProductsOnBranch(branchs_field.toStdString(),
                                                 hash_session.toStdString(),
                                                 product->barcode.toStdString(),
+                                                product->description.toStdString(),
+                                                product->sequential,
                                                 product->count_requested,
                                                 product->count_canceled,
                                                 product->total_value);
+
+                product->updateNewCount(ordertype);
+
                 // Update store products
-                if(ordertype == UPDATE_INPUT)
+                if(product_oper == UPDATE_PRODUCT)
                 {
-                        product->updateNewCount();
                         db_instance->updateProductOnBranch(branchs_field.toStdString(),
                                                            product->barcode.toStdString(),
                                                            product->count_available);
                 }
                 else
                 {
-			product->updateNewCount();
                         db_instance->insertProductOnBranch(branchs_field.toStdString(),
                                                            product->barcode.toStdString(),
                                                            product->description.toStdString(),
