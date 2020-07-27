@@ -86,11 +86,8 @@ void AdminModule::branchManagement_clickedSlot()
 void AdminModule::doCreateNewBranch_clickedSlot()
 {
 	QString branch_name = generalEdit->text();
-	if(branch_name.isEmpty())
-	{
-		warningMessage("Necessário dá um nome a filial!");
+	if(isSettedVariable(branch_name, "Necessário dá um nome a filial!") == 0)
 		return;
-	}
 
 	db_instance->createBranchCompanyTable(branch_name.toStdString());
 
@@ -125,67 +122,40 @@ void AdminModule::warningMessage(string str)
 void AdminModule::newOrder_clickedSlot()
 {
 	QString branchs_field = branchs_comboBox->currentText();
-	if(branchs_field.isEmpty())
-	{
-		warningMessage("Necessário escolher uma filial!");
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!") == 0)
 		return;
-	}
 
 	QString client_field = txtClientInfos->text();
-        if(client_field.isEmpty())
-        {
-                warningMessage("Necessário informar os dados do cliente!");
-                return;
-        }
+	if(isSettedVariable(client_field, "Necessário informar os dados do cliente!") == 0)
+		return;
 
 	QString operation_comboBox = txtClientInfos->text();
-	if(operation_comboBox.isEmpty())
-	{
-		warningMessage("Necessário informar o tipo de operação!");
+	if(isSettedVariable(operation_comboBox, "Necessário informar o tipo de operação!") == 0)
 		return;
-	}
 
 	QString operator_field = operator_comboBox->currentText();
-	if(operator_field.isEmpty())
-	{
-		warningMessage("Necessário informar operador!");
+	if(isSettedVariable(operator_field, "Necessário informar operador!") == 0)
 		return;
-	}
 
 	QString desc_product    = descProduct->text();
-	if(desc_product.isEmpty())
-	{
-		warningMessage("Necessário informar descrição do produto!");
+	if(isSettedVariable(desc_product, "Necessário informar descrição do produto!")  == 0)
 		return;
-	}
 
 	QString seq_product    = sequentialProduct->text();
-	if(desc_product.isEmpty())
-	{
-		warningMessage("Necessário informar sequencial do produto!");
+	if(isSettedVariable(seq_product, "Necessário informar sequencial do produto!") == 0)
 		return;
-	}
 
 	QString barcode_product = barcodeProduct->text();
-	if(barcode_product.isEmpty())
-	{
-		warningMessage("Necessário informar código de barras (6 dígitos)!");
+	if(isSettedVariable(barcode_product, "Necessário informar código de barras (6 dígitos)!")  == 0)
 		return;
-	}
 
 	QString count_product   = countProduct->text();
-	if(count_product.isEmpty())
-	{
-		warningMessage("Necessário informar a quantidade!");
+	if(isSettedVariable(count_product, "Necessário informar a quantidade!") == 0)
 		return;
-	}
 
 	QString value_product   = valueProduct->text();
-	if(value_product.isEmpty())
-	{
-		warningMessage("Necessário informar a quantidade!");
+	if(isSettedVariable(value_product, "Necessário informar a quantidade!")  == 0)
 		return;
-	}
 
 	QString obs = "NECESSARIO TROCAR ISSO";
 
@@ -550,11 +520,8 @@ void AdminModule::reportSearchlistOrdersPayment_clickedSlot()
 	QString out;
 
 	QString branchs_field = branchs_comboBox->currentText();
-	if(branchs_field.isEmpty())
-	{
-		warningMessage("Necessário escolher uma filial!");
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!")  == 0)
 		return;
-	}
 
 	HTOrder = db_instance->searchListOrderAndPaymentOnBranch(branchs_field.toStdString());
 
@@ -715,6 +682,17 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	optionsGeneralListManagement_clickedSlot();
 }
 
+int AdminModule::isSettedVariable(QString var, QString msgErr)
+{
+	if(var.isEmpty())
+	{
+		warningMessage(msgErr.toStdString().c_str());
+		return 0;
+	}
+
+	return 1;
+}
+
 void AdminModule::reportSearchlistOrders_clickedSlot()
 {
 	QHash<QString, ProductOfOrder *> HTProductOfOrder;
@@ -722,19 +700,12 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
 	QString out;
 
 	QString branchs_field = branchs_comboBox->currentText();
-	if(branchs_field.isEmpty())
-	{
-		warningMessage("Necessário escolher uma filial!");
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!")  == 0)
 		return;
-	}
 
 	QString sequential   = sequentialProduct->text();
-	if(sequential.isEmpty())
-	{
-		warningMessage("Necessário informar o código sequencial!");
+	if(isSettedVariable(sequential, "Necessário informar o código sequencial!")  == 0)
 		return;
-	}
-
 
 	HTProductOfOrder = db_instance->searchListOrdersOnBranch(
 							branchs_field.toStdString(),
@@ -779,18 +750,12 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 	QHash<QString, Product *> HTProducts;
 
 	QString branchs_field = branchs_comboBox->currentText();
-	if(branchs_field.isEmpty())
-	{
-		warningMessage("Necessário escolher uma filial!");
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!") == 0)
 		return;
-	}
 
 	QString count_product   = countProduct->text();
-	if(count_product.isEmpty())
-	{
-		warningMessage("Necessário informar a quantidade!");
+	if(isSettedVariable(count_product, "Necessário informar a quantidade!")  == 0)
 		return;
-	}
 
 	if(superlative_radio_option == BIGGER_THAN)
 		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), BIGGER_THAN, count_product.toInt());

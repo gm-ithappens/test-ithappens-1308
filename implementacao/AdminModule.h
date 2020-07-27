@@ -63,6 +63,7 @@ public slots:
 	void listOrdersPaymentManagement_clickedSlot();
 	void pre_listOrdersPaymentManagement_clickedSlot();
 	void reportSearchlistOrdersPayment_clickedSlot();
+	int isSettedVariable(QString branch, QString msgErr);
 
 
 private:
