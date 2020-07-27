@@ -26,7 +26,6 @@ public:
 
 	void Execute();
 	void warningMessage(string str);
-	void ProcessingOrder(int ordertype);
 
 public slots:
 	void branchManagement_clickedSlot  ();

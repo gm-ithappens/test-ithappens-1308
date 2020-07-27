@@ -154,7 +154,8 @@ void AdminModule::newOrder_clickedSlot()
 
 	neworder->Products[line_product->description] = line_product;
 
-	ProcessingOrder(processing_type);
+	neworder->ProcessingOrder(processing_type);
+	//ProcessingOrder(processing_type);
 }
 
 
@@ -261,56 +262,6 @@ void AdminModule::storeManagement_clickedSlot()
 	mGridLayout->addWidget(finishOrderButton);
 
 	show();
-}
-
-void AdminModule::ProcessingOrder(int ordertype)
-{
-	warningMessage("Vai processar o pedido de entrada!");
-        //Register order in a table of orders of the branch company
-        db_instance->registerOrderOnBranch(neworder->branchs_field.toStdString(),
-                                        neworder->hash_session.toStdString(),
-                                        neworder->order_type,
-                                        neworder->payment_mode);
-
-        //Register all products of the current order in a table especific
-        // Need made a loop in a hash table of products of order
-        QHashIterator<QString, Product *> iter(neworder->Products);
-        Product * product;
-        QString key;
-        while (iter.hasNext())
-        {
-                iter.next();
-                product = (Product *) iter.value();
-                key     = (QString) iter.key();
-
-                cout << key.toStdString() << ": " << product->count_requested << endl;
-
-                db_instance->registerOrderProductsOnBranch(neworder->branchs_field.toStdString(),
-                                                neworder->hash_session.toStdString(),
-                                                product->barcode.toStdString(),
-                                                product->count_requested,
-                                                product->count_canceled,
-                                                product->total_value);
-                // Update store products
-		if(ordertype == UPDATE_INPUT)
-		{
-			product->updateNewCount();
-			db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(),
-							   product->barcode.toStdString(),
-							   product->count_available);
-		}
-		else
-		{
-			//(string branch, string barcode, string description, int count_available, int unit_value, int sequential)
-			db_instance->insertProductOnBranch(neworder->branchs_field.toStdString(),
-							   product->barcode.toStdString(),
-							   product->description.toStdString(),
-							   product->count_available,
-							   product->unit_value,
-							   product->sequential);
-		}
-
-        }
 }
 
 void AdminModule::reportOrders_clickedSlot()
