@@ -15,6 +15,8 @@
 #include <QString>
 #include <QLineEdit>
 #include <QInputDialog>
+#include <QGroupBox>
+#include <QRadioButton>
 
 class AdminModule: public QWidget
 {
@@ -27,14 +29,25 @@ public:
 	void Execute();
 	void warningMessage(string str);
 	void destroyInitialAdminScreen();
+	QGroupBox * createFirstExclusiveGroup();
 
 public slots:
 	void branchManagement_clickedSlot  ();
+	void pre_storeManagement_clickedSlot();
 	void storeManagement_clickedSlot   ();
 	void reportOrders_clickedSlot      ();
 	void exit_clickedSlot              ();
 	void newOrder_clickedSlot          ();
-	void listManagement_clickedSlot    ();
+	void reportSuperlativeSearch_clickedSlot();
+	void superlativeRadioButtonBigger_onToggled(bool);
+	void superlativeRadioButtonLess_onToggled(bool);
+	void returnFromSuperlative_clickedSlot();
+	void pre_optionsListManagement_clickedSlot();
+	void optionsListManagement_clickedSlot();
+	void destroyOptionsListManagementScreen();
+	void pre_listSuperlativeManagement_clickedSlot();
+	void listSuperlativeManagement_clickedSlot();
+	void returnStoreManagement_clickedSlot_clickedSlot();
 
 
 private:
@@ -56,6 +69,9 @@ private:
 	QPushButton * exitButton;
 	QPushButton * finishOrderButton;
 	QPushButton * listManagementButton;
+	QPushButton * execSearchSuperlative;
+	QPushButton * returnSearchSuperlative;
+	QPushButton * returnButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
@@ -67,6 +83,11 @@ private:
         QLineEdit   *   barcodeProduct;
         QLineEdit   *   countProduct;
         QLineEdit   *   valueProduct;
+
+	QGroupBox * groupBox;
+
+	QRadioButton *radioBiggerThan;
+	QRadioButton *radioLessThan;
 
 	DataBase * db_instance;
 
