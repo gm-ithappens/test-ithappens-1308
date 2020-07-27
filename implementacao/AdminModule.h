@@ -48,10 +48,13 @@ public slots:
 	void pre_optionsGeneralListManagement_clickedSlot();
 	void destroyOptionsListManagementScreen();
 	void pre_listSuperlativeManagement_clickedSlot();
+	void pre_listOrdersManagement_clickedSlot();
 	void listSuperlativeManagement_clickedSlot();
 	void returnStoreManagement_clickedSlot_clickedSlot();
 	void destroyOptionsGeneralListManagementScreen();
 	void optionsGeneralListManagement_clickedSlot();
+	void listOrdersManagement_clickedSlot();
+	void returnSearchlistOrders_clickedSlot();
 
 
 private:
@@ -76,6 +79,8 @@ private:
 	QPushButton * execSearchSuperlative;
 	QPushButton * returnSearchSuperlative;
 	QPushButton * returnButton;
+	QPushButton * execSearchlistOrders;
+	QPushButton * returnSearchlistOrders;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;

@@ -409,6 +409,7 @@ void AdminModule::optionsGeneralListManagement_clickedSlot()
 	listManagementButton                      = new QPushButton(this);
 	listManagementButton->setText             ("Listar Pedidos e Seus Itens");
 	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersManagement_clickedSlot()));
 
 	reportsManagementButton                       = new QPushButton(this);
 	reportsManagementButton->setText              ("Consulta sumarizada");
@@ -421,6 +422,73 @@ void AdminModule::optionsGeneralListManagement_clickedSlot()
 	show();
 }
 
+
+void AdminModule::pre_listOrdersManagement_clickedSlot()
+{
+	destroyOptionsGeneralListManagementScreen();
+	listOrdersManagement_clickedSlot();
+}
+
+void AdminModule::listOrdersManagement_clickedSlot()
+{
+	branchLabel = new QLabel("Qual filial: ");
+
+        // Options to branch company
+        branchs_comboBox = new QComboBox;
+
+        branchs_comboBox->addItem(tr(""));
+        vector<string> list = db_instance->getListBranchCompany();
+        vector<string>::const_iterator iter;
+        for (iter = list.begin(); iter != list.end(); ++iter)
+        {
+                string s;
+                s = *iter;
+                branchs_comboBox->addItem(tr(s.c_str()));
+        }
+        list.clear();
+
+	sequentialLabel = new QLabel("Entre com código sequencial: ");
+        sequentialProduct = new QLineEdit(this);
+	sequentialProduct->setInputMask("999999");
+	sequentialProduct->setMaxLength(6);
+        sequentialProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	execSearchlistOrders                         = new QPushButton(this);
+	execSearchlistOrders->setText                ("Pesquisar");
+	execSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(execSearchlistOrders, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
+
+	returnSearchlistOrders                         = new QPushButton(this);
+	returnSearchlistOrders->setText                ("Voltar");
+	returnSearchlistOrders->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(returnSearchlistOrders, SIGNAL(clicked()),this, SLOT(returnSearchlistOrders_clickedSlot()));
+
+	mGridLayout->addWidget(branchLabel);
+	mGridLayout->addWidget(branchs_comboBox);
+	mGridLayout->addWidget(sequentialLabel);
+	mGridLayout->addWidget(sequentialProduct);
+	mGridLayout->addWidget(execSearchlistOrders);
+	mGridLayout->addWidget(returnSearchlistOrders);
+}
+
+void AdminModule::returnSearchlistOrders_clickedSlot()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(sequentialLabel);
+	mGridLayout->removeWidget(sequentialProduct);
+	mGridLayout->removeWidget(execSearchlistOrders);
+	mGridLayout->removeWidget(returnSearchlistOrders);
+
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete sequentialLabel;
+	delete sequentialProduct;
+	delete execSearchlistOrders;
+	delete returnSearchlistOrders;
+
+	optionsGeneralListManagement_clickedSlot();
+}
 
 void AdminModule::pre_listSuperlativeManagement_clickedSlot()
 {
@@ -457,7 +525,6 @@ void AdminModule::listSuperlativeManagement_clickedSlot()
 	execSearchSuperlative                         = new QPushButton(this);
 	execSearchSuperlative->setText                ("Pesquisar");
 	execSearchSuperlative->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	// method para ja fazer a busca
 	QObject::connect(execSearchSuperlative, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
 
 	returnSearchSuperlative                         = new QPushButton(this);
