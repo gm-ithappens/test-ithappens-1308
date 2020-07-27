@@ -56,6 +56,9 @@ public slots:
 	void listOrdersManagement_clickedSlot();
 	void returnSearchlistOrders_clickedSlot();
 	void reportSearchlistOrders_clickedSlot();
+	void pre_branchManagement_clickedSlot();
+	void returnBranchManagement_clickedSlot();
+	void doCreateNewBranch_clickedSlot();
 
 
 private:
@@ -70,6 +73,7 @@ private:
 	QLabel      *   operationLabel;
 	QLabel      *   descProdLabel;
 	QLabel      *   sequentialLabel;
+	QLabel      *   generalLabel;
 
 	QPushButton * branchManagementButton;
 	QPushButton * productsManagementButton;
@@ -82,6 +86,7 @@ private:
 	QPushButton * returnButton;
 	QPushButton * execSearchlistOrders;
 	QPushButton * returnSearchlistOrders;
+	QPushButton * execTaskButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
@@ -93,6 +98,7 @@ private:
         QLineEdit   *   barcodeProduct;
         QLineEdit   *   countProduct;
         QLineEdit   *   valueProduct;
+	QLineEdit   *   generalEdit;
 
 	QGroupBox * groupBox;
 
