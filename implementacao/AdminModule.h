@@ -64,7 +64,8 @@ public slots:
 	void pre_listOrdersPaymentManagement_clickedSlot();
 	void reportSearchlistOrdersPayment_clickedSlot();
 	int isSettedVariable(QString branch, QString msgErr);
-	QComboBox * AdminModule::mountComboBoxBranchNames();
+	QComboBox   * mountComboBoxBranchNames();
+	QPushButton * mountButton(string msg);
 
 
 private:
@@ -87,11 +88,9 @@ private:
 	QPushButton * exitButton;
 	QPushButton * finishOrderButton;
 	QPushButton * listManagementButton;
-	QPushButton * execSearchSuperlative;
-	QPushButton * returnSearchSuperlative;
 	QPushButton * returnButton;
+	QPushButton * execSearch;
 	QPushButton * execSearchlistOrders;
-	QPushButton * returnSearchlistOrders;
 	QPushButton * execTaskButton;
 	QPushButton * listManagPaymentButton;
 
