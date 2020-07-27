@@ -383,11 +383,14 @@ QGroupBox * AdminModule::createExclusiveGroup()
 void AdminModule::superlativeRadioButtonBigger_onToggled(bool)
 {
 	cout << "Toogled Bigger: " <<  endl;
+
+	superlative_radio_option = BIGGER_THAN;
 }
 
 void AdminModule::superlativeRadioButtonLess_onToggled(bool)
 {
 	cout << "Toogled Less: " << endl;
+	superlative_radio_option = LESS_THAN;
 }
 
 void AdminModule::pre_optionsGeneralListManagement_clickedSlot()
@@ -490,8 +493,12 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	optionsGeneralListManagement_clickedSlot();
 }
 
+// Escrever uma consulta que retorne todos os produtos com quantidade maior ou igual a 100
+// Escrever uma consulta que traga todos os produtos que têm estoque para a filial de código 60
 void AdminModule::reportSuperlativeSearch_clickedSlot()
 {
+	QHash<QString, Product *> HTProducts;
+
 	QString branchs_field = branchs_comboBox->currentText();
 	if(branchs_field.isEmpty())
 	{
@@ -499,10 +506,31 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 		return;
 	}
 
-	//cout <<  "ID do checked: " << groupBox->checkedId() << endl;; 
+	//if(superlative_radio_option == BIGGER_THAN)
+	HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), BIGGER_THAN, 80);
+
+	QString out;
+
+	//else
+	QHashIterator<QString, Product *> iter(HTProducts);
+        Product * product;
+        QString key;
+        while (iter.hasNext())
+        {
+                iter.next();
+                product = (Product *) iter.value();
+                key     = (QString) iter.key();
+
+                cout << key.toStdString() << ": " << product->description.toStdString() << endl;
+		out.append(product->description.toStdString().c_str());
+		out.append("-");
+		//QString msg = String("%1").arg(product->count_available);
+		out.append(QString("%1").arg(product->count_available).toStdString().c_str());
+		out.append("\n");
+	}
 
 	QMessageBox msgBox;
-	msgBox.setText("Aqui vai ser mostrado o resultado da consulta!");
+	msgBox.setText(out.toStdString().c_str());
 	msgBox.exec();
 }
 
