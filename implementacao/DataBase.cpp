@@ -208,6 +208,7 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 }
 
 QHash<QString, Product *> HTProducts;
+QHash<QString, ProductOfOrder *> HTProductOfOrder;
 
 static int retrieveAllLineProduct(void* data, int argc, char** argv, char** azColName)
 {
@@ -321,6 +322,100 @@ QHash<QString, Product *> DataBase::searchSuperProductOnBranch(string branch, in
 
 	return HTProducts;
 }
+
+static int retrieveOrderListProduct(void* data, int argc, char** argv, char** azColName)
+{
+	QString str1, str2, tmp;
+	ProductOfOrder * line_order = new ProductOfOrder;
+
+	int i;
+	for(i = 0; i < argc; i++)
+	{
+		str1="HASHORDER";
+		str2=azColName[i];
+		//cout << str1.toStdString() << " : "  << str2.toStdString() << endl;
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_order->hash_session      = argv[i];
+			continue;
+		}
+
+		str1="BARCODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_order->barcode         = argv[i];
+			continue;
+		}
+
+		str1="DESCRIPTION";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			line_order->description         = argv[i];
+			continue;
+		}
+
+		str1="SEQUENTIAL";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->sequential      = tmp.toInt();
+			continue;
+		}
+
+		str1="PROCESSED_COUNT";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->count_requested = tmp.toInt();
+			//cout << "PROCESSED_COUNT -> " << line_product->count_available << endl; 
+			continue;
+		}
+		str1="CANCELED_COUNT";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->count_canceled = tmp.toInt();
+			//cout << "COUNT_AVAILABLE -> " << line_product->count_available << endl; 
+			continue;
+		}
+
+		str1="TOTAL_VALUE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->total_value      = tmp.toInt();
+			continue;
+		}
+	}
+
+	HTProductOfOrder[line_order->description] = line_order;
+
+	return 0;
+}
+
+QHash<QString, ProductOfOrder *> DataBase::searchListOrdersOnBranch(string branch, int sequential)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	HTProductOfOrder.clear();
+
+	snprintf(query, 256, select_order_branch_company_filter_seq_sql, branch.c_str(), sequential);
+	cout << "DataBase::searchListOrdersOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveOrderListProduct, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return HTProductOfOrder;
+}
+
 
 void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
 {
