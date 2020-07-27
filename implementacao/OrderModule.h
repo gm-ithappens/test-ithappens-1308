@@ -26,6 +26,14 @@
 #define INPUT_ORDER	0
 #define OUTPUT_ORDER	1
 
+
+#define UPDATE_INPUT	0
+#define NEW_INPUT	1
+
+#define UNKNOW_IN_DB	0
+#define NOT_FOUND_IN_DB	1
+#define FOUND_IN_DB 	2
+
 class Product
 {
 public:
@@ -61,7 +69,9 @@ public:
 	int unit_value       = 0;
 	int total_value      = 0;
 	int count_requested  = 0;
-	int count_canceled  = 0;
+	int count_canceled   = 0;
+
+	int status_in_db     =  UNKNOW_IN_DB;
 };
 
 class OrderModule
