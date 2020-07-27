@@ -27,8 +27,8 @@
 #define OUTPUT_ORDER	1
 
 
-#define UPDATE_INPUT	0
-#define NEW_INPUT	1
+#define UPDATE_PRODUCT	0
+#define NEW_PRODUCT	1
 
 #define UNKNOW_IN_DB	0
 #define NOT_FOUND_IN_DB	1
@@ -43,9 +43,12 @@ public:
 		total_value           = count_requested * unit_value;
 	}
 
-	void updateNewCount()
+	void updateNewCount(int ordertype)
 	{
-		count_available = count_available - count_requested;
+		if(ordertype == INPUT_ORDER)
+			count_available = count_available + count_requested;
+		else
+			count_available = count_available - count_requested;
 	}
 
 	void updateCanceledTotal()
@@ -102,7 +105,7 @@ public:
 	    return tm.tv_nsec;
 	}
 
-	void ProcessingOrder(int ordertype);
+	void ProcessingOrder(int ordertype, int product_oper);
 
 public:
 	QString branchs_field;
