@@ -19,17 +19,17 @@ void AdminModule::Execute()
 	branchManagementButton                        = new QPushButton(this);
 	branchManagementButton->setText               ("Gerenciar Filais");
 	branchManagementButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(branchManagementButton, SIGNAL(clicked()),this, SLOT(branchManagement_clickedSlot()));
+	QObject::connect(branchManagementButton, SIGNAL(clicked()),this, SLOT(pre_branchManagement_clickedSlot()));
 
 	productsManagementButton                      = new QPushButton(this);
 	productsManagementButton->setText             ("Gerenciar Estoque");
 	productsManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(storeManagement_clickedSlot()));
+	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(pre_storeManagement_clickedSlot()));
 
 	listManagementButton                      = new QPushButton(this);
 	listManagementButton->setText             ("Listagem Geral");
 	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(listManagement_clickedSlot()));
+	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_optionsListManagement_clickedSlot()));
 
 
 	reportsManagementButton                       = new QPushButton(this);
@@ -162,14 +162,27 @@ void AdminModule::newOrder_clickedSlot()
 	neworder->Products[line_product->description] = line_product;
 
 	neworder->ProcessingOrder(processing_type);
-	//ProcessingOrder(processing_type);
 }
 
+void AdminModule::destroyOptionsListManagementScreen()
+{
+	mGridLayout->removeWidget(productsManagementButton);
+	mGridLayout->removeWidget(listManagementButton);
+	mGridLayout->removeWidget(reportsManagementButton);
+
+	delete productsManagementButton;
+	delete listManagementButton;
+	delete reportsManagementButton;
+}
+
+void AdminModule::pre_storeManagement_clickedSlot()
+{
+	destroyOptionsListManagementScreen();
+	storeManagement_clickedSlot();
+}
 
 void AdminModule::storeManagement_clickedSlot()
 {
-	destroyInitialAdminScreen();
-
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
@@ -240,6 +253,11 @@ void AdminModule::storeManagement_clickedSlot()
 	//QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishedOrder_clickedSlot()));
 	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
 
+	returnButton                         = new QPushButton(this);
+	returnButton->setText                ("Voltar");
+	returnButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnStoreManagement_clickedSlot_clickedSlot()));
+
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
 	mGridLayout->addWidget(operatorLabel);
@@ -259,30 +277,220 @@ void AdminModule::storeManagement_clickedSlot()
 	mGridLayout->addWidget(valueProdLabel);
 	mGridLayout->addWidget(valueProduct);
 	mGridLayout->addWidget(finishOrderButton);
+	mGridLayout->addWidget(returnButton);
 
 	show();
 }
+
+void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(operatorLabel);
+	mGridLayout->removeWidget(operator_comboBox);
+	mGridLayout->removeWidget(operationLabel);
+	mGridLayout->removeWidget(operation_comboBox);
+	mGridLayout->removeWidget(clientLabel);
+	mGridLayout->removeWidget(txtClientInfos);
+	mGridLayout->removeWidget(descProdLabel);
+	mGridLayout->removeWidget(descProduct);
+	mGridLayout->removeWidget(sequentialLabel);
+	mGridLayout->removeWidget(sequentialProduct);
+	mGridLayout->removeWidget(barcodeLabel);
+	mGridLayout->removeWidget(barcodeProduct);
+	mGridLayout->removeWidget(countProdLabel);
+	mGridLayout->removeWidget(countProduct);
+	mGridLayout->removeWidget(valueProdLabel);
+	mGridLayout->removeWidget(valueProduct);
+	mGridLayout->removeWidget(finishOrderButton);
+	mGridLayout->removeWidget(returnButton);
+
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete operatorLabel;
+	delete operator_comboBox;
+	delete operationLabel;
+	delete operation_comboBox;
+	delete clientLabel;
+	delete txtClientInfos;
+	delete descProdLabel;
+	delete descProduct;
+	delete sequentialLabel;
+	delete sequentialProduct;
+	delete barcodeLabel;
+	delete barcodeProduct;
+	delete countProdLabel;
+	delete countProduct;
+	delete valueProdLabel;
+	delete valueProduct;
+	delete finishOrderButton;
+	delete returnButton;
+
+	// return to administrator screen
+	Execute();
+}
+
 
 void AdminModule::destroyInitialAdminScreen()
 {
 	mGridLayout->removeWidget(branchManagementButton);
 	mGridLayout->removeWidget(productsManagementButton);
+	mGridLayout->removeWidget(listManagementButton);
 	mGridLayout->removeWidget(reportsManagementButton);
 	mGridLayout->removeWidget(exitButton);
-	mGridLayout->removeWidget(listManagementButton);
 
+	delete exitButton;
         delete branchManagementButton;
         delete productsManagementButton;
         delete reportsManagementButton;
-        delete exitButton;
 	delete listManagementButton;
 }
-void AdminModule::listManagement_clickedSlot()
+
+QGroupBox * AdminModule::createFirstExclusiveGroup()
+{
+    QGroupBox *groupBox = new QGroupBox(tr("Exclusive Radio Buttons"));
+
+    QRadioButton *radio1 = new QRadioButton(tr("Todos produtos com mais de: "), this);
+    QRadioButton *radio2 = new QRadioButton(tr("Todos produtos com menos de:"), this);
+    QObject::connect(radio1, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonBigger_onToggled(bool)));
+    QObject::connect(radio2, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonLess_onToggled(bool)));
+
+    radio1->setChecked(true);
+    QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(radio1);
+    vbox->addWidget(radio2);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+
+    return groupBox;
+}
+
+void AdminModule::superlativeRadioButtonBigger_onToggled(bool)
+{
+	cout << "Toogled Bigger: " <<  endl;
+}
+
+void AdminModule::superlativeRadioButtonLess_onToggled(bool)
+{
+	cout << "Toogled Less: " << endl;
+}
+
+void AdminModule::pre_optionsListManagement_clickedSlot()
 {
 	destroyInitialAdminScreen();
+	optionsListManagement_clickedSlot();
+}
+
+void AdminModule::optionsListManagement_clickedSlot()
+{
+	productsManagementButton                      = new QPushButton(this);
+	productsManagementButton->setText             ("Listagem de Produtos com Quantidades Superlativas");
+	productsManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(pre_listSuperlativeManagement_clickedSlot()));
+
+	listManagementButton                      = new QPushButton(this);
+	listManagementButton->setText             ("Listar Pedidos e Seus Itens");
+	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_storeManagement_clickedSlot()));
+
+	reportsManagementButton                       = new QPushButton(this);
+	reportsManagementButton->setText              ("Consulta sumarizada");
+	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(reportsManagementButton, SIGNAL(clicked()),this, SLOT(reportOrders_clickedSlot()));
+
+	mGridLayout->addWidget(productsManagementButton);
+	mGridLayout->addWidget(listManagementButton);
+	mGridLayout->addWidget(reportsManagementButton);
+
+	show();
+}
+
+
+void AdminModule::pre_listSuperlativeManagement_clickedSlot()
+{
+	destroyOptionsListManagementScreen();
+	listSuperlativeManagement_clickedSlot();
+}
+
+void AdminModule::listSuperlativeManagement_clickedSlot()
+{
+
+	branchLabel = new QLabel("Qual filial: ");
+
+        // Options to branch company
+        branchs_comboBox = new QComboBox;
+
+        branchs_comboBox->addItem(tr(""));
+        vector<string> list = db_instance->getListBranchCompany();
+        vector<string>::const_iterator iter;
+        for (iter = list.begin(); iter != list.end(); ++iter)
+        {
+                string s;
+                s = *iter;
+                branchs_comboBox->addItem(tr(s.c_str()));
+        }
+        list.clear();
+
+	groupBox = createFirstExclusiveGroup();
+
+        countProduct = new QLineEdit(this);
+        countProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	countProduct->setInputMask("999");
+	countProduct->setMaxLength(3);
+
+	execSearchSuperlative                         = new QPushButton(this);
+	execSearchSuperlative->setText                ("Pesquisar");
+	execSearchSuperlative->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	// method para ja fazer a busca
+	QObject::connect(execSearchSuperlative, SIGNAL(clicked()),this, SLOT(reportSuperlativeSearch_clickedSlot()));
+
+	returnSearchSuperlative                         = new QPushButton(this);
+	returnSearchSuperlative->setText                ("Voltar");
+	returnSearchSuperlative->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(returnSearchSuperlative, SIGNAL(clicked()),this, SLOT(returnFromSuperlative_clickedSlot()));
+
+	mGridLayout->addWidget(branchLabel);
+	mGridLayout->addWidget(branchs_comboBox);
+	mGridLayout->addWidget(groupBox);
+	mGridLayout->addWidget(countProduct);
+	mGridLayout->addWidget(execSearchSuperlative);
+	mGridLayout->addWidget(returnSearchSuperlative);
 
 }
 
+void AdminModule::returnFromSuperlative_clickedSlot()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(groupBox);
+	mGridLayout->removeWidget(countProduct);
+	mGridLayout->removeWidget(execSearchSuperlative);
+	mGridLayout->removeWidget(returnSearchSuperlative);
+
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete groupBox;
+	delete countProduct;
+	delete execSearchSuperlative;
+	delete returnSearchSuperlative;
+
+}
+
+void AdminModule::reportSuperlativeSearch_clickedSlot()
+{
+	QString branchs_field = branchs_comboBox->currentText();
+	if(branchs_field.isEmpty())
+	{
+		warningMessage("Necessário escolher uma filial!");
+		return;
+	}
+
+	//cout <<  "ID do checked: " << groupBox->checkedId() << endl;; 
+
+	QMessageBox msgBox;
+	msgBox.setText("Aqui vai ser mostrado o resultado da consulta!");
+	msgBox.exec();
+}
 
 void AdminModule::reportOrders_clickedSlot()
 {
