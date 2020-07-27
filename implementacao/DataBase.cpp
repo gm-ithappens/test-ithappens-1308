@@ -386,9 +386,25 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 			line_order->total_value      = tmp.toInt();
 			continue;
 		}
+
+		str1="ORDERCODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->order_type      = tmp.toInt();
+			continue;
+		}
+
+		str1="PAYMENT_MODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			line_order->payment_mode     = tmp.toInt();
+			continue;
+		}
 	}
 
-	HTProductOfOrder[line_order->description] = line_order;
+	HTProductOfOrder[line_order->hash_session] = line_order;
 
 	return 0;
 }
@@ -444,7 +460,7 @@ void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, 
 }
 
 void DataBase::registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
-					     int sequential, int count_requested, int count_canceled, int total_value)
+					     int sequential, int count_requested, int count_canceled, int total_value, int order_type, int payment_mode)
 {
 	char query[512];
 	int return_code;
@@ -459,7 +475,10 @@ void DataBase::registerOrderProductsOnBranch(string branch, string hashorder, st
 									    sequential,
 									    count_requested, 
 									    count_canceled, 
-									    total_value);
+									    total_value,
+									    order_type,
+									    payment_mode
+									    );
 
 	cout << "DataBase::registerOrderProductsOnBranch: " << query << endl;
 

@@ -55,14 +55,14 @@ private:
 	string create_orders_branch_company1_sql = "CREATE TABLE Vinhais_ORDERS_BRANCHS_COMPANY("
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
-	      "CODE                    INT    NOT NULL,"
+	      "ORDERCODE               INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL"
 	      ");";
 
 	string create_orders_branch_company2_sql = "CREATE TABLE Centro_ORDERS_BRANCHS_COMPANY("
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER               TEXT    NOT NULL,"
-	      "CODE                    INT    NOT NULL,"
+	      "ORDERCODE               INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL"
 	      ");";
 
@@ -76,7 +76,9 @@ private:
 	      "SEQUENTIAL              INT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "CANCELED_COUNT          INT    NOT NULL,"
-	      "TOTAL_VALUE             INT    NOT NULL"
+	      "TOTAL_VALUE             INT    NOT NULL,"
+	      "ORDERCODE               INT    NOT NULL,"
+	      "PAYMENT_MODE            INT    NOT NULL"
 	      ");";
 
 	string create_orders_products_branch_company2_sql = "CREATE TABLE Centro_ORDERS_PRODUCTS_BRANCHS_COMPANY("
@@ -87,7 +89,9 @@ private:
 	      "SEQUENTIAL              INT    NOT NULL,"
 	      "PROCESSED_COUNT         INT    NOT NULL,"
 	      "CANCELED_COUNT          INT    NOT NULL,"
-	      "TOTAL_VALUE             INT    NOT NULL"
+	      "TOTAL_VALUE             INT    NOT NULL,"
+	      "ORDERCODE               INT    NOT NULL,"
+	      "PAYMENT_MODE            INT    NOT NULL"
 	      ");";
 
 
@@ -96,12 +100,12 @@ private:
 	const char * select_product_store_branch_company_lsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE < %d;";
 	const char * select_order_branch_company_filter_seq_sql       = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE SEQUENTIAL == %d;" ;
 
-	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','CODE','PAYMENT_MODE') "
+	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','ORDERCODE','PAYMENT_MODE') "
 									"VALUES ('%s', %d, %d);";
 
 	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
-									"(HASHORDER,BARCODE,DESCRIPTION,SEQUENTIAL, PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE)"
-								       	"VALUES ('%s', '%s', '%s', %d, %d, %d, %d);";
+									"(HASHORDER,BARCODE,DESCRIPTION,SEQUENTIAL, PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE,ORDERCODE,PAYMENT_MODE)"
+								       	"VALUES ('%s', '%s', '%s', %d, %d, %d, %d, %d, %d);";
 
 	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
 	const char * insert_product_store_branch_company_sql         = "INSERT INTO '%s_STORE_BRANCHS_COMPANY' ('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) VALUES ('%s', '%s', %d, %d, %d);";
@@ -116,7 +120,8 @@ public:
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
 	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
-                                            int sequential, int count_requested, int count_canceled, int total_value);
+                                            int sequential, int count_requested, int count_canceled, 
+					    int total_value, int order_type, int payment_mode);
 	void updateProductOnBranch(string branch, string barcode, int count_available);
 	void insertProductOnBranch(string branch, string barcode, string description,
                                      int count_available, int unit_value, int sequential);
