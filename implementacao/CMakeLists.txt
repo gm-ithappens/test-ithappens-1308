@@ -12,6 +12,6 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_executable(tela_inicial main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp)
+add_executable(tela_inicial main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp OrderModule.cpp)
 
 target_link_libraries(tela_inicial Qt5::Widgets -lsqlite3)
