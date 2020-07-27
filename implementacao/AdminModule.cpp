@@ -158,6 +158,7 @@ void AdminModule::newOrder_clickedSlot()
 	line_product->count_requested = count_product.toInt();
 	line_product->unit_value      = value_product.toInt();
 	line_product->total_value     = line_product->count_requested * line_product->unit_value;
+	neworder->payment_mode        = INPUT_NO_PAYMENT;
 
 	neworder->Products[line_product->description] = line_product;
 
@@ -588,7 +589,8 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
 	QHashIterator<QString, ProductOfOrder *> iter(HTProductOfOrder);
 
         QString key;
-	out.append(" HASH  - DESCRIÇÃO - CÓD. BARRAS - QUANT. REQUISITADA  -  QUANT. CANCELADA - VAL. TOTAL\n");
+	out.append(" HASH  - DESCRIÇÃO - CÓD. BARRAS - QUANT. REQUISITADA  - " 
+			"QUANT. CANCELADA - VAL. TOTAL - TIPO  - PAGAMENTO\n");
         while (iter.hasNext())
         {
                 iter.next();
@@ -606,6 +608,10 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
 		out.append(QString("%1").arg(order->count_canceled).toStdString().c_str());
 		out.append("      -     ");
 		out.append(QString("%1").arg(order->total_value).toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->order_type).toStdString().c_str());
+		out.append("      -     ");
+		out.append(QString("%1").arg(order->payment_mode).toStdString().c_str());
 		out.append("\n");
 	}
 
