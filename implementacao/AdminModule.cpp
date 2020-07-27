@@ -144,24 +144,24 @@ void AdminModule::newOrder_clickedSlot()
 							search_mode.toStdString(), 
 							barcode_product.toStdString());
 
-	int processing_type = UPDATE_INPUT;
+	int processing_type = UPDATE_PRODUCT;
 	if(line_product->status_in_db == NOT_FOUND_IN_DB)
 	{
 		cout << "Vai ser criado um novo produto!" << endl;
 		Product * line_product = new Product();
-		processing_type        = NEW_INPUT;
+		processing_type        = NEW_PRODUCT;
 	}
 
 	line_product->description     = desc_product;
 	line_product->barcode         = barcode_product;
 	line_product->sequential      = seq_product.toInt();
-	line_product->count_available = count_product.toInt();
+	line_product->count_requested = count_product.toInt();
 	line_product->unit_value      = value_product.toInt();
-
+	line_product->total_value     = line_product->count_requested * line_product->unit_value;
 
 	neworder->Products[line_product->description] = line_product;
 
-	neworder->ProcessingOrder(processing_type);
+	neworder->ProcessingOrder(INPUT_ORDER, processing_type);
 }
 
 void AdminModule::destroyOptionsGeneralListManagementScreen()
