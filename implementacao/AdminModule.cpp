@@ -227,18 +227,7 @@ void AdminModule::storeManagement_clickedSlot()
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
-        branchs_comboBox = new QComboBox;
-
-        branchs_comboBox->addItem(tr(""));
-        vector<string> list = db_instance->getListBranchCompany();
-        vector<string>::const_iterator iter;
-        for (iter = list.begin(); iter != list.end(); ++iter)
-        {
-                string s;
-                s = *iter;
-                branchs_comboBox->addItem(tr(s.c_str()));
-        }
-        list.clear();
+	branchs_comboBox = mountComboBoxBranchNames();
 
 	operatorLabel = new QLabel("Selecione operador: ");
         // Operator in hardcode yet     
@@ -462,23 +451,30 @@ void AdminModule::pre_listOrdersPaymentManagement_clickedSlot()
 }
 
 
-void AdminModule::listOrdersPaymentManagement_clickedSlot()
+QComboBox * AdminModule::mountComboBoxBranchNames()
 {
-	branchLabel = new QLabel("Qual filial: ");
-
         // Options to branch company
-        branchs_comboBox = new QComboBox;
+        QComboBox * cbox = new QComboBox;
 
-        branchs_comboBox->addItem(tr(""));
+        cbox->addItem(tr(""));
         vector<string> list = db_instance->getListBranchCompany();
         vector<string>::const_iterator iter;
         for (iter = list.begin(); iter != list.end(); ++iter)
         {
                 string s;
                 s = *iter;
-                branchs_comboBox->addItem(tr(s.c_str()));
+                cbox->addItem(tr(s.c_str()));
         }
         list.clear();
+
+	return cbox;
+}
+
+void AdminModule::listOrdersPaymentManagement_clickedSlot()
+{
+	branchLabel = new QLabel("Qual filial: ");
+
+	branchs_comboBox = mountComboBoxBranchNames();
 
 	execSearchlistOrders                         = new QPushButton(this);
 	execSearchlistOrders->setText                ("Pesquisar");
@@ -556,18 +552,7 @@ void AdminModule::listOrdersManagement_clickedSlot()
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
-        branchs_comboBox = new QComboBox;
-
-        branchs_comboBox->addItem(tr(""));
-        vector<string> list = db_instance->getListBranchCompany();
-        vector<string>::const_iterator iter;
-        for (iter = list.begin(); iter != list.end(); ++iter)
-        {
-                string s;
-                s = *iter;
-                branchs_comboBox->addItem(tr(s.c_str()));
-        }
-        list.clear();
+	branchs_comboBox = mountComboBoxBranchNames();
 
 	sequentialLabel = new QLabel("Entre com código sequencial: ");
         sequentialProduct = new QLineEdit(this);
@@ -624,18 +609,7 @@ void AdminModule::listSuperlativeManagement_clickedSlot()
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
-        branchs_comboBox = new QComboBox;
-
-        branchs_comboBox->addItem(tr(""));
-        vector<string> list = db_instance->getListBranchCompany();
-        vector<string>::const_iterator iter;
-        for (iter = list.begin(); iter != list.end(); ++iter)
-        {
-                string s;
-                s = *iter;
-                branchs_comboBox->addItem(tr(s.c_str()));
-        }
-        list.clear();
+	branchs_comboBox = mountComboBoxBranchNames();
 
 	groupBox = createExclusiveGroup();
 

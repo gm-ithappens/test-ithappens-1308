@@ -64,6 +64,7 @@ public slots:
 	void pre_listOrdersPaymentManagement_clickedSlot();
 	void reportSearchlistOrdersPayment_clickedSlot();
 	int isSettedVariable(QString branch, QString msgErr);
+	QComboBox * AdminModule::mountComboBoxBranchNames();
 
 
 private:
