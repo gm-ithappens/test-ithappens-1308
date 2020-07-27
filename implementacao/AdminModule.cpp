@@ -16,30 +16,19 @@ void AdminModule::Execute()
 
 	db_instance = DataBase::getInstance();
 
-	branchManagementButton                        = new QPushButton(this);
-	branchManagementButton->setText               ("Gerenciar Filais");
-	branchManagementButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	branchManagementButton = mountButton("Gerenciar Filais");
 	QObject::connect(branchManagementButton, SIGNAL(clicked()),this, SLOT(pre_branchManagement_clickedSlot()));
 
-	productsManagementButton                      = new QPushButton(this);
-	productsManagementButton->setText             ("Gerenciar Estoque");
-	productsManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	productsManagementButton = mountButton("Gerenciar Estoque");
 	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(pre_storeManagement_clickedSlot()));
 
-	listManagementButton                      = new QPushButton(this);
-	listManagementButton->setText             ("Listagem Geral");
-	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	listManagementButton = mountButton("Listagem Geral");
 	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_optionsGeneralListManagement_clickedSlot()));
 
-
-	reportsManagementButton                       = new QPushButton(this);
-	reportsManagementButton->setText              ("Verificar Pedidos");
-	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	reportsManagementButton = mountButton("Verificar Pedidos");
 	QObject::connect(reportsManagementButton, SIGNAL(clicked()),this, SLOT(reportOrders_clickedSlot()));
 
-	exitButton                                    = new QPushButton(this);
-	exitButton->setText                           ("Sair do sistema!");
-	exitButton->setSizePolicy                     (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	exitButton = mountButton("Sair do sistema!");
 	QObject::connect(exitButton, SIGNAL(clicked()),this, SLOT(exit_clickedSlot()));
 
 	mGridLayout->addWidget(branchManagementButton);
@@ -65,9 +54,7 @@ void AdminModule::branchManagement_clickedSlot()
         generalEdit       = new QLineEdit(this);
         generalEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-	execTaskButton                         = new QPushButton(this);
-	execTaskButton->setText                ("Criar filial!");
-	execTaskButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	execTaskButton = mountButton("Criar filial!");
 	QObject::connect(execTaskButton, SIGNAL(clicked()),this, SLOT(doCreateNewBranch_clickedSlot()));
 
 	returnButton = mountButton("Voltar");
@@ -275,10 +262,7 @@ void AdminModule::storeManagement_clickedSlot()
 	valueProduct->setInputMask("999");
 	valueProduct->setMaxLength(3);
 
-	finishOrderButton                         = new QPushButton(this);
-	finishOrderButton->setText                ("Executar Operação");
-	finishOrderButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	//QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishedOrder_clickedSlot()));
+	finishOrderButton = mountButton("Executar Operação");
 	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
 
 	returnButton = mountButton("Voltar");
@@ -412,24 +396,16 @@ void AdminModule::pre_optionsGeneralListManagement_clickedSlot()
 
 void AdminModule::optionsGeneralListManagement_clickedSlot()
 {
-	productsManagementButton                      = new QPushButton(this);
-	productsManagementButton->setText             ("Listagem de Produtos com Quantidades Superlativas");
-	productsManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	productsManagementButton    = mountButton("Listagem de Produtos com Quantidades Superlativas");
 	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(pre_listSuperlativeManagement_clickedSlot()));
 
-	listManagementButton                      = new QPushButton(this);
-	listManagementButton->setText             ("Listar Pedidos e Seus Itens");
-	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	listManagementButton = mountButton("Listar Pedidos e Seus Itens");
 	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersManagement_clickedSlot()));
 
-	listManagPaymentButton                      = new QPushButton(this);
-	listManagPaymentButton->setText             ("Listar Pedidos e Forma de Pagamento");
-	listManagPaymentButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	listManagPaymentButton = mountButton("Listar Pedidos e Forma de Pagamento");
 	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
 
-	reportsManagementButton                       = new QPushButton(this);
-	reportsManagementButton->setText              ("Consulta sumarizada");
-	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	reportsManagementButton = mountButton("Consulta sumarizada");
 	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
 
 	mGridLayout->addWidget(listManagPaymentButton);
