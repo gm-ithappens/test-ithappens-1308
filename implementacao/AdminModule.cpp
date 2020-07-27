@@ -29,7 +29,7 @@ void AdminModule::Execute()
 	listManagementButton                      = new QPushButton(this);
 	listManagementButton->setText             ("Listagem Geral");
 	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_optionsListManagement_clickedSlot()));
+	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_optionsGeneralListManagement_clickedSlot()));
 
 
 	reportsManagementButton                       = new QPushButton(this);
@@ -164,7 +164,7 @@ void AdminModule::newOrder_clickedSlot()
 	neworder->ProcessingOrder(processing_type);
 }
 
-void AdminModule::destroyOptionsListManagementScreen()
+void AdminModule::destroyOptionsGeneralListManagementScreen()
 {
 	mGridLayout->removeWidget(productsManagementButton);
 	mGridLayout->removeWidget(listManagementButton);
@@ -173,6 +173,21 @@ void AdminModule::destroyOptionsListManagementScreen()
 	delete productsManagementButton;
 	delete listManagementButton;
 	delete reportsManagementButton;
+}
+
+void AdminModule::destroyOptionsListManagementScreen()
+{
+	mGridLayout->removeWidget(branchManagementButton);
+	mGridLayout->removeWidget(productsManagementButton);
+	mGridLayout->removeWidget(listManagementButton);
+	mGridLayout->removeWidget(productsManagementButton);
+	mGridLayout->removeWidget(exitButton);
+
+	delete branchManagementButton;
+	delete productsManagementButton;
+	delete listManagementButton;
+	delete reportsManagementButton;
+	delete exitButton;
 }
 
 void AdminModule::pre_storeManagement_clickedSlot()
@@ -346,7 +361,7 @@ void AdminModule::destroyInitialAdminScreen()
 	delete listManagementButton;
 }
 
-QGroupBox * AdminModule::createFirstExclusiveGroup()
+QGroupBox * AdminModule::createExclusiveGroup()
 {
     QGroupBox *groupBox = new QGroupBox(tr("Exclusive Radio Buttons"));
 
@@ -375,13 +390,13 @@ void AdminModule::superlativeRadioButtonLess_onToggled(bool)
 	cout << "Toogled Less: " << endl;
 }
 
-void AdminModule::pre_optionsListManagement_clickedSlot()
+void AdminModule::pre_optionsGeneralListManagement_clickedSlot()
 {
-	destroyInitialAdminScreen();
-	optionsListManagement_clickedSlot();
+	destroyOptionsListManagementScreen();
+	optionsGeneralListManagement_clickedSlot();
 }
 
-void AdminModule::optionsListManagement_clickedSlot()
+void AdminModule::optionsGeneralListManagement_clickedSlot()
 {
 	productsManagementButton                      = new QPushButton(this);
 	productsManagementButton->setText             ("Listagem de Produtos com Quantidades Superlativas");
@@ -391,12 +406,10 @@ void AdminModule::optionsListManagement_clickedSlot()
 	listManagementButton                      = new QPushButton(this);
 	listManagementButton->setText             ("Listar Pedidos e Seus Itens");
 	listManagementButton->setSizePolicy       (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_storeManagement_clickedSlot()));
 
 	reportsManagementButton                       = new QPushButton(this);
 	reportsManagementButton->setText              ("Consulta sumarizada");
 	reportsManagementButton->setSizePolicy        (QSizePolicy::Expanding,QSizePolicy::Expanding);
-	QObject::connect(reportsManagementButton, SIGNAL(clicked()),this, SLOT(reportOrders_clickedSlot()));
 
 	mGridLayout->addWidget(productsManagementButton);
 	mGridLayout->addWidget(listManagementButton);
@@ -408,7 +421,7 @@ void AdminModule::optionsListManagement_clickedSlot()
 
 void AdminModule::pre_listSuperlativeManagement_clickedSlot()
 {
-	destroyOptionsListManagementScreen();
+	destroyOptionsGeneralListManagementScreen();
 	listSuperlativeManagement_clickedSlot();
 }
 
@@ -431,7 +444,7 @@ void AdminModule::listSuperlativeManagement_clickedSlot()
         }
         list.clear();
 
-	groupBox = createFirstExclusiveGroup();
+	groupBox = createExclusiveGroup();
 
         countProduct = new QLineEdit(this);
         countProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -474,6 +487,7 @@ void AdminModule::returnFromSuperlative_clickedSlot()
 	delete execSearchSuperlative;
 	delete returnSearchSuperlative;
 
+	optionsGeneralListManagement_clickedSlot();
 }
 
 void AdminModule::reportSuperlativeSearch_clickedSlot()

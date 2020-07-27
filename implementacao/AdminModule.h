@@ -29,7 +29,7 @@ public:
 	void Execute();
 	void warningMessage(string str);
 	void destroyInitialAdminScreen();
-	QGroupBox * createFirstExclusiveGroup();
+	QGroupBox * createExclusiveGroup();
 
 public slots:
 	void branchManagement_clickedSlot  ();
@@ -42,12 +42,13 @@ public slots:
 	void superlativeRadioButtonBigger_onToggled(bool);
 	void superlativeRadioButtonLess_onToggled(bool);
 	void returnFromSuperlative_clickedSlot();
-	void pre_optionsListManagement_clickedSlot();
-	void optionsListManagement_clickedSlot();
+	void pre_optionsGeneralListManagement_clickedSlot();
 	void destroyOptionsListManagementScreen();
 	void pre_listSuperlativeManagement_clickedSlot();
 	void listSuperlativeManagement_clickedSlot();
 	void returnStoreManagement_clickedSlot_clickedSlot();
+	void destroyOptionsGeneralListManagementScreen();
+	void optionsGeneralListManagement_clickedSlot();
 
 
 private:
