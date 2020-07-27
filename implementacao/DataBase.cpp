@@ -301,15 +301,14 @@ QHash<QString, Product *> DataBase::searchSuperProductOnBranch(string branch, in
 	int return_code;
 	char* messaggeError;
 
-	//Product * line_product = new Product;
-	//line_product->status_in_db      =   NOT_FOUND_IN_DB;
+	HTProducts.clear();
 
-	if(1)
+	if(type == 0)
 		snprintf(query, 256, select_product_store_branch_company_hsuper_sql, branch.c_str(), count);
 	else
 		snprintf(query, 256, select_product_store_branch_company_lsuper_sql, branch.c_str(), count);
 
-	cout << "DataBase::searchProductOnBranch: " << query << endl;
+	cout << "DataBase::searchProductOnBranch: " << query <<  count << endl;
 
 	return_code = sqlite3_exec(db_instance, 
 			query, 
