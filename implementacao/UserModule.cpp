@@ -119,39 +119,8 @@ void UserModule::finishOrder_clickedSlot()
 		cout << "A vista " << endl;
 		neworder->payment_mode = MONEY_PAYMENTMODE;
 	}
-	
-	//Register order in a table of orders of the branch company
-	db_instance->registerOrderOnBranch(neworder->branchs_field.toStdString(), 
-					neworder->hash_session.toStdString(), 
-					neworder->order_type, 
-					neworder->payment_mode);
 
-	//Register all products of the current order in a table especific
-	// Need made a loop in a hash table of products of order
-	QHashIterator<QString, Product *> iter(neworder->Products);
-	Product * product;
-	QString key;
-	while (iter.hasNext())
-	{
-		iter.next();
-		product = (Product *) iter.value();
-		key     = (QString) iter.key();
-
-		cout << key.toStdString() << ": " << product->count_requested << endl;
-
-		db_instance->registerOrderProductsOnBranch(neworder->branchs_field.toStdString(), 
-						neworder->hash_session.toStdString(), 
-						product->barcode.toStdString(),
-						product->count_requested,
-						product->count_canceled,
-						product->total_value);
-		// Update store products
-		product->updateNewCount();
-		db_instance->updateProductOnBranch(neworder->branchs_field.toStdString(), 
-						   product->barcode.toStdString(),
-						   product->count_available);
-
-	}
+	neworder->ProcessingOrder(OUTPUT_ORDER);
 
 	destroyOrder();
 }
