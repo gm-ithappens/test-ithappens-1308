@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(tela_inicial LANGUAGES CXX)
+project(system3S LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -12,6 +12,6 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_executable(tela_inicial main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp OrderModule.cpp)
+add_executable(system3S main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp OrderModule.cpp)
 
-target_link_libraries(tela_inicial Qt5::Widgets -lsqlite3)
+target_link_libraries(system3S Qt5::Widgets -lsqlite3)
