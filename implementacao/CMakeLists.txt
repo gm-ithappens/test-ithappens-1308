@@ -12,6 +12,6 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_executable(system3S main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp OrderModule.cpp)
+add_executable(system3S main.cpp InitialWindow.cpp ManagerWindow.cpp AdminModule.cpp UserModule.cpp DataBase.cpp OrderModule.cpp Common.cpp)
 
 target_link_libraries(system3S Qt5::Widgets -lsqlite3)
