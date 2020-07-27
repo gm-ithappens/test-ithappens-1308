@@ -52,12 +52,65 @@ void AdminModule::Execute()
 	show();
 }
 
+void AdminModule::pre_branchManagement_clickedSlot()
+{
+	destroyOptionsListManagementScreen();
+	branchManagement_clickedSlot();
+}
+
 void AdminModule::branchManagement_clickedSlot()
 {
-	QMessageBox msgBox;
-	msgBox.setWindowTitle("Bem vindo!");
-	msgBox.setText("Nova loja:  "+ ((QPushButton*)sender())->text());
-	msgBox.exec();
+	generalLabel      = new QLabel("Nome para nova filial: ");
+
+        generalEdit       = new QLineEdit(this);
+        generalEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	execTaskButton                         = new QPushButton(this);
+	execTaskButton->setText                ("Criar filial!");
+	execTaskButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(execTaskButton, SIGNAL(clicked()),this, SLOT(doCreateNewBranch_clickedSlot()));
+
+	returnButton                         = new QPushButton(this);
+	returnButton->setText                ("Voltar");
+	returnButton->setSizePolicy         (QSizePolicy::Expanding,QSizePolicy::Expanding);
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnBranchManagement_clickedSlot()));
+
+	mGridLayout->addWidget(generalLabel);
+	mGridLayout->addWidget(generalEdit);
+	mGridLayout->addWidget(execTaskButton);
+	mGridLayout->addWidget(returnButton);
+
+	show();
+}
+
+void AdminModule::doCreateNewBranch_clickedSlot()
+{
+	QString branch_name = generalEdit->text();
+	if(branch_name.isEmpty())
+	{
+		warningMessage("Necessário dá um nome a filial!");
+		return;
+	}
+
+	db_instance->createBranchCompanyTable(branch_name.toStdString());
+
+	warningMessage("Filial criada com sucesso!");
+
+	returnBranchManagement_clickedSlot();
+}
+
+void AdminModule::returnBranchManagement_clickedSlot()
+{
+	mGridLayout->removeWidget(generalLabel);
+	mGridLayout->removeWidget(generalEdit);
+	mGridLayout->removeWidget(execTaskButton);
+	mGridLayout->removeWidget(returnButton);
+	delete execTaskButton;
+	delete returnButton;
+	delete generalLabel;
+	delete generalEdit;
+
+	Execute();
 }
 
 void AdminModule::warningMessage(string str)
