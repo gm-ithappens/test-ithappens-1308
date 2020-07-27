@@ -97,6 +97,7 @@ private:
 								       	"VALUES ('%s', %s, %d, %d, %d);";
 
 	const char * update_product_store_branch_company_sql         = "UPDATE  '%s_STORE_BRANCHS_COMPANY' SET COUNT_AVAILABLE = %d WHERE BARCODE == '%s';";
+	const char * insert_product_store_branch_company_sql         = "INSERT INTO '%s_STORE_BRANCHS_COMPANY' ('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) VALUES ('%s', '%s', %d, %d, %d);";
 
 	void createBranchCompanyTable();
 	void populateBranchCompanyTable();
@@ -110,6 +111,8 @@ public:
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, 
                                              int count_requested, int count_canceled, int total_value);
 	void updateProductOnBranch(string branch, string barcode, int count_available);
+	void DataBase::insertProductOnBranch(string branch, string barcode, string description,
+                                     int count_available, int unit_value, int sequential);
 
 };
 #endif

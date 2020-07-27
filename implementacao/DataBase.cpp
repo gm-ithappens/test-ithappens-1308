@@ -165,6 +165,8 @@ static int retrieveLineProduct(void* data, int argc, char** argv, char** azColNa
 		cout << str1.toStdString() << " : "  << str2.toStdString() << endl;
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
+			line_product->status_in_db      =   FOUND_IN_DB;
+
 			line_product->description      = argv[i];
 			continue;
 		}
@@ -212,6 +214,7 @@ Product * DataBase::searchProductOnBranch(string branch, string search_mode, str
 	char* messaggeError;
 
 	Product * line_product = new Product;
+	line_product->status_in_db      =   NOT_FOUND_IN_DB;
 
 	snprintf(query, 100, select_product_store_branch_company_sql, branch.c_str(), search_mode.c_str(), product.c_str());
 
@@ -311,6 +314,38 @@ void DataBase::updateProductOnBranch(string branch, string barcode, int count_av
 	if (return_code != SQLITE_OK)
 	{
 		cout << "erro ao atualizar os produtos " << messaggeError << endl;
+		sqlite3_free(messaggeError); 
+	}
+
+}
+
+void DataBase::insertProductOnBranch(string branch, string barcode, string description, int count_available, int unit_value, int sequential)
+{
+	char query[512];
+	int return_code;
+	char* messaggeError;
+
+	Product * line_product = new Product;
+
+	snprintf(query, 512, insert_product_store_branch_company_sql, 
+							branch.c_str(),
+							description.c_str(),
+							barcode.c_str(),
+							sequential,
+							unit_value,
+							count_available);
+
+	cout << "DataBase::insertProductOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			0, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{
+		cout << "erro ao inserir os produtos " << messaggeError << endl;
 		sqlite3_free(messaggeError); 
 	}
 
