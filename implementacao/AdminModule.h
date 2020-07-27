@@ -26,6 +26,7 @@ public:
 
 	void Execute();
 	void warningMessage(string str);
+	void destroyInitialAdminScreen();
 
 public slots:
 	void branchManagement_clickedSlot  ();
@@ -33,6 +34,7 @@ public slots:
 	void reportOrders_clickedSlot      ();
 	void exit_clickedSlot              ();
 	void newOrder_clickedSlot          ();
+	void listManagement_clickedSlot    ();
 
 
 private:
@@ -53,6 +55,7 @@ private:
 	QPushButton * reportsManagementButton;
 	QPushButton * exitButton;
 	QPushButton * finishOrderButton;
+	QPushButton * listManagementButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
