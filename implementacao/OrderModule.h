@@ -21,6 +21,7 @@
 #define CREDITCARD_PAYMENT_MODE		0
 #define MONEY_PAYMENTMODE		1
 #define ORDER_PAYMENTMODE		2
+#define INPUT_NO_PAYMENT		4
 
 // Order types
 #define INPUT_ORDER	0
@@ -132,6 +133,8 @@ public:
 	int total_value      = 0;
 	int count_requested  = 0;
 	int count_canceled   = 0;
+	int payment_mode;
+	int order_type;
 };
 
 
