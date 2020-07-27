@@ -18,6 +18,9 @@
 #include <QGroupBox>
 #include <QRadioButton>
 
+#define BIGGER_THAN	0
+#define LESS_THAN	1
+
 class AdminModule: public QWidget
 {
 	Q_OBJECT
@@ -89,6 +92,8 @@ private:
 
 	QRadioButton *radioBiggerThan;
 	QRadioButton *radioLessThan;
+
+	int superlative_radio_option;
 
 	DataBase * db_instance;
 
