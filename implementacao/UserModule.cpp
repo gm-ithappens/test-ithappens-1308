@@ -120,7 +120,7 @@ void UserModule::finishOrder_clickedSlot()
 		neworder->payment_mode = MONEY_PAYMENTMODE;
 	}
 
-	neworder->ProcessingOrder(OUTPUT_ORDER);
+	neworder->ProcessingOrder(OUTPUT_ORDER, UPDATE_PRODUCT);
 
 	destroyOrder();
 }
