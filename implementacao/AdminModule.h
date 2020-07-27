@@ -26,7 +26,7 @@ public:
 
 	void Execute();
 	void warningMessage(string str);
-	void ProcessingOrder();
+	void ProcessingOrder(int ordertype);
 
 public slots:
 	void branchManagement_clickedSlot  ();
@@ -47,6 +47,7 @@ private:
 	QLabel      *   operatorLabel;
 	QLabel      *   operationLabel;
 	QLabel      *   descProdLabel;
+	QLabel      *   sequentialLabel;
 
 	QPushButton * branchManagementButton;
 	QPushButton * productsManagementButton;
@@ -60,6 +61,7 @@ private:
 
 	QLineEdit   *   txtClientInfos;
         QLineEdit   *   descProduct;
+	QLineEdit   *   sequentialProduct;
         QLineEdit   *   barcodeProduct;
         QLineEdit   *   countProduct;
         QLineEdit   *   valueProduct;
