@@ -404,21 +404,23 @@ void AdminModule::destroyInitialAdminScreen()
 
 QGroupBox * AdminModule::createExclusiveGroup()
 {
-    QGroupBox *groupBox = new QGroupBox(tr("Exclusive Radio Buttons"));
+	QGroupBox *groupBox = new QGroupBox(tr("Exclusive Radio Buttons"));
 
-    QRadioButton *radio1 = new QRadioButton(tr("Todos produtos com mais de: "), this);
-    QRadioButton *radio2 = new QRadioButton(tr("Todos produtos com menos de:"), this);
-    QObject::connect(radio1, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonBigger_onToggled(bool)));
-    QObject::connect(radio2, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonLess_onToggled(bool)));
+	superlative_radio_option = BIGGER_THAN;
 
-    radio1->setChecked(true);
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radio1);
-    vbox->addWidget(radio2);
-    vbox->addStretch(1);
-    groupBox->setLayout(vbox);
+	QRadioButton *radio1 = new QRadioButton(tr("Todos produtos com mais de: "), this);
+	QRadioButton *radio2 = new QRadioButton(tr("Todos produtos com menos de:"), this);
+	QObject::connect(radio1, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonBigger_onToggled(bool)));
+	QObject::connect(radio2, SIGNAL(clicked(bool)), this, SLOT(superlativeRadioButtonLess_onToggled(bool)));
 
-    return groupBox;
+	radio1->setChecked(true);
+	QVBoxLayout *vbox = new QVBoxLayout;
+	vbox->addWidget(radio1);
+	vbox->addWidget(radio2);
+	vbox->addStretch(1);
+	groupBox->setLayout(vbox);
+
+	return groupBox;
 }
 
 void AdminModule::superlativeRadioButtonBigger_onToggled(bool)
@@ -953,6 +955,12 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), BIGGER_THAN, count_product.toInt());
 	else
 		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), LESS_THAN, count_product.toInt());
+
+	if(HTProducts.size() == 1)
+	{
+		warningMessage("Nenhum produto encontrado!");
+		return;
+	}
 
 	QString out;
 
