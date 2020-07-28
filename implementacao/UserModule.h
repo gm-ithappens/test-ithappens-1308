@@ -43,6 +43,7 @@ private:
 	QPushButton *   newOrderButton;
 	QPushButton *   cancelButton;
 	QPushButton *   finishOrderButton;
+	QLabel      *   searchModeLabel;
 	QLabel      *   mLabel;
 	QLabel      *   branchLabel;
 	QLabel      *   clientLabel;
