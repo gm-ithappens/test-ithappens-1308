@@ -42,7 +42,9 @@ private:
 	      "ID INTEGER PRIMARY KEY     AUTOINCREMENT, "
 	      "HASHORDER              TEXT    NOT NULL,"
 	      "ORDERCODE               INT    NOT NULL,"
-	      "PAYMENT_MODE            INT    NOT NULL"
+	      "PAYMENT_MODE            INT    NOT NULL,"
+	      "TOTAL_ITENS             INT    NOT NULL,"
+	      "TOTAL_VALUE             INT    NOT NULL"
 	      ");";
 
 	const char * create_orders_products_branch_company_sql = "CREATE TABLE %s_ORDERS_PRODUCTS_BRANCHS_COMPANY("
@@ -66,8 +68,8 @@ private:
 
 	const char * select_order_branch_company_filter_payment_sql   = "SELECT HASHORDER,PAYMENT_MODE FROM '%s_ORDERS_BRANCHS_COMPANY';";
 
-	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','ORDERCODE','PAYMENT_MODE') "
-									"VALUES ('%s', %d, %d);";
+	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','ORDERCODE','PAYMENT_MODE', 'TOTAL_ITENS','TOTAL_VALUE') "
+									"VALUES ('%s', %d, %d, %d, %d);";
 
 	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
 									"(HASHORDER,BARCODE,DESCRIPTION,SEQUENTIAL, PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE,ORDERCODE,PAYMENT_MODE)"
@@ -87,7 +89,7 @@ public:
 	void createBranchsCompanyTable();
 	vector<string> getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
-	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode);
+	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode, int total_value, int total_itens);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
                                             int sequential, int count_requested, int count_canceled, 
 					    int total_value, int order_type, int payment_mode);

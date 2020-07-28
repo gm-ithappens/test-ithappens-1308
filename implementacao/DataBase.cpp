@@ -464,7 +464,7 @@ QList<QString> * DataBase::searchResumedOrdersSuperlative(string branch, int cou
 }
 
 
-void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
+void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode, int total_value, int total_itens)
 {
 	char query[256];
 	int return_code;
@@ -472,7 +472,7 @@ void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, 
 
 	Product * line_product = new Product;
 
-	snprintf(query, 256, insert_order_store_branch_company_sql, branch.c_str(), hashorder.c_str(), code, payment_mode);
+	snprintf(query, 256, insert_order_store_branch_company_sql, branch.c_str(), hashorder.c_str(), code, payment_mode, total_itens, total_value);
 
 	cout << "DataBase::registerOrderOnBranch: " << query << endl;
 
