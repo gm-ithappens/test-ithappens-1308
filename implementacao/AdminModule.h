@@ -42,7 +42,7 @@ public slots:
 	void storeManagement_clickedSlot   ();
 	void reportOrders_clickedSlot      ();
 	void exit_clickedSlot              ();
-	void newOrder_clickedSlot          ();
+	void finishOrder_clickedSlot       ();
 	void reportSuperlativeSearch_clickedSlot();
 	void superlativeRadioButtonBigger_onToggled(bool);
 	void superlativeRadioButtonLess_onToggled(bool);
@@ -75,6 +75,8 @@ public slots:
 	void reportResumeSperlativeManagement_clickedSlot();
 	void branchChoosedChangedMountOrdersList();
 	void reportResumeXPlusButtonManagement_clickedSlot();
+	void clearScreenRegistreProduct_clickedSlot();
+	void tryAddProductToOrder_clickedSlot();
 
 
 private:
@@ -104,6 +106,7 @@ private:
 	QPushButton * listManagPaymentButton;
 	QPushButton * reportResumeXPlusButton;
 	QPushButton * resumeSperlativeButton;
+	QPushButton * addMoreButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
