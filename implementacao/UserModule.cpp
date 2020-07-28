@@ -208,6 +208,8 @@ void UserModule::ProcessingOrder()
 	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
 
 	// Search mode
+	searchModeLabel = new QLabel("Escolha a forma de procurar o produto:");
+
 	search_comboBox = new QComboBox;
 	search_comboBox->addItem(tr(""));
 	search_comboBox->addItem(tr("Código do Produto"));
@@ -231,6 +233,7 @@ void UserModule::ProcessingOrder()
 	cancelButton = mountButton("Cancelar produto");
         QObject::connect(cancelButton, SIGNAL(clicked()),this, SLOT(cancelProductSelected()));
 
+	mGridLayout->addWidget(searchModeLabel);
         mGridLayout->addWidget(search_comboBox);
 	mGridLayout->addWidget(dataSearchLabel);
 	mGridLayout->addWidget(searchData);
@@ -283,7 +286,12 @@ void UserModule::newProductSearch_clickedSlot()
 	}    
 	else
 	{
-		line_product = db_instance->searchProductOnBranch(branch.toStdString(), 
+		if(idx == 1)
+			line_product = db_instance->searchProductOnBranchSeq(branch.toStdString(), 
+								search_mode.toStdString(), 
+								product.toInt());
+		else
+			line_product = db_instance->searchProductOnBranch(branch.toStdString(), 
 								search_mode.toStdString(), 
 								product.toStdString());
 	}
