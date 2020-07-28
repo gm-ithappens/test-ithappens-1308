@@ -313,7 +313,10 @@ void UserModule::newProductSearch_clickedSlot()
 	}
 
 	line_product->updateRequestedTotal(input_count.toInt());
-	cout << "Depois de informar desejado -  Quantidade de " << product.toStdString() << " pedidos " << line_product->count_requested  << endl;
+
+	neworder->updateTotalValue(line_product->total_value);
+	neworder->updateTotalitens(line_product->count_requested);
+
 
 	neworder->Products[product] = line_product;
 }
@@ -357,8 +360,11 @@ void UserModule::cancelProductSelected()
 		return;
 	}
 
+	neworder->updateTotalValue(-1*line_product->total_value);
+
         line_product->status = STATUS_PRODUCT_CANCELED;
 	line_product->updateCanceledTotal();
+
 
 	neworder->Products[product] = line_product;
 }
