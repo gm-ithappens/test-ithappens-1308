@@ -515,27 +515,45 @@ void AdminModule::pre_ResumeXPlusButtonManagement_clickedSlot()
 	ResumeXPlusButtonManagement_clickedSlot();
 }
 
+void AdminModule::branchChoosedChangedMountOrdersList()
+{
+	QString s;
+	QString branchs_field = branchs_comboBox->currentText();
+
+	cboxOrder->clear();
+
+        QList<QString> * ql = db_instance->searchOrdersHashofBranch(branchs_field.toStdString());
+	for (int i = 0; i < ql->size(); ++i)
+	{
+                s = ql->at(i);
+                cboxOrder->addItem(tr(s.toStdString().c_str()));
+	}
+
+	show();
+}
+
 void AdminModule::ResumeXPlusButtonManagement_clickedSlot()
 {
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
 	branchs_comboBox = mountComboBoxBranchNames();
+	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChangedMountOrdersList()));
 
-	sequentialLabel   = new QLabel("Código do pedido (hash): ");
-        sequentialProduct = new QLineEdit(this);
-        sequentialProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+        // Options to orders in database
+        cboxOrder = new QComboBox;
+
+        cboxOrder->addItem(tr("Código do pedido (hash): "));
 
 	execSearch = mountButton("Pesquisar");
-	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(pre_reportResumeXPlusButtonManagement_clickedSlot()));
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportResumeXPlusButtonManagement_clickedSlot()));
 
 	returnButton = mountButton("Voltar");
 	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnResumeXPlusButtonManagement_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
-	mGridLayout->addWidget(sequentialLabel);
-	mGridLayout->addWidget(sequentialProduct);
+	mGridLayout->addWidget(cboxOrder);
 	mGridLayout->addWidget(execSearch);
 	mGridLayout->addWidget(returnButton);
 
@@ -543,32 +561,63 @@ void AdminModule::ResumeXPlusButtonManagement_clickedSlot()
 }
 
 
-void AdminModule::pre_reportResumeXPlusButtonManagement_clickedSlot()
+void AdminModule::reportResumeXPlusButtonManagement_clickedSlot()
 {
-	destroyResumeXPlusButtonManagement();
-	reportResumeXPlusButtonManagement();
-}
+        QHash<QString, ProductOfOrder *> HTProductOfOrder;
+	Order * order;
+	QString out;
+	ProductOfOrder * product_order;
 
-void AdminModule::reportResumeXPlusButtonManagement()
-{
-	//RANIERE
+	QString branchs_field = branchs_comboBox->currentText();
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!")  == 0)
+		return;
+
+	QString hashsession = cboxOrder->currentText();
+
+	// Retrieve order of hash
+        order = db_instance->searchOneOrderHashofBranch(
+				branchs_field.toStdString(), 
+				hashsession.toStdString());
+	
+	// Retrieve all products of hash
+	HTProductOfOrder = db_instance->searchListOrdersProductHashOnBranch(
+					branchs_field.toStdString(), 
+					hashsession.toStdString());
+
+	cout  << "Valor total: " << order->total_value << endl;
+	cout << "------------" << endl;
+
+	QHashIterator<QString, ProductOfOrder *> iter(HTProductOfOrder);
+
+        QString key;
+	//out.append(" HASH  - DESCRIÇÃO - CÓD. BARRAS - QUANT. REQUISITADA  - " 
+	//		"QUANT. CANCELADA - VAL. TOTAL - TIPO  - PAGAMENTO\n");
+        while (iter.hasNext())
+        {
+                iter.next();
+                product_order   = (ProductOfOrder *) iter.value();
+                key             = (QString) iter.key();
+
+		cout << order->total_value << endl;
+		out.append(QString("%1").arg(order->total_value).toStdString().c_str());
+		out.append("\n");
+	}
+
 }
 
 void AdminModule::destroyResumeXPlusButtonManagement()
 {
 	mGridLayout->removeWidget(branchLabel);
 	mGridLayout->removeWidget(branchs_comboBox);
-	mGridLayout->removeWidget(sequentialLabel);
-	mGridLayout->removeWidget(sequentialProduct);
+	mGridLayout->removeWidget(cboxOrder);
 	mGridLayout->removeWidget(execSearch);
 	mGridLayout->removeWidget(returnButton);
 
-	delete sequentialProduct;
 	delete branchLabel;
 	delete branchs_comboBox;
 	delete execSearch;
 	delete returnButton;
-	delete sequentialLabel;
+	delete cboxOrder;
 
 }
 
@@ -588,19 +637,19 @@ void AdminModule::pre_listOrdersPaymentManagement_clickedSlot()
 
 QComboBox * AdminModule::mountComboBoxBranchNames()
 {
+	QString s;
+
         // Options to branch company
         QComboBox * cbox = new QComboBox;
 
         cbox->addItem(tr(""));
-        vector<string> list = db_instance->getListBranchCompany();
-        vector<string>::const_iterator iter;
-        for (iter = list.begin(); iter != list.end(); ++iter)
-        {
-                string s;
-                s = *iter;
-                cbox->addItem(tr(s.c_str()));
+        QList<QString> * ql = db_instance->getListBranchCompany();
+	for (int i = 0; i < ql->size(); ++i)
+	{
+                s = ql->at(i);
+
+                cbox->addItem(tr(s.toStdString().c_str()));
         }
-        list.clear();
 
 	return cbox;
 }
@@ -793,7 +842,7 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
 	if(isSettedVariable(sequential, "Necessário informar o código sequencial!")  == 0)
 		return;
 
-	HTProductOfOrder = db_instance->searchListOrdersOnBranch(
+	HTProductOfOrder = db_instance->searchListOrdersProductOnBranch(
 							branchs_field.toStdString(),
 							sequential.toInt());
 
