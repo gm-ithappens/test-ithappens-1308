@@ -71,9 +71,10 @@ public slots:
 	void ResumeXPlusButtonManagement_clickedSlot();
 	void returnResumeXPlusButtonManagement_clickedSlot();
 	void returnResumeSuperlativeManagement_clickedSlot();
-	void pre_reportResumeXPlusButtonManagement_clickedSlot();
 	void ResumeSuperlativeManagement_clickedSlot();
 	void reportResumeSperlativeManagement_clickedSlot();
+	void branchChoosedChangedMountOrdersList();
+	void reportResumeXPlusButtonManagement_clickedSlot();
 
 
 private:
@@ -107,6 +108,7 @@ private:
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
         QComboBox   *   operation_comboBox;
+	QComboBox   *   cboxOrder;
 
 	QLineEdit   *   txtClientInfos;
         QLineEdit   *   descProduct;
