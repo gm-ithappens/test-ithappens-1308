@@ -195,10 +195,10 @@ void UserModule::ProcessingOrder()
 	delete operatorLabel;
 	
 	cout << "** Ordem de saida ** "  << endl;
-	cout << " Filial   : " << neworder->branchs_field.toStdString()          << endl;
-	cout << " Operador : " << neworder->operator_field.toStdString()         << endl;
-	cout << " Cliente  : " << neworder->client_field.toStdString()           << endl;
-	cout << " Obs      : " << neworder->obs_client_lient_infos.toStdString() << endl;
+	cout << " Filial   : "           << neworder->branchs_field.toStdString   () << endl;
+	cout << " Operador : "           << neworder->operator_field.toStdString  () << endl;
+	cout << " Cliente  : "           << neworder->client_field.toStdString    () << endl;
+	cout << " Obs      : "           << neworder->obs_client_infos.toStdString() << endl;
 
 	// Button to search
 	newOrderButton = mountButton("Buscar produto");
