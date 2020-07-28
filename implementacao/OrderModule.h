@@ -129,6 +129,8 @@ public:
 	int total_value = 0;
 	int total_itens = 0;
 
+	int processing_type = 0;
+
 	QHash<QString, Product *> Products;
 
 };
