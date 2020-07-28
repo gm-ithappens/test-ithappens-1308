@@ -65,6 +65,7 @@ private:
 	const char * select_product_store_branch_company_hsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE > %d;";
 	const char * select_product_store_branch_company_lsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE < %d;";
 	const char * select_order_branch_company_filter_seq_sql       = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE SEQUENTIAL == %d;" ;
+	const char * select_order_branch_company_filter_hash_seq_sql  = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE HASHORDER  == '%s';" ;
 
 	const char * select_order_branch_company_filter_payment_sql   = "SELECT HASHORDER,PAYMENT_MODE FROM '%s_ORDERS_BRANCHS_COMPANY';";
 
@@ -81,13 +82,15 @@ private:
 									"VALUES ('%s', '%s', %d, %d, %d);";
 
 	const char * select_resumed_orders_superlative             = "SELECT HASHORDER, COUNT(*) FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' GROUP BY HASHORDER HAVING COUNT(*) > %d;";
+	const char * select_orders_hash_of_branch                  = "SELECT HASHORDER FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY';";
+	const char * select_one_order_of_branch_sql                = "SELECT * FROM '%s_ORDERS_BRANCHS_COMPANY' WHERE HASHORDER == '%s';";
 
 public:
 	/* Static access method. */
         static DataBase* getInstance();
 	void createBranchCompanyTable(string branch_name);
 	void createBranchsCompanyTable();
-	vector<string> getListBranchCompany();
+	QList<QString> *  getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
 	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode, int total_value, int total_itens);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
@@ -97,9 +100,12 @@ public:
 	void insertProductOnBranch(string branch, string barcode, string description,
                                      int count_available, int unit_value, int sequential);
 	QHash<QString, Product *> searchSuperProductOnBranch(string branch, int type, int count);
-	QHash<QString, ProductOfOrder *> searchListOrdersOnBranch(string branch, int sequential);
+	QHash<QString, ProductOfOrder *> searchListOrdersProductOnBranch(string branch, int sequential);
 	QHash<QString, ProductOfOrder *> searchListOrderAndPaymentOnBranch(string branch);
 	QList<QString> * searchResumedOrdersSuperlative(string branch, int count);
+	QList<QString> * searchOrdersHashofBranch(string branch);
+	QHash<QString, ProductOfOrder *> searchListOrdersProductHashOnBranch(string branch, string hashsession);
+	Order * searchOneOrderHashofBranch(string branch, string hashsession);
 
 };
 #endif
