@@ -137,7 +137,8 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 
 	QString obs = "NECESSARIO TROCAR ISSO";
 
-	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, INPUT_ORDER);
+	if(!neworder)
+		neworder = new OrderModule(branchs_field, client_field, operator_field, obs, INPUT_ORDER);
 
 	Product * line_product = NULL;
 	QString search_mode = "BARCODE";
@@ -171,6 +172,8 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 	neworder->updateTotalitens(line_product->count_requested);
 
 	clearScreenRegistreProduct_clickedSlot();
+
+	warningMessage("Produto adicionado ao pedido com sucesso!");
 }
 
 void AdminModule::finishOrder_clickedSlot()
