@@ -44,7 +44,10 @@ private:
 	      "ORDERCODE               INT    NOT NULL,"
 	      "PAYMENT_MODE            INT    NOT NULL,"
 	      "TOTAL_ITENS             INT    NOT NULL,"
-	      "TOTAL_VALUE             INT    NOT NULL"
+	      "TOTAL_VALUE             INT    NOT NULL,"
+	      "OPERATOR               TEXT    NOT NULL,"
+	      "CLIENT                 TEXT    NOT NULL,"
+	      "CLIENTOBS              TEXT    NOT NULL"
 	      ");";
 
 	const char * create_orders_products_branch_company_sql = "CREATE TABLE %s_ORDERS_PRODUCTS_BRANCHS_COMPANY("
@@ -69,8 +72,10 @@ private:
 
 	const char * select_order_branch_company_filter_payment_sql   = "SELECT HASHORDER,PAYMENT_MODE FROM '%s_ORDERS_BRANCHS_COMPANY';";
 
-	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' ('HASHORDER','ORDERCODE','PAYMENT_MODE', 'TOTAL_ITENS','TOTAL_VALUE') "
-									"VALUES ('%s', %d, %d, %d, %d);";
+	const char * insert_order_store_branch_company_sql           = "INSERT   INTO '%s_ORDERS_BRANCHS_COMPANY' "
+									"('HASHORDER','ORDERCODE','PAYMENT_MODE', "
+									"'TOTAL_ITENS','TOTAL_VALUE','OPERATOR','CLIENT','CLIENTOBS') "
+									"VALUES ('%s', %d, %d, %d, %d, '%s','%s','%s');";
 
 	const char * insert_order_product_store_branch_company_sql   = "INSERT   INTO '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' "
 									"(HASHORDER,BARCODE,DESCRIPTION,SEQUENTIAL, PROCESSED_COUNT,CANCELED_COUNT,TOTAL_VALUE,ORDERCODE,PAYMENT_MODE)"
@@ -83,7 +88,7 @@ private:
 
 	const char * select_resumed_orders_superlative             = "SELECT HASHORDER, COUNT(*) FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' GROUP BY HASHORDER HAVING COUNT(*) > %d;";
 	const char * select_orders_hash_of_branch                  = "SELECT HASHORDER FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY';";
-	const char * select_one_order_of_branch_sql                = "SELECT * FROM '%s_ORDERS_BRANCHS_COMPANY' WHERE HASHORDER == '%s';";
+	const char * select_one_order_of_branch_sql                = "SELECT * FROM '%s_ORDERS_BRANCHS_COMPANY' WHERE HASHORDER == '%s' ORDERED;";
 
 public:
 	/* Static access method. */
@@ -92,7 +97,9 @@ public:
 	void createBranchsCompanyTable();
 	QList<QString> *  getListBranchCompany();
 	Product * searchProductOnBranch(string branch, string search_mode, string product);
-	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode, int total_value, int total_itens);
+	void registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode, 
+					    int total_value, int total_itens, string operator_user, 
+					    string client, string obs_client);
 	void registerOrderProductsOnBranch(string branch, string hashorder, string barcode, string description, 
                                             int sequential, int count_requested, int count_canceled, 
 					    int total_value, int order_type, int payment_mode);
