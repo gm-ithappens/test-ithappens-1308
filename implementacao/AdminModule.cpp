@@ -169,13 +169,15 @@ void AdminModule::destroyOptionsGeneralListManagementScreen()
 {
 	mGridLayout->removeWidget(productsManagementButton);
 	mGridLayout->removeWidget(listManagementButton);
-	mGridLayout->removeWidget(reportsManagementButton);
 	mGridLayout->removeWidget(listManagPaymentButton);
+	mGridLayout->removeWidget(reportResumeXPlusButton);
+	mGridLayout->removeWidget(resumeSperlativeButton);
 
 	delete listManagPaymentButton;
 	delete productsManagementButton;
 	delete listManagementButton;
-	delete reportsManagementButton;
+	delete reportResumeXPlusButton;
+	delete resumeSperlativeButton;
 }
 
 void AdminModule::destroyOptionsListManagementScreen()
@@ -388,25 +390,144 @@ void AdminModule::pre_optionsGeneralListManagement_clickedSlot()
 
 void AdminModule::optionsGeneralListManagement_clickedSlot()
 {
-	productsManagementButton    = mountButton("Listagem de Produtos com Quantidades Superlativas");
+	productsManagementButton     = mountButton("Listagem de Produtos com Quantidades Superlativas");
 	QObject::connect(productsManagementButton, SIGNAL(clicked()),this, SLOT(pre_listSuperlativeManagement_clickedSlot()));
 
-	listManagementButton = mountButton("Listar Pedidos e Seus Itens");
+	listManagementButton         = mountButton("Listar Pedidos e Seus Itens");
 	QObject::connect(listManagementButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersManagement_clickedSlot()));
 
-	listManagPaymentButton = mountButton("Listar Pedidos e Forma de Pagamento");
+	listManagPaymentButton       = mountButton("Listar Pedidos e Forma de Pagamento");
 	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
 
-	reportsManagementButton = mountButton("Consulta sumarizada");
-	QObject::connect(listManagPaymentButton, SIGNAL(clicked()),this, SLOT(pre_listOrdersPaymentManagement_clickedSlot()));
+	reportResumeXPlusButton      = mountButton("Consulta sumarizada - Total com soma");
+	QObject::connect(reportResumeXPlusButton, SIGNAL(clicked()),this, SLOT(pre_ResumeXPlusButtonManagement_clickedSlot()));
 
-	mGridLayout->addWidget(listManagPaymentButton);
+	resumeSperlativeButton       = mountButton("Consulta sumarizada - Pedidos Superlativo");
+	QObject::connect(resumeSperlativeButton, SIGNAL(clicked()),this, SLOT(pre_ResumeSperlativeManagement_clickedSlot()));
+
 	mGridLayout->addWidget(productsManagementButton);
 	mGridLayout->addWidget(listManagementButton);
-	mGridLayout->addWidget(reportsManagementButton);
+	mGridLayout->addWidget(listManagPaymentButton);
+	mGridLayout->addWidget(reportResumeXPlusButton);
+	mGridLayout->addWidget(resumeSperlativeButton);
 
 	show();
 }
+
+void AdminModule::pre_ResumeSperlativeManagement_clickedSlot()
+{
+	destroyOptionsGeneralListManagementScreen();
+	ResumeSuperlativeManagement_clickedSlot();
+}
+
+void AdminModule::ResumeSuperlativeManagement_clickedSlot()
+{
+	branchLabel = new QLabel("Qual filial: ");
+
+        // Options to branch company
+	branchs_comboBox = mountComboBoxBranchNames();
+
+	execSearch = mountButton("Pesquisar");
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportSearchlistOrdersPayment_clickedSlot()));
+
+	returnButton = mountButton("Voltar");
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnResumeSuperlativeManagement_clickedSlot()));
+
+	mGridLayout->addWidget(branchLabel);
+	mGridLayout->addWidget(branchs_comboBox);
+	//mGridLayout->addWidget(sequentialLabel);
+	//mGridLayout->addWidget(sequentialProduct);
+	mGridLayout->addWidget(execSearch);
+	mGridLayout->addWidget(returnButton);
+
+	show();
+}
+
+void AdminModule::returnResumeSuperlativeManagement_clickedSlot()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(execSearch);
+	mGridLayout->removeWidget(returnButton);
+
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete execSearch;
+	delete returnButton;
+
+	optionsGeneralListManagement_clickedSlot();
+}
+
+
+
+void AdminModule::pre_ResumeXPlusButtonManagement_clickedSlot()
+{
+	destroyOptionsGeneralListManagementScreen();
+	ResumeXPlusButtonManagement_clickedSlot();
+}
+
+void AdminModule::ResumeXPlusButtonManagement_clickedSlot()
+{
+	branchLabel = new QLabel("Qual filial: ");
+
+        // Options to branch company
+	branchs_comboBox = mountComboBoxBranchNames();
+
+	sequentialLabel   = new QLabel("Código do pedido (hash): ");
+        sequentialProduct = new QLineEdit(this);
+        sequentialProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+	execSearch = mountButton("Pesquisar");
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(pre_reportResumeXPlusButtonManagement_clickedSlot()));
+
+	returnButton = mountButton("Voltar");
+	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnResumeXPlusButtonManagement_clickedSlot()));
+
+	mGridLayout->addWidget(branchLabel);
+	mGridLayout->addWidget(branchs_comboBox);
+	mGridLayout->addWidget(sequentialLabel);
+	mGridLayout->addWidget(sequentialProduct);
+	mGridLayout->addWidget(execSearch);
+	mGridLayout->addWidget(returnButton);
+
+	show();
+}
+
+
+void AdminModule::pre_reportResumeXPlusButtonManagement_clickedSlot()
+{
+	destroyResumeXPlusButtonManagement();
+	reportResumeXPlusButtonManagement();
+}
+
+void AdminModule::reportResumeXPlusButtonManagement()
+{
+}
+
+void AdminModule::destroyResumeXPlusButtonManagement()
+{
+	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(branchs_comboBox);
+	mGridLayout->removeWidget(sequentialLabel);
+	mGridLayout->removeWidget(sequentialProduct);
+	mGridLayout->removeWidget(execSearch);
+	mGridLayout->removeWidget(returnButton);
+
+	delete sequentialProduct;
+	delete branchLabel;
+	delete branchs_comboBox;
+	delete execSearch;
+	delete returnButton;
+	delete sequentialLabel;
+
+}
+
+void AdminModule::returnResumeXPlusButtonManagement_clickedSlot()
+{
+	destroyResumeXPlusButtonManagement();
+	optionsGeneralListManagement_clickedSlot();
+}
+
 
 void AdminModule::pre_listOrdersPaymentManagement_clickedSlot()
 {
