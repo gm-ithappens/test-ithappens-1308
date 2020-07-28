@@ -88,6 +88,14 @@ void UserModule::operatorChoosedChanged()
 
 void UserModule::finishOrder_clickedSlot()
 {
+	// Verificar se existe produto
+	if(neworder->Products.size() == 0)
+	{
+		warningMessage("Nenhum produto pedido.!");
+		return;
+	}
+
+
 	// Payment method
 	QMessageBox msgBox;
 	msgBox.setText("Escolher a forma de pagamento!");
