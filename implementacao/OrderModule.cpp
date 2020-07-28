@@ -30,7 +30,10 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
                                                 product->sequential,
                                                 product->count_requested,
                                                 product->count_canceled,
-                                                product->total_value);
+                                                product->total_value,
+						order_type,
+						payment_mode
+						);
 
                 product->updateNewCount(ordertype);
 
