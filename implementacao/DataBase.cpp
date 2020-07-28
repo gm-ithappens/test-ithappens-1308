@@ -81,39 +81,41 @@ void DataBase::createBranchCompanyTable(string branch_name)
 	} 
 }
 
-vector<string> branch_company_list;
-
-static int retrieveStringVector(void* data, int argc, char** argv, char** azColName)
+static int retrieveQList(void* data, int argc, char** argv, char** azColName)
 {
+	QString tmp;
+	QList<QString> * ql = (QList<QString> *) data;
+
 	int i;
 	for(i = 0; i < argc; i++)
 	{
-		cout << azColName[i] << ": " << argv[i] << endl;
-		string s = argv[i];
-		branch_company_list.push_back(s);
+		tmp = argv[i];
+		ql->append(tmp);
 	}
 
 	return 0;
 }
 
-vector<string> DataBase::getListBranchCompany()
+
+QList<QString> * DataBase::getListBranchCompany()
 {
+	QList<QString> * ql = new QList<QString>();
 	int return_code;
 	char* messaggeError;
 
 	return_code = sqlite3_exec(db_instance, 
 			select_branch_company_sql.c_str(), 
-			retrieveStringVector, 
-			0,
+			retrieveQList, 
+			(void *)ql,
 			&messaggeError);
 
 	if (return_code != SQLITE_OK)
 	{ 
 		sqlite3_free(messaggeError); 
-		return branch_company_list;
+		return ql;
 	} 
 
-	return branch_company_list;
+	return ql;
 }
 
 
@@ -376,7 +378,103 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 	return 0;
 }
 
-QHash<QString, ProductOfOrder *> DataBase::searchListOrdersOnBranch(string branch, int sequential)
+static int retrieveOrder(void* data, int argc, char** argv, char** azColName)
+{
+	QString str1, str2, tmp;
+	Order * order = (Order *) data;
+
+	int i;
+	for(i = 0; i < argc; i++)
+	{
+		str1="HASHORDER";
+		str2=azColName[i];
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			order->hash_session      = argv[i];
+			continue;
+		}
+
+		str1="ORDERCODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			order->order_type         = argv[i];
+			continue;
+		}
+
+		str1="PAYMENT_MODE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			order->payment_mode      = tmp.toInt();
+			continue;
+		}
+
+		str1="TOTAL_ITENS";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			order->total_itens      = tmp.toInt();
+			continue;
+		}
+
+		str1="TOTAL_VALUE";
+		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
+		{
+			tmp = argv[i];
+			order->total_value = tmp.toInt();
+			continue;
+		}
+	}
+
+	return 0;
+}
+
+Order * DataBase::searchOneOrderHashofBranch(string branch, string hashsession)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+	Order * order = new Order;
+
+	snprintf(query, 256, select_one_order_of_branch_sql, branch.c_str(), hashsession.c_str());
+	cout << "DataBase::searchOneOrderHashofBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveOrder, 
+			(void *)order,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return order;
+}
+
+QHash<QString, ProductOfOrder *> DataBase::searchListOrdersProductHashOnBranch(string branch, string hashsession)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	HTProductOfOrder.clear();
+
+	snprintf(query, 256, select_order_branch_company_filter_hash_seq_sql, branch.c_str(), hashsession.c_str());
+	cout << "DataBase::searchListOrdersProductHashOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveOrderListProduct, 
+			0,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return HTProductOfOrder;
+}
+
+QHash<QString, ProductOfOrder *> DataBase::searchListOrdersProductOnBranch(string branch, int sequential)
 {
 	char query[256];
 	int return_code;
@@ -423,19 +521,26 @@ QHash<QString, ProductOfOrder *> DataBase::searchListOrderAndPaymentOnBranch(str
 }
 
 
-static int retrieveOrderCountProduct(void* data, int argc, char** argv, char** azColName)
+QList<QString> * DataBase::searchOrdersHashofBranch(string branch)
 {
-	QString tmp;
-	QList<QString> * ql = (QList<QString> *) data;
+	char query[512];
+	int return_code;
+	char* messaggeError;
+	QList<QString> * ql = new QList<QString>();
 
-	int i;
-	for(i = 0; i < argc; i++)
-	{
-		tmp = argv[i];
-		ql->append(tmp);
-	}
+	snprintf(query, 512, select_orders_hash_of_branch, branch.c_str());
+	cout << "DataBase::searchOrdersHashofBranch: " << query << endl;
 
-	return 0;
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveQList, 
+			(void *) ql,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return ql;
 }
 
 
@@ -446,14 +551,12 @@ QList<QString> * DataBase::searchResumedOrdersSuperlative(string branch, int cou
 	char* messaggeError;
 	QList<QString> * ql = new QList<QString>();
 
-	HTProductOfOrder.clear();
-
 	snprintf(query, 512, select_resumed_orders_superlative, branch.c_str(), count);
 	cout << "DataBase::earchResumedOrdersSuperlative: " << query << endl;
 
 	return_code = sqlite3_exec(db_instance, 
 			query, 
-			retrieveOrderCountProduct, 
+			retrieveQList, 
 			(void *) ql,
 			&messaggeError);
 
