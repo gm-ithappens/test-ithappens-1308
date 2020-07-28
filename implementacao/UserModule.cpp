@@ -24,17 +24,15 @@ void UserModule::Execute()
 
 	// Options to branch company
 	branchs_comboBox = new QComboBox;
+        branchs_comboBox->addItem(tr(""));
+        QList<QString> * ql = db_instance->getListBranchCompany();
+	QString s;
+        for (int i = 0; i < ql->size(); ++i)
+        {
+                s = ql->at(i);
 
-	branchs_comboBox->addItem(tr(""));
-	vector<string> list = db_instance->getListBranchCompany();
-	vector<string>::const_iterator iter;
-	for (iter = list.begin(); iter != list.end(); ++iter)
-	{
-		string s;
-		s = *iter;
-		branchs_comboBox->addItem(tr(s.c_str()));
-	}
-	list.clear();
+                branchs_comboBox->addItem(tr(s.toStdString().c_str()));
+        }
 
         branchs_comboBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	connect(branchs_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(branchChoosedChanged()));
