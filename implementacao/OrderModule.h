@@ -106,6 +106,16 @@ public:
 	    return tm.tv_nsec;
 	}
 
+        void updateTotalValue(int value)
+	{
+		total_value += value;
+	}
+        void updateTotalitens(int count)
+	{
+		total_itens += count;
+	}
+
+
 	void ProcessingOrder(int ordertype, int product_oper);
 
 public:
@@ -116,6 +126,8 @@ public:
 	QString hash_session;
 	int payment_mode;
 	int order_type;
+	int total_value;
+	int total_itens;
 
 	QHash<QString, Product *> Products;
 
