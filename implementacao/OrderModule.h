@@ -90,7 +90,7 @@ public:
 		branchs_field           = branchsfield;
 		client_field            = clientfield;
 		operator_field          = operatorfield;
-		obs_client_lient_infos  = obsclientlientinfos;
+		obs_client_infos        = obsclientlientinfos;
 		order_type              = ordertype;
 
 		hash_session            =  QString("%1").arg(hash_order());
@@ -122,7 +122,7 @@ public:
 	QString branchs_field;
 	QString client_field;
 	QString operator_field;
-	QString obs_client_lient_infos;
+	QString obs_client_infos;
 	QString hash_session;
 	int payment_mode= 0;
 	int order_type  = 0;
