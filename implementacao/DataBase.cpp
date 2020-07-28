@@ -239,6 +239,30 @@ static int retrieveAllLineProduct(void* data, int argc, char** argv, char** azCo
 	return 0;
 }
 
+Product * DataBase::searchProductOnBranchSeq(string branch, string search_mode, int product)
+{
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	Product * line_product = new Product;
+	line_product->status_in_db      =   NOT_FOUND_IN_DB;
+
+	snprintf(query, 256, select_product_store_branch_company_seq_sql, branch.c_str(), search_mode.c_str(), product);
+
+	cout << "DataBase::searchProductOnBranch: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveLineProduct, 
+			(void *)line_product,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return line_product;
+}
 Product * DataBase::searchProductOnBranch(string branch, string search_mode, string product)
 {
 	char query[100];
