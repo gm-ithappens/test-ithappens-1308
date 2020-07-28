@@ -96,8 +96,9 @@ void AdminModule::returnBranchManagement_clickedSlot()
 	Execute();
 }
 
-void AdminModule::newOrder_clickedSlot()
+void AdminModule::tryAddProductToOrder_clickedSlot()
 {
+
 	QString branchs_field = branchs_comboBox->currentText();
 	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!") == 0)
 		return;
@@ -144,12 +145,12 @@ void AdminModule::newOrder_clickedSlot()
 							search_mode.toStdString(), 
 							barcode_product.toStdString());
 
-	int processing_type = UPDATE_PRODUCT;
+	neworder->processing_type = UPDATE_PRODUCT;
 	if(line_product->status_in_db == NOT_FOUND_IN_DB)
 	{
 		cout << "Vai ser criado um novo produto!" << endl;
-		Product * line_product = new Product();
-		processing_type        = NEW_PRODUCT;
+		Product * line_product    = new Product();
+		neworder->processing_type = NEW_PRODUCT;
 	}
 
 	neworder->client_field        = client_field;
@@ -169,7 +170,23 @@ void AdminModule::newOrder_clickedSlot()
 	neworder->updateTotalValue(line_product->total_value);
 	neworder->updateTotalitens(line_product->count_requested);
 
-	neworder->ProcessingOrder(INPUT_ORDER, processing_type);
+	clearScreenRegistreProduct_clickedSlot();
+}
+
+void AdminModule::finishOrder_clickedSlot()
+{
+	if(!neworder)
+	{
+		warningMessage("Nenhum produto cadastrado!");
+		return;
+	}
+	if(neworder->Products.size() == 0)
+	{
+		warningMessage("Nenhum produto cadastrado!");
+		return;
+	}
+
+	neworder->ProcessingOrder(INPUT_ORDER, neworder->processing_type);
 }
 
 void AdminModule::destroyOptionsGeneralListManagementScreen()
@@ -210,6 +227,8 @@ void AdminModule::pre_storeManagement_clickedSlot()
 
 void AdminModule::storeManagement_clickedSlot()
 {
+	neworder = NULL;
+
 	branchLabel = new QLabel("Qual filial: ");
 
         // Options to branch company
@@ -263,8 +282,11 @@ void AdminModule::storeManagement_clickedSlot()
 	valueProduct->setInputMask("999");
 	valueProduct->setMaxLength(3);
 
-	finishOrderButton = mountButton("Executar Operação");
-	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(newOrder_clickedSlot()));
+	addMoreButton = mountButton("Adicionar produto ao pedido");
+	QObject::connect(addMoreButton, SIGNAL(clicked()),this, SLOT(tryAddProductToOrder_clickedSlot()));
+
+	finishOrderButton = mountButton("FECHAR PEDIDO");
+	QObject::connect(finishOrderButton, SIGNAL(clicked()),this, SLOT(finishOrder_clickedSlot()));
 
 	returnButton = mountButton("Voltar");
 	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnStoreManagement_clickedSlot_clickedSlot()));
@@ -287,8 +309,20 @@ void AdminModule::storeManagement_clickedSlot()
 	mGridLayout->addWidget(countProduct);
 	mGridLayout->addWidget(valueProdLabel);
 	mGridLayout->addWidget(valueProduct);
+	mGridLayout->addWidget(addMoreButton);
 	mGridLayout->addWidget(finishOrderButton);
 	mGridLayout->addWidget(returnButton);
+
+	show();
+}
+
+void AdminModule::clearScreenRegistreProduct_clickedSlot()
+{
+	descProduct->clear();
+	sequentialProduct->clear();
+	barcodeProduct->clear();
+	countProduct->clear();
+	valueProduct->clear();
 
 	show();
 }
@@ -313,6 +347,7 @@ void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
 	mGridLayout->removeWidget(countProduct);
 	mGridLayout->removeWidget(valueProdLabel);
 	mGridLayout->removeWidget(valueProduct);
+	mGridLayout->removeWidget(addMoreButton);
 	mGridLayout->removeWidget(finishOrderButton);
 	mGridLayout->removeWidget(returnButton);
 
@@ -336,6 +371,7 @@ void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
 	delete valueProduct;
 	delete finishOrderButton;
 	delete returnButton;
+	delete addMoreButton;
 
 	// return to administrator screen
 	Execute();
