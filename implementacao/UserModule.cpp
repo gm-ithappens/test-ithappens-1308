@@ -296,21 +296,21 @@ void UserModule::newProductSearch_clickedSlot()
         }
 
 	bool ok;
-	QString input_count = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-			 tr("Quantidade:"), QLineEdit::Normal, 0, &ok);
+	int input_count = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
+			 tr("Quantidade:"), 25, 0, 10000, 1, &ok);
 
 	// New requested count plus already requested cant higher than count available
-	if(line_product->count_available < (line_product->count_requested + input_count.toInt()))
+	if(line_product->count_available < (line_product->count_requested + input_count))
 	{
 		QString msg = QString("Insuficiente em estoque. Solicitado %1 -  Disponivel %2").arg(
-						line_product->count_requested + input_count.toInt()).arg(
+						line_product->count_requested + input_count).arg(
 						line_product->count_available);
 
 		warningMessage(msg.toStdString());
 		return;
 	}
 
-	line_product->updateRequestedTotal(input_count.toInt());
+	line_product->updateRequestedTotal(input_count);
 
 	neworder->updateTotalValue(line_product->total_value);
 	neworder->updateTotalitens(line_product->count_requested);
