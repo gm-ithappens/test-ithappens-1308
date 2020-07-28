@@ -15,7 +15,6 @@ ManagerWindow::ManagerWindow(QWidget * parent)
 	, mNextButton(new QPushButton("Usuário", this))
 	,mIndex(0)
 {
-	//addWidget(QWidget *widget, int row, int column, Qt::Alignment alignment = Qt::Alignment())
 	mGridLayout->addWidget(mStackedWidget, 0, 0, 1, 2);
 	mGridLayout->addWidget(mPrevButton,    1, 0, 1, 1);
 	mGridLayout->addWidget(mNextButton,    1, 1, 1, 1);
@@ -37,6 +36,7 @@ void ManagerWindow::callbackChangeScreen(int choosedScreen)
 {
 	mStackedWidget->setCurrentIndex(choosedScreen);
 }
+
 
 void ManagerWindow::loginAdmin_clickedSlot()
 {
