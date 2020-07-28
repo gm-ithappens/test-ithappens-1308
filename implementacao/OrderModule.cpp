@@ -9,7 +9,9 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
         db_instance->registerOrderOnBranch(branchs_field.toStdString(),
                                         hash_session.toStdString(),
                                         order_type,
-                                        payment_mode);
+                                        payment_mode,
+					total_value,
+					total_itens);
         //Register all products of the current order in a table especific
         // Need made a loop in a hash table of products of order
         QHashIterator<QString, Product *> iter(Products);
