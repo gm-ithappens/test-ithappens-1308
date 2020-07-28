@@ -11,7 +11,11 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
                                         order_type,
                                         payment_mode,
 					total_value,
-					total_itens);
+					total_itens,
+					operator_field.toStdString(),
+					client_field.toStdString(),
+					obs_client_infos.toStdString());
+
         //Register all products of the current order in a table especific
         // Need made a loop in a hash table of products of order
         QHashIterator<QString, Product *> iter(Products);
