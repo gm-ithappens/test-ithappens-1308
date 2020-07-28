@@ -373,7 +373,7 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 		}
 	}
 
-	HTProductOfOrder[line_order->hash_session] = line_order;
+	HTProductOfOrder[line_order->description] = line_order;
 
 	return 0;
 }
