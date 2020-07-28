@@ -33,6 +33,8 @@ public:
 	//void warningMessage(string str);
 	void destroyInitialAdminScreen();
 	QGroupBox * createExclusiveGroup();
+	void reportResumeXPlusButtonManagement();
+	void destroyResumeXPlusButtonManagement();
 
 public slots:
 	void branchManagement_clickedSlot  ();
@@ -64,6 +66,13 @@ public slots:
 	void pre_listOrdersPaymentManagement_clickedSlot();
 	void reportSearchlistOrdersPayment_clickedSlot();
 	QComboBox   * mountComboBoxBranchNames();
+	void pre_ResumeSperlativeManagement_clickedSlot();
+	void pre_ResumeXPlusButtonManagement_clickedSlot();
+	void ResumeXPlusButtonManagement_clickedSlot();
+	void returnResumeXPlusButtonManagement_clickedSlot();
+	void returnResumeSuperlativeManagement_clickedSlot();
+	void pre_reportResumeXPlusButtonManagement_clickedSlot();
+	void ResumeSuperlativeManagement_clickedSlot();
 
 
 private:
@@ -91,6 +100,8 @@ private:
 	QPushButton * execSearchlistOrders;
 	QPushButton * execTaskButton;
 	QPushButton * listManagPaymentButton;
+	QPushButton * reportResumeXPlusButton;
+	QPushButton * resumeSperlativeButton;
 
         QComboBox   *   branchs_comboBox;
         QComboBox   *   operator_comboBox;
