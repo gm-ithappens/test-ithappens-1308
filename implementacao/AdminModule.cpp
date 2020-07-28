@@ -162,6 +162,9 @@ void AdminModule::newOrder_clickedSlot()
 
 	neworder->Products[line_product->description] = line_product;
 
+	neworder->updateTotalValue(line_product->total_value);
+	neworder->updateTotalitens(line_product->count_requested);
+
 	neworder->ProcessingOrder(INPUT_ORDER, processing_type);
 }
 
@@ -548,6 +551,7 @@ void AdminModule::pre_reportResumeXPlusButtonManagement_clickedSlot()
 
 void AdminModule::reportResumeXPlusButtonManagement()
 {
+	//RANIERE
 }
 
 void AdminModule::destroyResumeXPlusButtonManagement()
