@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "OrderModule.h"
+#include <QList>
 
 using namespace std;
 
@@ -77,6 +78,8 @@ private:
 									"('DESCRIPTION', 'BARCODE', 'SEQUENTIAL', 'UNIT_VALUE', 'COUNT_AVAILABLE' ) "
 									"VALUES ('%s', '%s', %d, %d, %d);";
 
+	const char * select_resumed_orders_superlative             = "SELECT HASHORDER, COUNT(*) FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' GROUP BY HASHORDER HAVING COUNT(*) > %d;";
+
 public:
 	/* Static access method. */
         static DataBase* getInstance();
@@ -94,6 +97,7 @@ public:
 	QHash<QString, Product *> searchSuperProductOnBranch(string branch, int type, int count);
 	QHash<QString, ProductOfOrder *> searchListOrdersOnBranch(string branch, int sequential);
 	QHash<QString, ProductOfOrder *> searchListOrderAndPaymentOnBranch(string branch);
+	QList<QString> * searchResumedOrdersSuperlative(string branch, int count);
 
 };
 #endif
