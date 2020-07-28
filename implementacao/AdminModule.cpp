@@ -567,6 +567,7 @@ void AdminModule::reportResumeXPlusButtonManagement_clickedSlot()
 	Order * order;
 	QString out;
 	ProductOfOrder * product_order;
+	int value_total = 0;
 
 	QString branchs_field = branchs_comboBox->currentText();
 	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!")  == 0)
@@ -585,24 +586,31 @@ void AdminModule::reportResumeXPlusButtonManagement_clickedSlot()
 					hashsession.toStdString());
 
 	cout  << "Valor total: " << order->total_value << endl;
-	cout << "------------" << endl;
+	out.append("Valor total (Tabela Pedido): ");
+	out.append(QString("%1\n\n").arg(order->total_value).toStdString().c_str());
+	out.append("Valor dos produtos:\n");
 
 	QHashIterator<QString, ProductOfOrder *> iter(HTProductOfOrder);
 
         QString key;
-	//out.append(" HASH  - DESCRIÇÃO - CÓD. BARRAS - QUANT. REQUISITADA  - " 
-	//		"QUANT. CANCELADA - VAL. TOTAL - TIPO  - PAGAMENTO\n");
         while (iter.hasNext())
         {
                 iter.next();
                 product_order   = (ProductOfOrder *) iter.value();
                 key             = (QString) iter.key();
 
-		cout << order->total_value << endl;
-		out.append(QString("%1").arg(order->total_value).toStdString().c_str());
+		cout << "   -" << product_order->total_value << endl;
+		out.append(product_order->description.toStdString().c_str());
+		out.append(" -  ");
+		out.append(QString("%1").arg(product_order->total_value).toStdString().c_str());
 		out.append("\n");
+		value_total += product_order->total_value;
 	}
+	out.append("\nValor somado: ");
+	out.append(QString("%1\n").arg(value_total).toStdString().c_str());
+	out.append("");
 
+	warningMessage(out.toStdString().c_str());
 }
 
 void AdminModule::destroyResumeXPlusButtonManagement()
