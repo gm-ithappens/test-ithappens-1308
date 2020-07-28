@@ -73,6 +73,7 @@ public slots:
 	void returnResumeSuperlativeManagement_clickedSlot();
 	void pre_reportResumeXPlusButtonManagement_clickedSlot();
 	void ResumeSuperlativeManagement_clickedSlot();
+	void reportResumeSperlativeManagement_clickedSlot();
 
 
 private:

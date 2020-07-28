@@ -427,29 +427,75 @@ void AdminModule::ResumeSuperlativeManagement_clickedSlot()
         // Options to branch company
 	branchs_comboBox = mountComboBoxBranchNames();
 
+	generalLabel = new QLabel("Quantidade de itens? ");
+
+        countProduct = new QLineEdit(this);
+        countProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	countProduct->setInputMask("999");
+	countProduct->setMaxLength(3);
+
 	execSearch = mountButton("Pesquisar");
-	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportSearchlistOrdersPayment_clickedSlot()));
+	QObject::connect(execSearch, SIGNAL(clicked()),this, SLOT(reportResumeSperlativeManagement_clickedSlot()));
 
 	returnButton = mountButton("Voltar");
 	QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnResumeSuperlativeManagement_clickedSlot()));
 
 	mGridLayout->addWidget(branchLabel);
 	mGridLayout->addWidget(branchs_comboBox);
-	//mGridLayout->addWidget(sequentialLabel);
-	//mGridLayout->addWidget(sequentialProduct);
+	mGridLayout->addWidget(generalLabel);
+	mGridLayout->addWidget(countProduct);
 	mGridLayout->addWidget(execSearch);
 	mGridLayout->addWidget(returnButton);
 
 	show();
 }
 
+void AdminModule::reportResumeSperlativeManagement_clickedSlot()
+{
+	QList<QString> * ql;
+	QString out;
+	QString hashsession;
+
+	QString branchs_field = branchs_comboBox->currentText();
+	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!") == 0)
+		return;
+
+	QString count_product   = countProduct->text();
+	if(isSettedVariable(count_product, "Necessário informar a quantidade!")  == 0)
+		return;
+
+	ql = db_instance->searchResumedOrdersSuperlative(branchs_field.toStdString(), 
+							 count_product.toInt());
+
+	out.append("Pedidos com mais que ");
+	out.append(QString("%1").arg(count_product.toStdString().c_str()));
+	out.append(" itens:");
+
+	for (int i = 0; i < ql->size(); ++i)
+	{
+                hashsession = ql->at(i);
+
+                cout <<  ": " << hashsession.toStdString() << endl;
+		out.append(hashsession.toStdString().c_str());
+		out.append("\n");
+	}
+
+	warningMessage(out.toStdString().c_str());
+
+	returnResumeSuperlativeManagement_clickedSlot();
+}
+
 void AdminModule::returnResumeSuperlativeManagement_clickedSlot()
 {
 	mGridLayout->removeWidget(branchLabel);
+	mGridLayout->removeWidget(generalLabel);
 	mGridLayout->removeWidget(branchs_comboBox);
 	mGridLayout->removeWidget(execSearch);
 	mGridLayout->removeWidget(returnButton);
+	mGridLayout->removeWidget(countProduct);
 
+	delete countProduct;
+	delete generalLabel;
 	delete branchLabel;
 	delete branchs_comboBox;
 	delete execSearch;
