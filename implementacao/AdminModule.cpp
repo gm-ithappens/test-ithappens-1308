@@ -190,6 +190,12 @@ void AdminModule::finishOrder_clickedSlot()
 	}
 
 	neworder->ProcessingOrder(INPUT_ORDER, neworder->processing_type);
+
+	warningMessage("Pedido registrado com sucesso!");
+
+	delete neworder;
+
+	returnStoreManagement_clickedSlot_clickedSlot();
 }
 
 void AdminModule::destroyOptionsGeneralListManagementScreen()
