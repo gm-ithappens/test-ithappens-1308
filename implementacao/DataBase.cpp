@@ -422,6 +422,48 @@ QHash<QString, ProductOfOrder *> DataBase::searchListOrderAndPaymentOnBranch(str
 	return HTProductOfOrder;
 }
 
+
+static int retrieveOrderCountProduct(void* data, int argc, char** argv, char** azColName)
+{
+	QString tmp;
+	QList<QString> * ql = (QList<QString> *) data;
+
+	int i;
+	for(i = 0; i < argc; i++)
+	{
+		tmp = argv[i];
+		ql->append(tmp);
+	}
+
+	return 0;
+}
+
+
+QList<QString> * DataBase::searchResumedOrdersSuperlative(string branch, int count)
+{
+	char query[512];
+	int return_code;
+	char* messaggeError;
+	QList<QString> * ql = new QList<QString>();
+
+	HTProductOfOrder.clear();
+
+	snprintf(query, 512, select_resumed_orders_superlative, branch.c_str(), count);
+	cout << "DataBase::earchResumedOrdersSuperlative: " << query << endl;
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveOrderCountProduct, 
+			(void *) ql,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+		sqlite3_free(messaggeError); 
+
+	return ql;
+}
+
+
 void DataBase::registerOrderOnBranch(string branch, string hashorder, int code, int payment_mode)
 {
 	char query[256];
