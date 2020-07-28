@@ -65,6 +65,7 @@ private:
 
 
 	const char * select_product_store_branch_company_sql          = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == '%s';";
+	const char * select_product_store_branch_company_seq_sql      = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE %s == %d;";
 	const char * select_product_store_branch_company_hsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE > %d;";
 	const char * select_product_store_branch_company_lsuper_sql   = "SELECT * FROM '%s_STORE_BRANCHS_COMPANY' WHERE COUNT_AVAILABLE < %d;";
 	const char * select_order_branch_company_filter_seq_sql       = "SELECT * FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' WHERE SEQUENTIAL == %d;" ;
@@ -113,6 +114,7 @@ public:
 	QList<QString> * searchOrdersHashofBranch(string branch);
 	QHash<QString, ProductOfOrder *> searchListOrdersProductHashOnBranch(string branch, string hashsession);
 	Order * searchOneOrderHashofBranch(string branch, string hashsession);
+	Product * searchProductOnBranchSeq(string branch, string search_mode, int product);
 
 };
 #endif
