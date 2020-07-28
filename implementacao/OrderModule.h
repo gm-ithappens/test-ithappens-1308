@@ -124,15 +124,25 @@ public:
 	QString operator_field;
 	QString obs_client_lient_infos;
 	QString hash_session;
-	int payment_mode;
-	int order_type;
-	int total_value;
-	int total_itens;
+	int payment_mode= 0;
+	int order_type  = 0;
+	int total_value = 0;
+	int total_itens = 0;
 
 	QHash<QString, Product *> Products;
 
 };
 
+
+class Order
+{
+public:
+	QString hash_session;
+	int order_type;
+	int payment_mode;
+	int total_value;
+	int total_itens;
+};
 
 
 class ProductOfOrder
