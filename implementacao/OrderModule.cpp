@@ -13,8 +13,8 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
 					total_value,
 					total_itens,
 					operator_field.toStdString(),
-					client_field.toStdString(),
-					obs_client_infos.toStdString());
+					client.name.toStdString(),
+					client.obs.toStdString());
 
         //Register all products of the current order in a table especific
         // Need made a loop in a hash table of products of order
