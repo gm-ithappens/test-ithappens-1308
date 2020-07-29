@@ -914,7 +914,6 @@ void AdminModule::reportSearchlistOrders_clickedSlot()
         {
                 iter.next();
                 order   = (ProductOfOrder *) iter.value();
-                key     = (QString) iter.key();
 
 		out.append(order->hash_session.toStdString().c_str());
 		out.append("      -     ");
