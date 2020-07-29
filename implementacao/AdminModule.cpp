@@ -956,7 +956,7 @@ void AdminModule::reportSuperlativeSearch_clickedSlot()
 	else
 		HTProducts = db_instance->searchSuperProductOnBranch(branchs_field.toStdString(), LESS_THAN, count_product.toInt());
 
-	if(HTProducts.size() == 1)
+	if(HTProducts.size() == 0)
 	{
 		warningMessage("Nenhum produto encontrado!");
 		return;
