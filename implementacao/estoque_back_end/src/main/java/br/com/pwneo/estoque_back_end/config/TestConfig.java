@@ -61,13 +61,13 @@ public class TestConfig implements CommandLineRunner {
         this.productRepository.saveAll(Arrays.asList(notebook, monitor, backpack, headphone, miniMac));
 
         Subsidiary sub1 = new Subsidiary(null, "Filial 1", "1234567890", "Rua teste 1", "72",
-                "Imaginario 1", "Cinematografica 1", "Maranhão");
+                "Imaginario 1", "Ficticia 1", "Maranhão");
         Subsidiary sub2 = new Subsidiary(null, "Filial 2", "1234567891", "Rua teste 2", "73",
-                "Imaginario 2", "Cinematografica 2", "Maranhão");
+                "Imaginario 2", "Ficticia 2", "Maranhão");
         Subsidiary sub3 = new Subsidiary(null, "Filial 1", "1234567892", "Rua teste 3", "74",
-                "Imaginario 3", "Cinematografica 3", "Maranhão");
+                "Imaginario 3", "Ficticia 3", "Maranhão");
         Subsidiary sub4 = new Subsidiary(null, "Filial 1", "1234567893", "Rua teste 4", "75",
-                "Imaginario 4", "Cinematografica 4", "Maranhão");
+                "Imaginario 4", "Ficticia 4", "Maranhão");
         this.subsidiaryRepository.saveAll(Arrays.asList(sub1, sub2, sub3, sub4));
 
         StockItem item1 = new StockItem(null, notebook, 10, 4500.0, sub1);
