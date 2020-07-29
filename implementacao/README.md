@@ -1,4 +1,4 @@
-# Sale and Store System - 3S
+# Simple Store and Sale System - 4S
 
 ## Introduction
 The system is a MVP that have some attributes based in this document ../avaliacao/prova-1303.pdf.
