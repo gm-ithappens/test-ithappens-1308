@@ -89,7 +89,7 @@ private:
 
 	const char * select_resumed_orders_superlative             = "SELECT HASHORDER, COUNT(*) FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY' GROUP BY HASHORDER HAVING COUNT(*) > %d;";
 	const char * select_orders_hash_of_branch                  = "SELECT HASHORDER FROM '%s_ORDERS_PRODUCTS_BRANCHS_COMPANY';";
-	const char * select_one_order_of_branch_sql                = "SELECT * FROM '%s_ORDERS_BRANCHS_COMPANY' WHERE HASHORDER == '%s' ORDERED;";
+	const char * select_one_order_of_branch_sql                = "SELECT * FROM '%s_ORDERS_BRANCHS_COMPANY' WHERE HASHORDER == '%s';";
 
 public:
 	/* Static access method. */
