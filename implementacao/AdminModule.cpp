@@ -75,6 +75,14 @@ void AdminModule::doCreateNewBranch_clickedSlot()
 	if(isSettedVariable(branch_name, "Necessário dá um nome a filial!") == 0)
 		return;
 
+	QString * branch = db_instance->searchBranchCompanyTable(branch_name.toStdString());
+
+	if(!branch->isEmpty())
+	{
+		warningMessage("Filial já cadastrada. Tente outro nome!");
+		return;
+	}
+
 	db_instance->createBranchCompanyTable(branch_name.toStdString());
 
 	warningMessage("Filial criada com sucesso!");
