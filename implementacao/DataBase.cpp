@@ -319,7 +319,7 @@ QHash<QString, Product *> DataBase::searchSuperProductOnBranch(string branch, in
 
 static int retrieveOrderListProduct(void* data, int argc, char** argv, char** azColName)
 {
-	QString str1, str2, tmp;
+	QString str1, str2, tmp, key;
 	ProductOfOrder * line_order = new ProductOfOrder;
 
 	int i;
@@ -331,6 +331,7 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
 			line_order->hash_session      = argv[i];
+			key.append(line_order->hash_session);
 			continue;
 		}
 
@@ -345,6 +346,7 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 		if(!QString::compare(str1, str2, Qt::CaseInsensitive))
 		{
 			line_order->description         = argv[i];
+			key.append(line_order->description);
 			continue;
 		}
 
@@ -398,7 +400,7 @@ static int retrieveOrderListProduct(void* data, int argc, char** argv, char** az
 		}
 	}
 
-	HTProductOfOrder[line_order->description] = line_order;
+	HTProductOfOrder[key] = line_order;
 
 	return 0;
 }
