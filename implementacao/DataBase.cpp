@@ -81,6 +81,39 @@ void DataBase::createBranchCompanyTable(string branch_name)
 	} 
 }
 
+static int retrieveQString(void* data, int argc, char** argv, char** azColName)
+{
+	QString * qs = (QString *) data;
+
+	qs->append(argv[0]);
+
+	return 0;
+}
+
+QString * DataBase::searchBranchCompanyTable(string branch)
+{
+	QString * qs = new QString("");
+	char query[256];
+	int return_code;
+	char* messaggeError;
+
+	snprintf(query, 256, select_branch_company_filtered_sql, branch.c_str());
+
+	return_code = sqlite3_exec(db_instance, 
+			query, 
+			retrieveQString, 
+			(void *)qs,
+			&messaggeError);
+
+	if (return_code != SQLITE_OK)
+	{ 
+		sqlite3_free(messaggeError); 
+		return qs;
+	} 
+
+	return qs;
+}
+
 static int retrieveQList(void* data, int argc, char** argv, char** azColName)
 {
 	QString tmp;
