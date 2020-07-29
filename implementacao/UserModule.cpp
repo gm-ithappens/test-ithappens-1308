@@ -412,4 +412,9 @@ void UserModule::cancelProductSelected()
 
 
 	neworder->Products[product] = line_product;
+
+	QString msg = "";
+	msg.append(product);
+	msg.append(" cancelado");
+	warningMessage(msg.toStdString().c_str());
 }
