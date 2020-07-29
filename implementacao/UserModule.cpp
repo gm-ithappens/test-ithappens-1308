@@ -123,15 +123,39 @@ void UserModule::finishOrder_clickedSlot()
 
 	neworder->ProcessingOrder(OUTPUT_ORDER, UPDATE_PRODUCT);
 
-	destroyOrder();
-}
-
-
-void UserModule::destroyOrder()
-{
 	cout << "** Fim de venda! ** "  << endl;
 	warningMessage("Venda concluida com sucesso!");
 
+	destroyOrder();
+	Execute();
+}
+
+
+void UserModule::destroyPreOrder()
+{
+        mGridLayout->removeWidget(branchLabel);
+        mGridLayout->removeWidget(branchs_comboBox);
+        mGridLayout->removeWidget(operatorLabel);
+        mGridLayout->removeWidget(operator_comboBox);
+        mGridLayout->removeWidget(clientLabel);
+        mGridLayout->removeWidget(txtClientInfos);
+        mGridLayout->removeWidget(obsLabel);
+        mGridLayout->removeWidget(obsClientInfos);
+        mGridLayout->removeWidget(newOrderButton);
+
+        delete branchLabel;
+        delete branchs_comboBox;
+        delete operatorLabel;
+        delete operator_comboBox;
+        delete clientLabel;
+        delete txtClientInfos;
+        delete obsLabel;
+        delete obsClientInfos;
+        delete newOrderButton;
+}
+
+void UserModule::destroyOrder()
+{
         mGridLayout->removeWidget(search_comboBox);
 	mGridLayout->removeWidget(dataSearchLabel);
 	mGridLayout->removeWidget(searchData);
@@ -140,7 +164,10 @@ void UserModule::destroyOrder()
 	mGridLayout->removeWidget(cancelThisProduct);
         mGridLayout->removeWidget(cancelButton);
         mGridLayout->removeWidget(finishOrderButton);
+	mGridLayout->removeWidget(returnButton);
+	mGridLayout->removeWidget(searchModeLabel);
 
+	delete searchModeLabel;
         delete search_comboBox;
 	delete dataSearchLabel;
 	delete searchData;
@@ -149,8 +176,7 @@ void UserModule::destroyOrder()
 	delete cancelThisProduct;
         delete cancelButton;
         delete finishOrderButton;
-
-	Execute();
+	delete returnButton;
 }
 
 
@@ -175,33 +201,13 @@ void UserModule::newOrder_clickedSlot()
 
 	neworder = new OrderModule(branchs_field, client_field, operator_field, obs, OUTPUT_ORDER);
 
+	destroyPreOrder();
+
 	ProcessingOrder();
 }
 
-
 void UserModule::ProcessingOrder()
 {
-        mGridLayout->removeWidget(newOrderButton);
-        mGridLayout->removeWidget(txtClientInfos);
-        mGridLayout->removeWidget(operator_comboBox);
-        mGridLayout->removeWidget(branchs_comboBox);
-	mGridLayout->removeWidget(obsClientInfos);
-
-	mGridLayout->removeWidget(branchLabel);
-	mGridLayout->removeWidget(clientLabel);
-	mGridLayout->removeWidget(obsLabel);
-	mGridLayout->removeWidget(operatorLabel);
-
-        delete newOrderButton;
-	delete operator_comboBox;
-	delete branchs_comboBox;
-	delete txtClientInfos;
-	delete obsClientInfos;
-	delete branchLabel;
-	delete clientLabel;
-	delete obsLabel;
-	delete operatorLabel;
-	
 	cout << "** Ordem de saida ** "  << endl;
 	cout << " Filial   : "           << neworder->branchs_field.toStdString   () << endl;
 	cout << " Operador : "           << neworder->operator_field.toStdString  () << endl;
@@ -241,6 +247,9 @@ void UserModule::ProcessingOrder()
 	cancelButton = mountButton("Cancelar produto");
         QObject::connect(cancelButton, SIGNAL(clicked()),this, SLOT(cancelProductSelected()));
 
+	returnButton = mountButton("Voltar");;
+        QObject::connect(returnButton, SIGNAL(clicked()),this, SLOT(returnProcessingOrder()));
+
 	mGridLayout->addWidget(searchModeLabel);
         mGridLayout->addWidget(search_comboBox);
 	mGridLayout->addWidget(dataSearchLabel);
@@ -250,8 +259,15 @@ void UserModule::ProcessingOrder()
 	mGridLayout->addWidget(cancelThisProduct);
         mGridLayout->addWidget(cancelButton);
         mGridLayout->addWidget(finishOrderButton);
+	mGridLayout->addWidget(returnButton);
 
         show();
+}
+
+void UserModule::returnProcessingOrder()
+{
+	destroyOrder();
+	Execute();
 }
 
 void UserModule::searchModeChoosedChanged()
@@ -342,6 +358,11 @@ void UserModule::newProductSearch_clickedSlot()
 
 
 	neworder->Products[product] = line_product;
+
+	QString msg = "";
+	msg.append(product);
+	msg.append(" adicionado ao pedido");
+	warningMessage(msg.toStdString().c_str());
 }
 
 void UserModule::cancelProductSelected()
