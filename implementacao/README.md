@@ -13,6 +13,12 @@ The software have three basics modules:
 3. Core Business
 	The core is a main loop that know about the system work.
 
+## Dependency
+
+```
+$ sudo apt -y install build-essential qtcreator qt5-default libsqlite3-0 libsqlite3-dev
+```
+
 ## Build and Run
 
 To build project only bring directory build, if do not exists create.
