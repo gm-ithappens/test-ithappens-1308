@@ -32,6 +32,8 @@ To run
 $ ./system3S
 ```
 
+![Application Diagram](../documentacao/system3S.jpg?raw=true "Title")
+
 ## Developer informations
 Developer: Raniere Machado
 email    : raniere.ee@gmail.com
