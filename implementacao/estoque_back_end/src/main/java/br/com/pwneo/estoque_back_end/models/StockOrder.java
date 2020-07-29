@@ -7,7 +7,6 @@ import java.io.Serializable;
 @Table(name = "stock_order")
 public class StockOrder implements Serializable {
 
-
     private static final long serialVersionUID = 1L;
 
     @Id

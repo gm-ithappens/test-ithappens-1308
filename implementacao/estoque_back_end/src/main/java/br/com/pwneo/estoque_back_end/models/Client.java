@@ -1,5 +1,6 @@
 package br.com.pwneo.estoque_back_end.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -8,12 +9,25 @@ import java.util.Objects;
 @Table(name = "client")
 public class Client extends Person {
 
+    @Column(length = 11, nullable = false)
     private String cpf;
+
+    @Column(length = 7, nullable = false)
     private String rg;
+
+    @Column(nullable = false)
     private String street;
+
+    @Column(length = 10, nullable = false)
     private String number;
+
+    @Column(nullable = false)
     private String neighborhood;
+
+    @Column(nullable = false)
     private String city;
+
+    @Column(nullable = false)
     private String uf;
 
     public Client(Long id, String name, String email, String password, String cpf, String rg, String street, String number, String neighborhood, String city, String uf) {

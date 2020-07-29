@@ -17,7 +17,10 @@ public class StockItem implements Serializable {
     @ManyToOne
     private Product product;
 
+    @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false)
     private Double price;
 
     @OneToOne

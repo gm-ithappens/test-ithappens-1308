@@ -40,6 +40,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private StockOrderRepository stockOrderRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
         Operation operation1 = new Operation(null, "ENTRADA");
@@ -107,5 +110,11 @@ public class TestConfig implements CommandLineRunner {
         StockOrder so3 = new StockOrder(null, "", sub2, client2, employee2, paymentMethod2);
 
         this.stockOrderRepository.saveAll(Arrays.asList(so1, so2, so3));
+
+        OrderItem notebookItem = new OrderItem(null, 1, 4500.0, status1, item1, so1);
+        OrderItem backpackItem = new OrderItem(null, 1, 150.0, status1, item4, so2);
+        OrderItem miniMacItem = new OrderItem(null, 1, 6000.0, status1, item13, so1);
+
+        this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
     }
 }
