@@ -22,8 +22,9 @@ $ mkdir build
 
 When into build directory:
 ```
+$ NUM_PROCESSOR=`cat /proc/cpuinfo | grep processor | wc -l`
 $ cmake ..
-$ make
+$ make -j $NUM_PROCESSOR
 ```
 
 To run
