@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Simple Store and Sale System - 4S
 
 ## Introduction
@@ -44,3 +45,10 @@ $ ./system4S
 ## Developer informations
 Developer: Raniere Machado
 email    : raniere.ee@gmail.com
+=======
+### SEU CÓDIGO DE IMPLEMENTAÇÃO AQUI NESTE DIRETÓRIO
+
+```java
+  System.out.println("Se preferir pode editar este arquivo!");
+```
+>>>>>>> bbc0aa2efc732f4ea31f5c05b69179b632b731df
