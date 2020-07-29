@@ -115,6 +115,10 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 	if(isSettedVariable(client_field, "Necessário informar os dados do cliente!") == 0)
 		return;
 
+	QString client_obs = txtClientObs->text();
+	if(isSettedVariable(client_obs, "Necessário informar alguma observação do cliente!") == 0)
+		return;
+
 	QString operation_comboBox = txtClientInfos->text();
 	if(isSettedVariable(operation_comboBox, "Necessário informar o tipo de operação!") == 0)
 		return;
@@ -143,10 +147,8 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 	if(isSettedVariable(value_product, "Necessário informar a quantidade!")  == 0)
 		return;
 
-	QString obs = "NECESSARIO TROCAR ISSO";
-
 	if(!neworder)
-		neworder = new OrderModule(branchs_field, client_field, operator_field, obs, INPUT_ORDER);
+		neworder = new OrderModule(branchs_field, client_field, operator_field, client_obs, INPUT_ORDER);
 
 	Product * line_product = NULL;
 	QString search_mode = "BARCODE";
@@ -163,8 +165,6 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 	}
 
 	neworder->operator_field      = operator_field;
-	neworder->client.name         = client_field;
-	neworder->client.obs          = "Operação de entrada!";
 
 	line_product->description     = desc_product;
 	line_product->barcode         = barcode_product;
@@ -271,6 +271,10 @@ void AdminModule::storeManagement_clickedSlot()
         txtClientInfos = new QLineEdit(this);
         txtClientInfos->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
+	clientObsLabel = new QLabel("Observações sobre cliente: ");
+        txtClientObs = new QLineEdit(this);
+        txtClientObs->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
 	descProdLabel = new QLabel("Descrição do produto: ");
         descProduct = new QLineEdit(this);
         descProduct->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -316,6 +320,8 @@ void AdminModule::storeManagement_clickedSlot()
 	mGridLayout->addWidget(operation_comboBox);
 	mGridLayout->addWidget(clientLabel);
 	mGridLayout->addWidget(txtClientInfos);
+	mGridLayout->addWidget(clientObsLabel);
+	mGridLayout->addWidget(txtClientObs);
 	mGridLayout->addWidget(descProdLabel);
 	mGridLayout->addWidget(descProduct);
 	mGridLayout->addWidget(sequentialLabel);
@@ -354,6 +360,8 @@ void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
 	mGridLayout->removeWidget(operation_comboBox);
 	mGridLayout->removeWidget(clientLabel);
 	mGridLayout->removeWidget(txtClientInfos);
+	mGridLayout->removeWidget(clientObsLabel);
+	mGridLayout->removeWidget(txtClientObs);
 	mGridLayout->removeWidget(descProdLabel);
 	mGridLayout->removeWidget(descProduct);
 	mGridLayout->removeWidget(sequentialLabel);
@@ -376,6 +384,7 @@ void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
 	delete operation_comboBox;
 	delete clientLabel;
 	delete txtClientInfos;
+	delete txtClientObs;
 	delete descProdLabel;
 	delete descProduct;
 	delete sequentialLabel;
@@ -389,6 +398,7 @@ void AdminModule::returnStoreManagement_clickedSlot_clickedSlot()
 	delete finishOrderButton;
 	delete returnButton;
 	delete addMoreButton;
+	delete clientObsLabel;
 
 	// return to administrator screen
 	Execute();
