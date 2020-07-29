@@ -250,7 +250,7 @@ Product * DataBase::searchProductOnBranchSeq(string branch, string search_mode, 
 
 	snprintf(query, 256, select_product_store_branch_company_seq_sql, branch.c_str(), search_mode.c_str(), product);
 
-	cout << "DataBase::searchProductOnBranch: " << query << endl;
+	cout << "DataBase::searchProductOnBranchSeq: " << query << endl;
 
 	return_code = sqlite3_exec(db_instance, 
 			query, 
@@ -263,6 +263,7 @@ Product * DataBase::searchProductOnBranchSeq(string branch, string search_mode, 
 
 	return line_product;
 }
+
 Product * DataBase::searchProductOnBranch(string branch, string search_mode, string product)
 {
 	char query[100];
@@ -302,7 +303,7 @@ QHash<QString, Product *> DataBase::searchSuperProductOnBranch(string branch, in
 	else
 		snprintf(query, 256, select_product_store_branch_company_lsuper_sql, branch.c_str(), count);
 
-	cout << "DataBase::searchProductOnBranch: " << query <<  count << endl;
+	cout << "DataBase::searchSuperProductOnBranch: " << query <<  count << endl;
 
 	return_code = sqlite3_exec(db_instance, 
 			query, 
