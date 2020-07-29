@@ -26,6 +26,7 @@ private:
 	      ");";
 
 	string select_branch_company_sql = "SELECT NAME FROM 'BRANCHS_COMPANY';";
+	const char * select_branch_company_filtered_sql = "SELECT NAME FROM 'BRANCHS_COMPANY' WHERE NAME == '%s';";
 
 	const char * populate_branch_company_sql = "INSERT INTO BRANCHS_COMPANY ('NAME')  VALUES ('%s');";
 
@@ -115,6 +116,7 @@ public:
 	QHash<QString, ProductOfOrder *> searchListOrdersProductHashOnBranch(string branch, string hashsession);
 	Order * searchOneOrderHashofBranch(string branch, string hashsession);
 	Product * searchProductOnBranchSeq(string branch, string search_mode, int product);
+	QString * DataBase::searchBranchCompanyTable(string branch);
 
 };
 #endif
