@@ -34,14 +34,6 @@ public class ClientService {
         return this.repository.findByRg(rg);
     }
 
-    public Client findByEmail(String email) {
-        return this.repository.findByEmail(email);
-    }
-
-    public Client findByName(String name) {
-        return this.repository.findByNameContains(name);
-    }
-
     public Client create(Client client) {
         return this.repository.save(client);
     }

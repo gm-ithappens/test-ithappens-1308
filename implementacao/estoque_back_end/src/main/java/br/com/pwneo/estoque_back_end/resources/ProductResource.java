@@ -22,14 +22,14 @@ public class ProductResource {
         return ResponseEntity.ok().body(this.service.findAll());
     }
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
-    @GetMapping(value = "/barcode/{barCode}")
-    public ResponseEntity<Product> findById(@PathVariable String  barCode) {
-        return ResponseEntity.ok().body(this.service.findBybarCode(barCode));
+    @GetMapping(value = "/barcode/{number}")
+    public ResponseEntity<Product> findByBarcode(@PathVariable String number) {
+        return ResponseEntity.ok().body(this.service.findBybarCode(number));
     }
 
     @PostMapping

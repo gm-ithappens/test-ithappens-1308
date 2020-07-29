@@ -23,7 +23,7 @@ public class ClientResource {
         return ResponseEntity.ok().body(this.service.findAll());
     }
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Client> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
@@ -37,17 +37,6 @@ public class ClientResource {
     public ResponseEntity<Client> findByRg(@PathVariable String number) {
         return ResponseEntity.ok().body(this.service.findByRg(number));
     }
-
-    @GetMapping(value = "/name/{value}")
-    public ResponseEntity<Client> findByName(@PathVariable String value) {
-        return ResponseEntity.ok().body(this.service.findByName(value));
-    }
-
-    @GetMapping(value = "/email/{value}")
-    public ResponseEntity<Client> findByEmail(@PathVariable String value) {
-        return ResponseEntity.ok().body(this.service.findByEmail(value));
-    }
-
 
     @PostMapping
     public ResponseEntity<Client> create(@RequestBody Client client) {

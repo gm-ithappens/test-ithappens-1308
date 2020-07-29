@@ -26,8 +26,8 @@ public class ProductService {
         return this.repository.findById(id).get();
     }
 
-    public Product findBybarCode(String barCode){
-        return this.repository.findByBarCode(barCode);
+    public Product findBybarCode(String number){
+        return this.repository.findByBarCode(number);
     }
 
     public Product create(Product product){
