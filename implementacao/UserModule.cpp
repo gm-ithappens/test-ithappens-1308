@@ -130,7 +130,7 @@ void UserModule::finishOrder_clickedSlot()
 void UserModule::destroyOrder()
 {
 	cout << "** Fim de venda! ** "  << endl;
-	warningMessage("Venda concuida com sucesso!");
+	warningMessage("Venda concluida com sucesso!");
 
         mGridLayout->removeWidget(search_comboBox);
 	mGridLayout->removeWidget(dataSearchLabel);
