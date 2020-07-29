@@ -307,13 +307,22 @@ void UserModule::newProductSearch_clickedSlot()
 	cout << "Quantidade de " << product.toStdString() << " disponivel " << line_product->count_available  << endl;
         if(line_product->count_available == 0)
         {
-                warningMessage("Produto em falta!");
+                warningMessage("Produto não encontrado ou em falta!");
 		return;
         }
 
 	bool ok;
 	int input_count = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
-			 tr("Quantidade:"), 25, 0, 10000, 1, &ok);
+			 tr("Quantidade:"), 0, 0, 10000, 1, &ok);
+
+	if(!ok)
+		return;
+
+	if(input_count == 0)
+	{
+                warningMessage("Não é possível inserir ZERO produto!");
+		return;
+	}
 
 	// New requested count plus already requested cant higher than count available
 	if(line_product->count_available < (line_product->count_requested + input_count))
