@@ -35,7 +35,7 @@ $ make -j $NUM_PROCESSOR
 
 To run
 ```
-$ ./system3S
+$ ./system4S
 ```
 ## Diagram
 
