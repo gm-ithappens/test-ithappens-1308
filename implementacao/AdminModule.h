@@ -92,6 +92,7 @@ private:
 	QLabel      *   descProdLabel;
 	QLabel      *   sequentialLabel;
 	QLabel      *   generalLabel;
+	QLabel      *   clientObsLabel;
 
 	QPushButton * branchManagementButton;
 	QPushButton * productsManagementButton;
@@ -114,6 +115,7 @@ private:
 	QComboBox   *   cboxOrder;
 
 	QLineEdit   *   txtClientInfos;
+	QLineEdit   *   txtClientObs;
         QLineEdit   *   descProduct;
 	QLineEdit   *   sequentialProduct;
         QLineEdit   *   barcodeProduct;
