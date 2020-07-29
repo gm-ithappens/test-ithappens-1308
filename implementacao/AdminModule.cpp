@@ -619,6 +619,7 @@ void AdminModule::reportResumeXPlusButtonManagement_clickedSlot()
 	QString out;
 	ProductOfOrder * product_order;
 	int value_total = 0;
+	int cancel_value_total = 0;
 
 	QString branchs_field = branchs_comboBox->currentText();
 	if(isSettedVariable(branchs_field, "Necessário escolher uma filial!")  == 0)
@@ -650,15 +651,25 @@ void AdminModule::reportResumeXPlusButtonManagement_clickedSlot()
                 product_order   = (ProductOfOrder *) iter.value();
                 key             = (QString) iter.key();
 
-		cout << "   -" << product_order->total_value << endl;
+		cout << "   ->   " << product_order->total_value << endl;
 		out.append(product_order->description.toStdString().c_str());
-		out.append(" -  ");
-		out.append(QString("%1").arg(product_order->total_value).toStdString().c_str());
-		out.append("\n");
 		value_total += product_order->total_value;
+
+		if(product_order->count_canceled)
+		{
+			out.append(" :  -");
+			cancel_value_total += product_order->total_value;
+		}
+		else
+		{
+			out.append(" :  +");
+		}
+		out.append(QString("%1\n").arg(product_order->total_value).toStdString().c_str());
 	}
 	out.append("\nValor somado: ");
 	out.append(QString("%1\n").arg(value_total).toStdString().c_str());
+	out.append("\nValor cancelado: ");
+	out.append(QString("%1\n").arg(cancel_value_total).toStdString().c_str());
 	out.append("");
 
 	warningMessage(out.toStdString().c_str());
