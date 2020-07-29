@@ -36,7 +36,9 @@ public slots:
 	void searchModeChoosedChanged      ();
 	void cancelProductSelected         ();
 	void finishOrder_clickedSlot       ();
-	void UserModule::destroyOrder      ();
+	void destroyOrder                  ();
+	void returnProcessingOrder         ();
+	void destroyPreOrder               ();
 
 private:
 	QGridLayout *   mGridLayout;
@@ -58,6 +60,7 @@ private:
 	QLineEdit   *   obsClientInfos;
 	QLineEdit   *   searchData;
 	QLineEdit   *   cancelThisProduct;
+	QPushButton *   returnButton;
 
 	DataBase * db_instance;
 
