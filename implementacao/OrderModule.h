@@ -78,6 +78,13 @@ public:
 	int status_in_db     =  UNKNOW_IN_DB;
 };
 
+class Client
+{
+public:
+	QString name;
+	QString obs;
+};
+
 class OrderModule
 {
 public:
@@ -88,10 +95,13 @@ public:
 			     int ordertype)
 	{
 		branchs_field           = branchsfield;
-		client_field            = clientfield;
+		//client_field            = clientfield;
 		operator_field          = operatorfield;
-		obs_client_infos        = obsclientlientinfos;
+		//obs_client_infos        = obsclientlientinfos;
 		order_type              = ordertype;
+		client.name             = clientfield;
+        	client.obs              = obsclientlientinfos;
+
 
 		hash_session            =  QString("%1").arg(hash_order());
 	}
@@ -131,10 +141,11 @@ public:
 
 	int processing_type = 0;
 
+	Client client;
+
 	QHash<QString, Product *> Products;
 
 };
-
 
 class Order
 {
