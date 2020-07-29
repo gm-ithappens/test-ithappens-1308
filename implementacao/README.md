@@ -31,6 +31,7 @@ To run
 ```
 $ ./system3S
 ```
+## Diagram
 
 ![Application Diagram](../documentacao/system3S.jpg?raw=true "Title")
 
