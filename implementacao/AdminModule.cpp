@@ -523,15 +523,21 @@ void AdminModule::reportResumeSperlativeManagement_clickedSlot()
 
 	out.append("Pedidos com mais que ");
 	out.append(QString("%1").arg(count_product.toStdString().c_str()));
-	out.append(" itens:");
+	out.append(" itens:\n\n\n");
 
+	out.append("PEDIDO : TOTAL ITENS\n");
+	out.append("--------------------\n");
 	for (int i = 0; i < ql->size(); ++i)
 	{
                 hashsession = ql->at(i);
 
                 cout <<  ": " << hashsession.toStdString() << endl;
 		out.append(hashsession.toStdString().c_str());
-		out.append("\n");
+
+		if(i%2)
+			out.append("\n");
+		else
+			out.append(" : ");
 	}
 
 	warningMessage(out.toStdString().c_str());
