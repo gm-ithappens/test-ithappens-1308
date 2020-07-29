@@ -356,6 +356,7 @@ void UserModule::newProductSearch_clickedSlot()
 	neworder->updateTotalValue(line_product->total_value);
 	neworder->updateTotalitens(line_product->count_requested);
 
+	line_product->status = STATUS_PRODUCT_ACTIVE;
 
 	neworder->Products[product] = line_product;
 

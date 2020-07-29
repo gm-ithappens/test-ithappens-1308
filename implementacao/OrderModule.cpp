@@ -49,6 +49,7 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
                         db_instance->updateProductOnBranch(branchs_field.toStdString(),
                                                            product->barcode.toStdString(),
                                                            product->count_available);
+			product->status = STATUS_PRODUCT_PROCESSED;
                 }
                 else
                 {
@@ -58,6 +59,7 @@ void OrderModule::ProcessingOrder(int ordertype, int product_oper)
                                                            product->count_available,
                                                            product->unit_value,
                                                            product->sequential);
+			product->status = STATUS_PRODUCT_PROCESSED;
                 }
 
         }
