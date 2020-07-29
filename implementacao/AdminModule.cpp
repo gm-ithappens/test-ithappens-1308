@@ -162,9 +162,9 @@ void AdminModule::tryAddProductToOrder_clickedSlot()
 		neworder->processing_type = NEW_PRODUCT;
 	}
 
-	neworder->client_field        = client_field;
 	neworder->operator_field      = operator_field;
-	neworder->obs_client_infos    = "Operação de entrada!";
+	neworder->client.name         = client_field;
+	neworder->client.obs          = "Operação de entrada!";
 
 	line_product->description     = desc_product;
 	line_product->barcode         = barcode_product;
