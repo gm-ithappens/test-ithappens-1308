@@ -1,9 +1,11 @@
 package br.com.pwneo.estoque_back_end.models;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
+@Table(name = "employee")
 public class Employee extends Person {
 
     private String registration;

@@ -37,6 +37,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private StockOrderRepository stockOrderRepository;
+
     @Override
     public void run(String... args) throws Exception {
         Operation operation1 = new Operation(null, "ENTRADA");
@@ -86,17 +89,23 @@ public class TestConfig implements CommandLineRunner {
         this.stockItemRepository.saveAll(Arrays
                 .asList(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13));
 
-        Client c1 = new Client(null, "Carlos", "carlos@gmail.com", "1234567891",
+        Client client1 = new Client(null, "Carlos", "carlos@gmail.com", "1234567891",
                 "12345678916", "556670", "Rua A", "17-B", "Aurora",
                 "São Luis", "Maranhão");
-        Client c2 = new Client(null, "Patricia", "carlos@gmail.com", "1234567890",
+        Client client2 = new Client(null, "Patricia", "carlos@gmail.com", "1234567890",
                 "12345678910", "5566789", "Rua B", "200", "Barreto",
                 "São Luis", "Maranhão");
-        clientRepository.saveAll(Arrays.asList(c1, c2));
+        clientRepository.saveAll(Arrays.asList(client1, client2));
 
-        Employee e1 = new Employee(null, "Paulo", "paulo@ithappens.com.br", "0987654321", "251201");
-        Employee e2 = new Employee(null, "Maria", "maria@ithappens.com.br", "5463424279", "251202");
-        Employee e3 = new Employee(null, "Julia", "julia@ithappens.com.br", "0000000001", "251203");
-        this.employeeRepository.saveAll(Arrays.asList(e1, e2, e3));
+        Employee employee1 = new Employee(null, "Paulo", "paulo@ithappens.com.br", "0987654321", "251201");
+        Employee employee2 = new Employee(null, "Maria", "maria@ithappens.com.br", "5463424279", "251202");
+        Employee employee3 = new Employee(null, "Julia", "julia@ithappens.com.br", "0000000001", "251203");
+        this.employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3));
+
+        StockOrder so1 = new StockOrder(null, "Deixar na porta", sub1, client1, employee3, paymentMethod1);
+        StockOrder so2 = new StockOrder(null, "Entregar na portaria", sub1, client1, employee3, paymentMethod1);
+        StockOrder so3 = new StockOrder(null, "", sub2, client2, employee2, paymentMethod2);
+
+        this.stockOrderRepository.saveAll(Arrays.asList(so1, so2, so3));
     }
 }
