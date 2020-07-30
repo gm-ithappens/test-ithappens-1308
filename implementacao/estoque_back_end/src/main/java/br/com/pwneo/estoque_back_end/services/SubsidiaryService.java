@@ -20,4 +20,8 @@ public class SubsidiaryService {
     public Subsidiary findById(Long id) {
         return this.repository.findById(id).get();
     }
+
+    public Subsidiary findByCnpj(String code){
+        return this.repository.getByCnpj(code);
+    }
 }

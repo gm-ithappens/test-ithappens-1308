@@ -1,12 +1,11 @@
 package br.com.pwneo.estoque_back_end.config;
 
-import br.com.pwneo.estoque_back_end.models.Product;
-import br.com.pwneo.estoque_back_end.models.Stock;
-import br.com.pwneo.estoque_back_end.models.StockProduct;
-import br.com.pwneo.estoque_back_end.models.Subsidiary;
+import br.com.pwneo.estoque_back_end.models.*;
 import br.com.pwneo.estoque_back_end.models.supports.Operation;
 import br.com.pwneo.estoque_back_end.models.supports.PaymentMethod;
 import br.com.pwneo.estoque_back_end.models.supports.Status;
+import br.com.pwneo.estoque_back_end.models.users.Client;
+import br.com.pwneo.estoque_back_end.models.users.Employee;
 import br.com.pwneo.estoque_back_end.repositories.*;
 import br.com.pwneo.estoque_back_end.repositories.supports.OperationRepository;
 import br.com.pwneo.estoque_back_end.repositories.supports.PaymentMethodRepository;
@@ -141,29 +140,28 @@ public class TestConfig implements CommandLineRunner {
 
         this.stockProductRepository.saveAll(stockProducts);
 
-//        Client client1 = new Client(null, "Carlos", "carlos@gmail.com", "1234567891",
-//                "12345678916", "556670", "Rua A", "17-B", "Aurora",
-//                "São Luis", "Maranhão");
-//        Client client2 = new Client(null, "Patricia", "carlos@gmail.com", "1234567890",
-//                "12345678910", "5566789", "Rua B", "200", "Barreto",
-//                "São Luis", "Maranhão");
-//        clientRepository.saveAll(Arrays.asList(client1, client2));
-//
-//        Employee employee1 = new Employee(null, "Paulo", "paulo@ithappens.com.br", "0987654321", "251201");
-//        Employee employee2 = new Employee(null, "Maria", "maria@ithappens.com.br", "5463424279", "251202");
-//        Employee employee3 = new Employee(null, "Julia", "julia@ithappens.com.br", "0000000001", "251203");
-//        this.employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3));
-//
-//        StockOrder so1 = new StockOrder(null, "Deixar na porta", sub1, client1, employee3, paymentMethod1, input);
-//        StockOrder so2 = new StockOrder(null, "Entregar na portaria", sub1, client1, employee3, paymentMethod1, input);
-//        StockOrder so3 = new StockOrder(null, "", sub2, client2, employee2, paymentMethod2, input);
-//
-//        this.stockOrderRepository.saveAll(Arrays.asList(so1, so2, so3));
-//
-//        OrderItem notebookItem = new OrderItem(null, 1, 4500.0, status1, item1, so1);
-//        OrderItem backpackItem = new OrderItem(null, 1, 150.0, status1, item4, so2);
-//        OrderItem miniMacItem = new OrderItem(null, 1, 6000.0, status1, item13, so1);
-//
-//        this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
+        Client client1 = new Client(null, "Carlos", "carlos@gmail.com", "1234567891",
+                "12345678916", "556670", "Rua A", "17-B", "Aurora",
+                "São Luis", "Maranhão");
+        Client client2 = new Client(null, "Patricia", "carlos@gmail.com", "1234567890",
+                "12345678910", "5566789", "Rua B", "200", "Barreto",
+                "São Luis", "Maranhão");
+        clientRepository.saveAll(Arrays.asList(client1, client2));
+
+        Employee employee1 = new Employee(null, "Paulo", "paulo@ithappens.com.br", "0987654321", "251201");
+        Employee employee2 = new Employee(null, "Maria", "maria@ithappens.com.br", "5463424279", "251202");
+        Employee employee3 = new Employee(null, "Julia", "julia@ithappens.com.br", "0000000001", "251203");
+        this.employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3));
+
+        StockOrder so1 = new StockOrder(null, "Deixar na porta", sub1, client1, employee3, paymentMethod1, output);
+        StockOrder so2 = new StockOrder(null, "Entregar na portaria", sub1, client1, employee3, paymentMethod1, output);
+
+        this.stockOrderRepository.saveAll(Arrays.asList(so1, so2));
+
+        OrderItem notebookItem = new OrderItem(null, 1, 4500.0, status1, item1, so1);
+        OrderItem miniMacItem = new OrderItem(null, 1, 6000.0, status1, item13, so1);
+        OrderItem backpackItem = new OrderItem(null, 1, 150.0, status1, item4, so2);
+
+        this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
     }
 }

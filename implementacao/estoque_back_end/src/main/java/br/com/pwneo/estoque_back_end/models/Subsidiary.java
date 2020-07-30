@@ -1,8 +1,12 @@
 package br.com.pwneo.estoque_back_end.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "subsidiary")
@@ -23,6 +27,10 @@ public class Subsidiary implements Serializable {
 
     @OneToOne
     private Stock stock;
+
+
+    @OneToMany(mappedBy = "subsidiary")
+    Set<StockOrder> stockOrders = new HashSet<>();
 
     public Subsidiary(Long id, String name, String cnpj, String street, String number, String neighborhood, String city, String uf, Stock stock) {
         this.id = id;

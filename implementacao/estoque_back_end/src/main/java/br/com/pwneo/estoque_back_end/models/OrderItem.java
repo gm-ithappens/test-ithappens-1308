@@ -1,6 +1,7 @@
 package br.com.pwneo.estoque_back_end.models;
 
 import br.com.pwneo.estoque_back_end.models.supports.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class OrderItem implements Serializable {
     @ManyToOne
     private StockProduct stockProduct;
 
+    @JsonIgnore
     @ManyToOne
     private StockOrder stockOrder;
 

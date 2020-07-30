@@ -4,9 +4,12 @@ import br.com.pwneo.estoque_back_end.models.supports.Operation;
 import br.com.pwneo.estoque_back_end.models.supports.PaymentMethod;
 import br.com.pwneo.estoque_back_end.models.users.Client;
 import br.com.pwneo.estoque_back_end.models.users.Employee;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "stock_order")
@@ -20,6 +23,7 @@ public class StockOrder implements Serializable {
 
     private String note;
 
+    @JsonIgnore
     @ManyToOne
     private Subsidiary subsidiary;
 
@@ -34,6 +38,9 @@ public class StockOrder implements Serializable {
 
     @ManyToOne
     private Operation operation;
+
+    @OneToMany(mappedBy = "stockOrder")
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     public StockOrder(Long id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod, Operation operation) {
         this.id = id;
@@ -102,6 +109,14 @@ public class StockOrder implements Serializable {
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override

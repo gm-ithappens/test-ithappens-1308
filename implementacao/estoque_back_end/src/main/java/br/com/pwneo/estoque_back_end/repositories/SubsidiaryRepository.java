@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubsidiaryRepository extends JpaRepository<Subsidiary, Long> {
+    Subsidiary getByCnpj(String code);
 }

@@ -27,4 +27,9 @@ public class SubsidiaryResource {
     public ResponseEntity<Subsidiary> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
+
+    @GetMapping(value = "/cnpj/{code}")
+    public ResponseEntity<Subsidiary> findById(@PathVariable String code) {
+        return ResponseEntity.ok().body(this.service.findByCnpj(code));
+    }
 }
