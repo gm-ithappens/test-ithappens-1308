@@ -2,18 +2,13 @@ package br.com.pwneo.estoque_back_end.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
-
-/**
- * @author Paulo Weskley de Almeida Ferreira
- * @date 2020-07-29
- *
- * Classe responsável por mapear a Entidade responsável pelos tipos de pagamentos.
- */
+import java.util.Set;
 
 @Entity
-@Table(name = "payment_method")
-public class PaymentMethod implements Serializable {
+@Table(name = "stock")
+public class Stock implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,12 +18,15 @@ public class PaymentMethod implements Serializable {
 
     private String description;
 
-    public PaymentMethod(Long id, String description) {
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+    private Set<StockProduct> stockProducts = new HashSet<>();
+
+    public Stock(Long id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public PaymentMethod() {
+    public Stock() {
     }
 
     public Long getId() {
@@ -47,13 +45,21 @@ public class PaymentMethod implements Serializable {
         this.description = description;
     }
 
+    public Set<StockProduct> getStockProducts() {
+        return stockProducts;
+    }
+
+    public void setStockProducts(Set<StockProduct> stockProducts) {
+        this.stockProducts = stockProducts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PaymentMethod that = (PaymentMethod) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(description, that.description);
+        Stock stock = (Stock) o;
+        return Objects.equals(id, stock.id) &&
+                Objects.equals(description, stock.description);
     }
 
     @Override
@@ -63,7 +69,7 @@ public class PaymentMethod implements Serializable {
 
     @Override
     public String toString() {
-        return "PaymentMethod{" +
+        return "Stock{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 '}';

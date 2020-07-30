@@ -1,5 +1,10 @@
 package br.com.pwneo.estoque_back_end.models;
 
+import br.com.pwneo.estoque_back_end.models.supports.Operation;
+import br.com.pwneo.estoque_back_end.models.supports.PaymentMethod;
+import br.com.pwneo.estoque_back_end.models.users.Client;
+import br.com.pwneo.estoque_back_end.models.users.Employee;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,25 +20,29 @@ public class StockOrder implements Serializable {
 
     private String note;
 
-    @OneToOne
+    @ManyToOne
     private Subsidiary subsidiary;
 
-    @OneToOne
+    @ManyToOne
     private Client client;
 
-    @OneToOne
+    @ManyToOne
     private Employee employee;
 
-    @OneToOne
+    @ManyToOne
     private PaymentMethod paymentMethod;
 
-    public StockOrder(Long id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod) {
+    @ManyToOne
+    private Operation operation;
+
+    public StockOrder(Long id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod, Operation operation) {
         this.id = id;
         this.note = note;
         this.subsidiary = subsidiary;
         this.client = client;
         this.employee = employee;
         this.paymentMethod = paymentMethod;
+        this.operation = operation;
     }
 
     public StockOrder() {
@@ -85,6 +94,14 @@ public class StockOrder implements Serializable {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
 
     @Override

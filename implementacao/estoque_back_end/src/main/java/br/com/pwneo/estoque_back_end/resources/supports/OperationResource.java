@@ -1,7 +1,7 @@
-package br.com.pwneo.estoque_back_end.resources;
+package br.com.pwneo.estoque_back_end.resources.supports;
 
-import br.com.pwneo.estoque_back_end.models.StockItem;
-import br.com.pwneo.estoque_back_end.services.StockItemService;
+import br.com.pwneo.estoque_back_end.models.supports.Operation;
+import br.com.pwneo.estoque_back_end.services.supports.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/stocks")
-public class StockItemResource {
+@RequestMapping(value = "/operations")
+public class OperationResource {
 
     @Autowired
-    private StockItemService service;
+    private OperationService service;
 
     @GetMapping
-    public ResponseEntity<List<StockItem>> findAll() {
+    public ResponseEntity<List<Operation>> findAll() {
         return ResponseEntity.ok().body(this.service.findAll());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<StockItem> findById(@PathVariable Long id) {
+    public ResponseEntity<Operation> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 }

@@ -1,7 +1,7 @@
-package br.com.pwneo.estoque_back_end.services;
+package br.com.pwneo.estoque_back_end.services.supports;
 
-import br.com.pwneo.estoque_back_end.models.Status;
-import br.com.pwneo.estoque_back_end.repositories.StatusRepository;
+import br.com.pwneo.estoque_back_end.models.supports.Status;
+import br.com.pwneo.estoque_back_end.repositories.supports.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

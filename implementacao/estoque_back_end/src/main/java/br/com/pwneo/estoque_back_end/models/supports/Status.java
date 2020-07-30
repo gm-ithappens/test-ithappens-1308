@@ -1,4 +1,4 @@
-package br.com.pwneo.estoque_back_end.models;
+package br.com.pwneo.estoque_back_end.models.supports;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,14 +6,14 @@ import java.util.Objects;
 
 /**
  * @author Paulo Weskley de Almeida Ferreira
- * @date 2020-07-27
- * <p>
- * Classe Responsável por mapear a tabela auxiliar das operações de pedidos de estoque.
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear a entidade Status, que é uma coluna da entidade ItemPedido.
  */
 
 @Entity
-@Table(name = "operation")
-public class Operation implements Serializable {
+@Table(name = "status")
+public class Status implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,16 +23,14 @@ public class Operation implements Serializable {
 
     private String description;
 
-    /*Constructors*/
-    public Operation(Long id, String description) {
+    public Status(Long id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public Operation() {
+    public Status() {
     }
 
-    /*Getters and Setters*/
     public Long getId() {
         return id;
     }
@@ -49,14 +47,13 @@ public class Operation implements Serializable {
         this.description = description;
     }
 
-    /*HashCode and Equals*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Operation operation = (Operation) o;
-        return Objects.equals(id, operation.id) &&
-                Objects.equals(description, operation.description);
+        Status status = (Status) o;
+        return Objects.equals(id, status.id) &&
+                Objects.equals(description, status.description);
     }
 
     @Override
@@ -66,7 +63,7 @@ public class Operation implements Serializable {
 
     @Override
     public String toString() {
-        return "Operation{" +
+        return "Status{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 '}';

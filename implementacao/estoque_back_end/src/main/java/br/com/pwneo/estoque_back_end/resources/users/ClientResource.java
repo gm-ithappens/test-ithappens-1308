@@ -1,7 +1,7 @@
-package br.com.pwneo.estoque_back_end.resources;
+package br.com.pwneo.estoque_back_end.resources.users;
 
-import br.com.pwneo.estoque_back_end.models.Client;
-import br.com.pwneo.estoque_back_end.services.ClientService;
+import br.com.pwneo.estoque_back_end.models.users.Client;
+import br.com.pwneo.estoque_back_end.services.users.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

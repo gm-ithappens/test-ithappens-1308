@@ -1,5 +1,7 @@
 package br.com.pwneo.estoque_back_end.models;
 
+import br.com.pwneo.estoque_back_end.models.supports.Status;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -23,17 +25,17 @@ public class OrderItem implements Serializable {
     private Status status;
 
     @ManyToOne
-    private StockItem stockItem;
+    private StockProduct stockProduct;
 
     @ManyToOne
     private StockOrder stockOrder;
 
-    public OrderItem(Long id, Integer quantity, Double total, Status status, StockItem stockItem, StockOrder stockOrder) {
+    public OrderItem(Long id, Integer quantity, Double total, Status status, StockProduct stockProduct, StockOrder stockOrder) {
         this.id = id;
         this.quantity = quantity;
         this.total = total;
         this.status = status;
-        this.stockItem = stockItem;
+        this.stockProduct = stockProduct;
         this.stockOrder = stockOrder;
     }
 
@@ -72,12 +74,12 @@ public class OrderItem implements Serializable {
         this.status = status;
     }
 
-    public StockItem getStockItem() {
-        return stockItem;
+    public StockProduct getStockItem() {
+        return stockProduct;
     }
 
-    public void setStockItem(StockItem stockItem) {
-        this.stockItem = stockItem;
+    public void setStockItem(StockProduct stockProduct) {
+        this.stockProduct = stockProduct;
     }
 
     public StockOrder getStockOrder() {
@@ -97,13 +99,13 @@ public class OrderItem implements Serializable {
                 Objects.equals(quantity, orderItem.quantity) &&
                 Objects.equals(total, orderItem.total) &&
                 Objects.equals(status, orderItem.status) &&
-                Objects.equals(stockItem, orderItem.stockItem) &&
+                Objects.equals(stockProduct, orderItem.stockProduct) &&
                 Objects.equals(stockOrder, orderItem.stockOrder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity, total, status, stockItem, stockOrder);
+        return Objects.hash(id, quantity, total, status, stockProduct, stockOrder);
     }
 
     @Override
@@ -113,7 +115,7 @@ public class OrderItem implements Serializable {
                 ", quantity=" + quantity +
                 ", total=" + total +
                 ", status=" + status +
-                ", stockItem=" + stockItem +
+                ", stockItem=" + stockProduct +
                 ", stockOrder=" + stockOrder +
                 '}';
     }

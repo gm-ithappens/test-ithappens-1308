@@ -1,7 +1,7 @@
-package br.com.pwneo.estoque_back_end.services;
+package br.com.pwneo.estoque_back_end.services.supports;
 
-import br.com.pwneo.estoque_back_end.models.PaymentMethod;
-import br.com.pwneo.estoque_back_end.repositories.PaymentMethodRepository;
+import br.com.pwneo.estoque_back_end.models.supports.PaymentMethod;
+import br.com.pwneo.estoque_back_end.repositories.supports.PaymentMethodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

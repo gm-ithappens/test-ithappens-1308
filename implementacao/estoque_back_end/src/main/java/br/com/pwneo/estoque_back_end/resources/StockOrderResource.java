@@ -1,6 +1,5 @@
 package br.com.pwneo.estoque_back_end.resources;
 
-import br.com.pwneo.estoque_back_end.models.Client;
 import br.com.pwneo.estoque_back_end.models.StockOrder;
 import br.com.pwneo.estoque_back_end.services.StockOrderService;
 import org.springframework.beans.factory.annotation.Autowired;

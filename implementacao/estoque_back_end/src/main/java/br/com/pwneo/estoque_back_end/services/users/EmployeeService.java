@@ -1,7 +1,7 @@
-package br.com.pwneo.estoque_back_end.services;
+package br.com.pwneo.estoque_back_end.services.users;
 
-import br.com.pwneo.estoque_back_end.models.Employee;
-import br.com.pwneo.estoque_back_end.repositories.EmployeeRepository;
+import br.com.pwneo.estoque_back_end.models.users.Employee;
+import br.com.pwneo.estoque_back_end.repositories.users.EmployeeRepository;
 import br.com.pwneo.estoque_back_end.services.exceptions.DatabaseException;
 import br.com.pwneo.estoque_back_end.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

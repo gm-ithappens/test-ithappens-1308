@@ -34,9 +34,10 @@ public class ProductService {
         return this.repository.save(product);
     }
 
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         try {
             repository.deleteById(id);
+            return true;
         }
 
         catch (EmptyResultDataAccessException e) {

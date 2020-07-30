@@ -26,10 +26,6 @@ public class OrderItemService {
         return this.repository.findById(id).get();
     }
 
-    public OrderItem findByItemId(Long id){
-        return this.repository.findByStockItem_Id(id);
-    }
-
     public OrderItem create(OrderItem orderItem) {
         return this.repository.save(orderItem);
     }

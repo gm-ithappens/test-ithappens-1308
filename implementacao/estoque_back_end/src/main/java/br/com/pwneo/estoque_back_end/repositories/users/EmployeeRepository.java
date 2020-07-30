@@ -1,7 +1,6 @@
-package br.com.pwneo.estoque_back_end.repositories;
+package br.com.pwneo.estoque_back_end.repositories.users;
 
-import br.com.pwneo.estoque_back_end.models.Client;
-import br.com.pwneo.estoque_back_end.models.Employee;
+import br.com.pwneo.estoque_back_end.models.users.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

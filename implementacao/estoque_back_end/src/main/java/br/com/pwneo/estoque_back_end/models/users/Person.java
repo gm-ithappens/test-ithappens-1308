@@ -1,4 +1,4 @@
-package br.com.pwneo.estoque_back_end.models;
+package br.com.pwneo.estoque_back_end.models.users;
 
 import javax.persistence.*;
 import java.io.Serializable;

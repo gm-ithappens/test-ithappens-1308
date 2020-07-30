@@ -1,12 +1,14 @@
 package br.com.pwneo.estoque_back_end.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "stock_item")
-public class StockItem implements Serializable {
+@Table(name = "stock_product")
+public class StockProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -14,27 +16,28 @@ public class StockItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Product product;
-
     @Column(nullable = false)
     private Integer quantity;
 
     @Column(nullable = false)
     private Double price;
 
-    @OneToOne
-    private Subsidiary subsidiary;
+    @ManyToOne
+    private Product product;
 
-    public StockItem(Long id, Product product, Integer quantity, Double price, Subsidiary subsidiary) {
+    @JsonIgnore
+    @ManyToOne
+    private Stock stock;
+
+    public StockProduct(Long id, Product product, Integer quantity, Double price, Stock stock) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
-        this.subsidiary = subsidiary;
+        this.stock = stock;
     }
 
-    public StockItem() {
+    public StockProduct() {
     }
 
     public Long getId() {
@@ -69,39 +72,39 @@ public class StockItem implements Serializable {
         this.price = price;
     }
 
-    public Subsidiary getSubsidiary() {
-        return subsidiary;
+    public Stock getStock() {
+        return stock;
     }
 
-    public void setSubsidiary(Subsidiary subsidiary) {
-        this.subsidiary = subsidiary;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StockItem item = (StockItem) o;
-        return Objects.equals(id, item.id) &&
-                Objects.equals(product, item.product) &&
-                Objects.equals(quantity, item.quantity) &&
-                Objects.equals(price, item.price) &&
-                Objects.equals(subsidiary, item.subsidiary);
+        StockProduct that = (StockProduct) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(quantity, that.quantity) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(product, that.product) &&
+                Objects.equals(stock, that.stock);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, product, quantity, price, subsidiary);
+        return Objects.hash(id, quantity, price, product, stock);
     }
 
     @Override
     public String toString() {
-        return "StockItem{" +
+        return "StockProduct{" +
                 "id=" + id +
-                ", product=" + product +
                 ", quantity=" + quantity +
                 ", price=" + price +
-                ", subsidiary=" + subsidiary +
+                ", product=" + product +
+                ", stock=" + stock +
                 '}';
     }
 }

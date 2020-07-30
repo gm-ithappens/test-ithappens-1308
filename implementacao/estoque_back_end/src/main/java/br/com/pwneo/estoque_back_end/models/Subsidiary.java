@@ -21,7 +21,10 @@ public class Subsidiary implements Serializable {
     private String city;
     private String uf;
 
-    public Subsidiary(Long id, String name, String cnpj, String street, String number, String neighborhood, String city, String uf) {
+    @OneToOne
+    private Stock stock;
+
+    public Subsidiary(Long id, String name, String cnpj, String street, String number, String neighborhood, String city, String uf, Stock stock) {
         this.id = id;
         this.name = name;
         this.cnpj = cnpj;
@@ -30,6 +33,7 @@ public class Subsidiary implements Serializable {
         this.neighborhood = neighborhood;
         this.city = city;
         this.uf = uf;
+        this.stock = stock;
     }
 
     public Subsidiary() {
@@ -99,6 +103,14 @@ public class Subsidiary implements Serializable {
         this.uf = uf;
     }
 
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,12 +123,13 @@ public class Subsidiary implements Serializable {
                 Objects.equals(number, that.number) &&
                 Objects.equals(neighborhood, that.neighborhood) &&
                 Objects.equals(city, that.city) &&
-                Objects.equals(uf, that.uf);
+                Objects.equals(uf, that.uf) &&
+                Objects.equals(stock, that.stock);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, cnpj, street, number, neighborhood, city, uf);
+        return Objects.hash(id, name, cnpj, street, number, neighborhood, city, uf, stock);
     }
 
     @Override
@@ -126,10 +139,11 @@ public class Subsidiary implements Serializable {
                 ", name='" + name + '\'' +
                 ", cnpj='" + cnpj + '\'' +
                 ", street='" + street + '\'' +
-                ", number=" + number +
+                ", number='" + number + '\'' +
                 ", neighborhood='" + neighborhood + '\'' +
                 ", city='" + city + '\'' +
-                ", state='" + uf + '\'' +
+                ", uf='" + uf + '\'' +
+                ", stock=" + stock +
                 '}';
     }
 }

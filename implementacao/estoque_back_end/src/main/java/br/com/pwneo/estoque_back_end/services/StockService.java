@@ -1,23 +1,23 @@
 package br.com.pwneo.estoque_back_end.services;
 
-import br.com.pwneo.estoque_back_end.models.StockItem;
-import br.com.pwneo.estoque_back_end.repositories.StockItemRepository;
+import br.com.pwneo.estoque_back_end.models.Stock;
+import br.com.pwneo.estoque_back_end.repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StockItemService {
+public class StockService {
 
     @Autowired
-    private StockItemRepository repository;
+    private StockRepository repository;
 
-    public List<StockItem> findAll() {
+    public List<Stock> findAll() {
         return this.repository.findAll();
     }
 
-    public StockItem findById(Long id) {
+    public Stock findById(Long id) {
         return this.repository.findById(id).get();
     }
 }

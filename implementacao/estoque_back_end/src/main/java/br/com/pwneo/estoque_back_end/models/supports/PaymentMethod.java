@@ -1,4 +1,4 @@
-package br.com.pwneo.estoque_back_end.models;
+package br.com.pwneo.estoque_back_end.models.supports;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,12 +8,12 @@ import java.util.Objects;
  * @author Paulo Weskley de Almeida Ferreira
  * @date 2020-07-29
  *
- * Classe responsável por mapear a entidade Status, que é uma coluna da entidade ItemPedido.
+ * Classe responsável por mapear a Entidade responsável pelos tipos de pagamentos.
  */
 
 @Entity
-@Table(name = "status")
-public class Status implements Serializable {
+@Table(name = "payment_method")
+public class PaymentMethod implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,12 +23,12 @@ public class Status implements Serializable {
 
     private String description;
 
-    public Status(Long id, String description) {
+    public PaymentMethod(Long id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public Status() {
+    public PaymentMethod() {
     }
 
     public Long getId() {
@@ -51,9 +51,9 @@ public class Status implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Status status = (Status) o;
-        return Objects.equals(id, status.id) &&
-                Objects.equals(description, status.description);
+        PaymentMethod that = (PaymentMethod) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(description, that.description);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return "Status{" +
+        return "PaymentMethod{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 '}';

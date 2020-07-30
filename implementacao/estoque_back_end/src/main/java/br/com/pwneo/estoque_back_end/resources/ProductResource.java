@@ -42,9 +42,8 @@ public class ProductResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.service.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return ResponseEntity.ok().body(this.service.delete(id) ? "Item removido de Produtos" : "Algo deu errado");
     }
 
     @PutMapping(value = "/{id}")

@@ -1,9 +1,11 @@
-package br.com.pwneo.estoque_back_end.models;
+package br.com.pwneo.estoque_back_end.models.users;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import br.com.pwneo.estoque_back_end.models.StockOrder;
+
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -29,6 +31,9 @@ public class Client extends Person {
 
     @Column(nullable = false)
     private String uf;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<StockOrder> stockOrder = new HashSet<>();
 
     public Client(Long id, String name, String email, String password, String cpf, String rg, String street, String number, String neighborhood, String city, String uf) {
         super(id, name, email, password);
@@ -99,6 +104,14 @@ public class Client extends Person {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public Set<StockOrder> getStockOrder() {
+        return stockOrder;
+    }
+
+    public void setStockOrder(Set<StockOrder> stockOrder) {
+        this.stockOrder = stockOrder;
     }
 
     @Override

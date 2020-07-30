@@ -1,11 +1,7 @@
 package br.com.pwneo.estoque_back_end.resources;
 
 import br.com.pwneo.estoque_back_end.models.OrderItem;
-import br.com.pwneo.estoque_back_end.models.Product;
-import br.com.pwneo.estoque_back_end.models.StockItem;
 import br.com.pwneo.estoque_back_end.services.OrderItemService;
-import br.com.pwneo.estoque_back_end.services.StockItemService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +27,10 @@ public class OrderItemResource {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
-    @GetMapping(value = "/product/{id}")
-    public ResponseEntity<OrderItem> findByProductId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(this.service.findByItemId(id));
-    }
+//    @GetMapping(value = "/product/{id}")
+//    public ResponseEntity<OrderItem> findByProductId(@PathVariable Long id) {
+//        return ResponseEntity.ok().body(this.service.findByItemId(id));
+//    }
 
     @PostMapping
     public ResponseEntity<OrderItem> create(@RequestBody OrderItem orderItem) {
