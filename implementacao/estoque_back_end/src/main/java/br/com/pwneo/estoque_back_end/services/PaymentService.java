@@ -90,8 +90,7 @@ public class PaymentService {
             orderItem.setStatus(this.statusRepository.findByDescription("PROCESSADO"));
             this.stockProductRepository.findAll().forEach(stockProductCurrent -> {
                 if (orderItem.getStockProduct().getId().equals(stockProductCurrent.getId())) {
-                    System.out.println("QTD do Item no estoque: " + stockProductCurrent.getQuantity() +" : " + " Qtd do item no pedido: " + orderItem.getStockProduct().getQuantity());
-//                    stockProductCurrent.setQuantity(stockProductCurrent.getQuantity() - orderItem.getStockProduct().getQuantity());
+                    stockProductCurrent.setQuantity(stockProductCurrent.getQuantity() - orderItem.getStockProduct().getQuantity());
                 }
             });
         });
