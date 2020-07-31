@@ -1,4 +1,4 @@
-Para testar deve-se seguir a sequência dos modelos.
+Para testar deve-se seguir a sequência dos modelos abaixo.
 
 Exemplo de post de Client:
 {
