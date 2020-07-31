@@ -1,3 +1,5 @@
+Para testar deve-se seguir a sequência dos modelos.
+
 Exemplo de post de Client:
 {
   "name": "Jose Augusto",
