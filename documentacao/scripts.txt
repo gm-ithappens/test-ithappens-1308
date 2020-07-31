@@ -1,0 +1,11 @@
+Produtos com quant. ≥ 100
+SELECT * FROM STOCK_PRODUCT SP WHERE SP.QUANTITY >= 100;
+
+Produtos para a filial 60
+SELECT * FROM STOCK_PRODUCT SP JOIN SUBSIDIARY SUB ON (SUB.STOCK_ID = SP.STOCK_ID AND [SUB.ID](http://sub.id/) = 60);
+
+Todos os campos de item pedido e pedido estoque filtrando pelo produto de id 7993
+SELECT * FROM ORDER_ITEM OI JOIN STOCK_ORDER SO ON (OI.STOCK_ORDER_ID = [SO.ID](http://so.id/) AND OI.STOCK_PRODUCT_ID = 7993);
+
+Todos os pedidos e formas de pagamento
+SELECT * FROM STOCK_ORDER SO JOIN PAYMENT PAY ON ([SO.ID](http://so.id/) = PAY.STOCK_ORDER_ID) JOIN PAYMENT_METHOD PM ON (PAY.PAYMENT_METHOD_ID = [PM.ID](http://pm.id/));
