@@ -1,19 +1,18 @@
 package br.com.pwneo.estoque_back_end.models.dtos;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public class OrderItemDTO implements Serializable {
 
     private static final Long serialVersionUID = 1L;
 
     private Integer stockOrder;
-    private Integer productId;
+    private Integer product;
     private Integer quantity;
 
-    public OrderItemDTO(Integer stockOrder,Integer productId, Integer quantity) {
+    public OrderItemDTO(Integer stockOrder, Integer product, Integer quantity) {
         this.stockOrder = stockOrder;
-        this.productId = productId;
+        this.product = product;
         this.quantity = quantity;
     }
 
@@ -28,12 +27,12 @@ public class OrderItemDTO implements Serializable {
         this.stockOrder = stockOrder;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Integer product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {
@@ -42,5 +41,14 @@ public class OrderItemDTO implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItemDTO{" +
+                "stockOrder=" + stockOrder +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                '}';
     }
 }

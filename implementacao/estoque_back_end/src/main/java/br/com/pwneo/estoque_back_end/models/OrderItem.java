@@ -70,7 +70,7 @@ public class OrderItem implements Serializable {
     }
 
     public void setTotal(Double total) {
-        this.total = this.quantity * this.stockProduct.getPrice();
+        this.total = total;
     }
 
     public Status getStatus() {

@@ -5,7 +5,6 @@ import br.com.pwneo.estoque_back_end.models.dtos.StockOrderNewDTO;
 import br.com.pwneo.estoque_back_end.repositories.StockOrderRepository;
 import br.com.pwneo.estoque_back_end.repositories.SubsidiaryRepository;
 import br.com.pwneo.estoque_back_end.repositories.supports.OperationRepository;
-import br.com.pwneo.estoque_back_end.repositories.supports.PaymentMethodRepository;
 import br.com.pwneo.estoque_back_end.repositories.users.ClientRepository;
 import br.com.pwneo.estoque_back_end.repositories.users.EmployeeRepository;
 import br.com.pwneo.estoque_back_end.services.exceptions.DatabaseException;
@@ -33,10 +32,8 @@ public class StockOrderService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private PaymentMethodRepository paymentMethodRepository;
-
-    @Autowired
     private OperationRepository operationRepository;
+
 
     public List<StockOrder> findAll() {
         return this.stockOrderRepository.findAll();
@@ -58,16 +55,18 @@ public class StockOrderService {
         stockOrder.setSubsidiary(this.subsidiaryRepository.findById(stockOrderNewDTO.getSubsidiary()).get());
         stockOrder.setClient(this.clientRepository.findById(stockOrderNewDTO.getClient()).get());
         stockOrder.setEmployee(this.employeeRepository.findById(stockOrderNewDTO.getEmployee()).get());
-        stockOrder.setPaymentMethod(this.paymentMethodRepository.findById(stockOrderNewDTO.getPaymentMethod()).get());
         stockOrder.setOperation(this.operationRepository.findByDescription("SAIDA"));
+
         return this.stockOrderRepository.save(stockOrder);
     }
 
     public void delete(Integer id) {
         try {
             stockOrderRepository.deleteById(id);
+
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id);
+
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }

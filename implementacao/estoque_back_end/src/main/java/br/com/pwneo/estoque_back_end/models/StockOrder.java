@@ -1,20 +1,17 @@
 package br.com.pwneo.estoque_back_end.models;
 
 import br.com.pwneo.estoque_back_end.models.supports.Operation;
-import br.com.pwneo.estoque_back_end.models.supports.PaymentMethod;
 import br.com.pwneo.estoque_back_end.models.users.Client;
 import br.com.pwneo.estoque_back_end.models.users.Employee;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * @author Paulo Weskley de Almeida Ferreira
  * @date 2020-07-29
- *
+ * <p>
  * Classe responsável por mapear as informações dos pedidos de estoque
  */
 
@@ -29,6 +26,8 @@ public class StockOrder implements Serializable {
     private Integer id;
 
     private String note;
+    private Integer quantity = 0;
+    private Double totalPrice = 0.0;
 
     @ManyToOne
     private Subsidiary subsidiary;
@@ -40,18 +39,14 @@ public class StockOrder implements Serializable {
     private Employee employee;
 
     @ManyToOne
-    private PaymentMethod paymentMethod;
-
-    @ManyToOne
     private Operation operation;
 
-    public StockOrder(Integer id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod, Operation operation) {
+    public StockOrder(Integer id, String note, Subsidiary subsidiary, Client client, Employee employee, Operation operation) {
         this.id = id;
         this.note = note;
         this.subsidiary = subsidiary;
         this.client = client;
         this.employee = employee;
-        this.paymentMethod = paymentMethod;
         this.operation = operation;
     }
 
@@ -98,20 +93,46 @@ public class StockOrder implements Serializable {
         this.employee = employee;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
     public Operation getOperation() {
         return operation;
     }
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StockOrder that = (StockOrder) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(note, that.note) &&
+                Objects.equals(subsidiary, that.subsidiary) &&
+                Objects.equals(client, that.client) &&
+                Objects.equals(employee, that.employee) &&
+                Objects.equals(operation, that.operation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, note, subsidiary, client, employee, operation);
     }
 
     @Override
@@ -122,7 +143,6 @@ public class StockOrder implements Serializable {
                 ", subsidiary=" + subsidiary +
                 ", client=" + client +
                 ", employee=" + employee +
-                ", paymentMethod=" + paymentMethod +
                 '}';
     }
 }

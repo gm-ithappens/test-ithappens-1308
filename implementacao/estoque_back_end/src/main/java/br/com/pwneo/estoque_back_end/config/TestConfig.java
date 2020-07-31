@@ -67,6 +67,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
+
     @Override
     public void run(String... args) throws Exception {
         Operation input = new Operation(null, "ENTRADA");
@@ -159,15 +162,18 @@ public class TestConfig implements CommandLineRunner {
         Employee employee3 = new Employee(null, "Julia", "julia@ithappens.com.br", "0000000001", "251203");
         this.employeeRepository.saveAll(Arrays.asList(employee1, employee2, employee3));
 
-        StockOrder so1 = new StockOrder(null, "Deixar na porta", sub1, client1, employee3, paymentMethod1, output);
-        StockOrder so2 = new StockOrder(null, "Entregar na portaria", sub1, client1, employee3, paymentMethod1, output);
+//        StockOrder so1 = new StockOrder(null, "Deixar na porta", sub1, client1, employee3, output);
+//        StockOrder so2 = new StockOrder(null, "Entregar na portaria", sub1, client1, employee3, output);
 
-        this.stockOrderRepository.saveAll(Arrays.asList(so1, so2));
+//        this.stockOrderRepository.saveAll(Arrays.asList(so1));
 
-        OrderItem notebookItem = new OrderItem(null, 1,  status1, item1, so1);
-        OrderItem miniMacItem = new OrderItem(null, 1, status1, item13, so1);
-        OrderItem backpackItem = new OrderItem(null, 1, status1, item4, so2);
+//        OrderItem notebookItem = new OrderItem(null, 1,  status1, item1, so1);
+//        OrderItem miniMacItem = new OrderItem(null, 1, status1, item13, so1);
 
-        this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
+//        this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
+
+//        Payment payment1 = new Payment(null, paymentMethod1, so1, status3);
+//        Payment payment2 = new Payment(null, paymentMethod1, so2, status2);
+//        this.paymentRepository.saveAll(Arrays.asList(payment1));
     }
 }

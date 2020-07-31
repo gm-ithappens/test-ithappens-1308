@@ -1,8 +1,14 @@
 package br.com.pwneo.estoque_back_end.services;
 
 import br.com.pwneo.estoque_back_end.models.OrderItem;
+import br.com.pwneo.estoque_back_end.models.StockOrder;
+import br.com.pwneo.estoque_back_end.models.StockProduct;
 import br.com.pwneo.estoque_back_end.models.dtos.OrderItemDTO;
+import br.com.pwneo.estoque_back_end.models.dtos.OrderItemQuantityDTO;
+import br.com.pwneo.estoque_back_end.models.dtos.OrderItemStatusDTO;
+import br.com.pwneo.estoque_back_end.models.supports.Status;
 import br.com.pwneo.estoque_back_end.repositories.OrderItemRepository;
+import br.com.pwneo.estoque_back_end.repositories.StockOrderRepository;
 import br.com.pwneo.estoque_back_end.repositories.StockProductRepository;
 import br.com.pwneo.estoque_back_end.repositories.supports.StatusRepository;
 import br.com.pwneo.estoque_back_end.services.exceptions.DatabaseException;
@@ -28,6 +34,10 @@ public class OrderItemService {
     @Autowired
     private StockProductRepository stockProductRepository;
 
+    @Autowired
+    private StockOrderRepository stockOrderRepository;
+
+
     public List<OrderItem> findAll() {
         return this.orderItemRepository.findAll();
     }
@@ -42,7 +52,7 @@ public class OrderItemService {
      * Ele verifica primeiramente se já existe o item neste pedido.
      * Para isso ele compara o id do pedido de estoque e id do produto.
      * Caso encontre ele um item que já tem o id do pedido e o id do produto, ele dispara uma exception informando o ocorrido.
-     * Caso contrário ele cria o novo item.
+     * Caso contrário ele cria o novo item e atualiza em StockOrder o valor total e a quantidade de itens da lista.
      */
     public OrderItem create(OrderItemDTO orderItemDTO) {
         OrderItem orderItem = new OrderItem();
@@ -50,21 +60,38 @@ public class OrderItemService {
         List<OrderItem> orderItems = this.orderItemRepository.findAll();
 
         orderItems.forEach(orderItemCurrent -> {
-            Integer stockOrder = orderItemCurrent.getStockOrder().getId();
-            Integer productId = orderItemCurrent.getStockProduct().getId();
+            Integer stockOrderCurrent = orderItemCurrent.getStockOrder().getId();
+            Integer productIdCurrent = orderItemCurrent.getStockProduct().getId();
 
-            if (stockOrder.equals(orderItemDTO.getStockOrder()) && productId.equals(orderItemDTO.getProductId())) {
+            /*
+             * Caso os id's de pediddo de estoque e produtos sejam iguais ao que veio no DTO então ele achou o pedido de estoque.
+             * index.Set(1) representa que o elemento foi encontrado
+             **/
+            if (stockOrderCurrent.equals(orderItemDTO.getStockOrder()) && productIdCurrent.equals(orderItemDTO.getProduct())) {
                 index.set(1);
             }
         });
 
+        /*Pedido de estoque já existe no banco? Não faz nada, apenas dispara uma exception*/
         if (index.get() > -1) {
-            throw new DatabaseException("Produto já existe na lista de itens!");
-        } else {
-            Double priceProduct = this.stockProductRepository.findById(orderItemDTO.getProductId()).get().getPrice();
-            Integer quantityInStock = stockProductRepository.findById(orderItemDTO.getProductId()).get().getQuantity();
+            throw new RuntimeException("Produto já existe na lista de itens!");
+        }
 
-            if (orderItemDTO.getQuantity() < 0) {
+        /*
+         * Se não achou, então vamos criar um novo pedido de estoque para ser armazenado, mas antes:
+         * - Verificamos se a quantidade não é menor que 1 e se ela é menor ou igual a que existe no estoque.
+         * - Atualizamos a quantidade total de produtos do pedido, somando o total ja existente com a quantidade do novo item.
+         * - Atualizamos o valor total do pedido de estoque, somando o valorTotal (quantidade x preço) de cada item.
+         */
+        else {
+            System.out.println("Order Item DTO Atual ===============: " + orderItemDTO);
+
+            StockOrder newStockOrder =  this.stockOrderRepository.findById(orderItemDTO.getStockOrder()).get();
+            StockProduct newStockProduct = this.stockProductRepository.findById(orderItemDTO.getProduct()).get();
+            Double priceProduct = this.stockProductRepository.findById(orderItemDTO.getProduct()).get().getPrice();
+            Integer quantityInStock = this.stockProductRepository.findById(orderItemDTO.getProduct()).get().getQuantity();
+
+           if (orderItemDTO.getQuantity() < 1) {
                 throw new RuntimeException("Quantidade de produtos é inválida!");
             }
 
@@ -73,10 +100,16 @@ public class OrderItemService {
             }
 
             orderItem.setStatus(this.statusRepository.findByDescription("ATIVO"));
-            orderItem.setTotal(orderItemDTO.getQuantity() * priceProduct);
+            orderItem.setTotal( orderItemDTO.getQuantity().doubleValue() * priceProduct);
             orderItem.setQuantity(orderItemDTO.getQuantity());
-            orderItem.setStockOrder(orderItem.getStockOrder());
-            orderItem.setStockProduct(this.stockProductRepository.findById(orderItemDTO.getProductId()).get());
+            orderItem.setStockOrder(newStockOrder);
+            orderItem.setStockProduct(newStockProduct);
+
+            this.stockOrderRepository.findById(orderItemDTO.getStockOrder())
+                    .ifPresent(stockOrderCurrent -> {
+                        stockOrderCurrent.setQuantity(stockOrderCurrent.getQuantity() + orderItem.getQuantity());
+                        stockOrderCurrent.setTotalPrice(stockOrderCurrent.getTotalPrice() + orderItem.getTotal());
+                    });
         }
         return this.orderItemRepository.save(orderItem);
     }
@@ -96,16 +129,31 @@ public class OrderItemService {
     /*
      * O Método é responsável por atualizar a quantidade do item selecionado no pedido de estoque.
      * Ele verifica se o valor digitado é maior que zero. Caso contrário ele não insere e retorna uma exception.
-     * */
-    public OrderItem updateQuantity(Integer id, OrderItemDTO orderItemDTO) {
+     */
+    public OrderItem updateQuantity(Integer id, OrderItemQuantityDTO orderItemQuantityDTO) {
         try {
             OrderItem orderItem = this.orderItemRepository.getOne(id);
 
-            if (orderItemDTO.getQuantity() < 0) {
+            if (orderItemQuantityDTO.getQuantity() < 0) {
                 throw new RuntimeException("A quantidade do item é inválida");
             }
 
-            orderItem.setQuantity(orderItemDTO.getQuantity());
+            orderItem.setQuantity(orderItemQuantityDTO.getQuantity());
+            return this.orderItemRepository.save(orderItem);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
+    }
+
+    /*
+     * O Método é responsável por atualizar o status do item do pedido.
+     */
+    public OrderItem updateStatus(Integer id, OrderItemStatusDTO orderItemStatusDTO) {
+        try {
+            Status statusCode = this.statusRepository.findByDescription(orderItemStatusDTO.getStatusMessage());
+            OrderItem orderItem = this.orderItemRepository.getOne(id);
+            orderItem.setStatus(statusCode);
             return this.orderItemRepository.save(orderItem);
 
         } catch (EntityNotFoundException e) {

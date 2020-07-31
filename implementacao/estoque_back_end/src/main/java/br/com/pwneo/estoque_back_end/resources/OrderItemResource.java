@@ -2,6 +2,8 @@ package br.com.pwneo.estoque_back_end.resources;
 
 import br.com.pwneo.estoque_back_end.models.OrderItem;
 import br.com.pwneo.estoque_back_end.models.dtos.OrderItemDTO;
+import br.com.pwneo.estoque_back_end.models.dtos.OrderItemQuantityDTO;
+import br.com.pwneo.estoque_back_end.models.dtos.OrderItemStatusDTO;
 import br.com.pwneo.estoque_back_end.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +45,13 @@ public class OrderItemResource {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<OrderItem> update(@PathVariable Integer id, @RequestBody OrderItemDTO orderItemDTO) {
-        return ResponseEntity.ok().body(this.service.updateQuantity(id, orderItemDTO));
+    @PutMapping(value = "/quantity/{id}")
+    public ResponseEntity<OrderItem> updateQuantity(@PathVariable Integer id, @RequestBody OrderItemQuantityDTO orderItemQuantityDTO) {
+        return ResponseEntity.ok().body(this.service.updateQuantity(id, orderItemQuantityDTO));
+    }
+
+    @PutMapping(value = "/status/{id}")
+    public ResponseEntity<OrderItem> updateStatus(@PathVariable Integer id, @RequestBody OrderItemStatusDTO orderItemStatusDTO) {
+        return ResponseEntity.ok().body(this.service.updateStatus(id, orderItemStatusDTO));
     }
 }
