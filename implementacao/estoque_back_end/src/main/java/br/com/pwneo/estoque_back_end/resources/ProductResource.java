@@ -23,7 +23,7 @@ public class ProductResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) {
+    public ResponseEntity<Product> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
@@ -42,12 +42,12 @@ public class ProductResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.delete(id) ? "Item removido de Produtos" : "Algo deu errado");
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> update(@PathVariable Integer id, @RequestBody Product product) {
         return ResponseEntity.ok().body(this.service.update(id, product));
     }
 }

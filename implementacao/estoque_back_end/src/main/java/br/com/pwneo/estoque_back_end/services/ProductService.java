@@ -22,7 +22,7 @@ public class ProductService {
         return this.repository.findAll();
     }
 
-    public Product findById(Long id) {
+    public Product findById(Integer id) {
         return this.repository.findById(id).get();
     }
 
@@ -34,7 +34,7 @@ public class ProductService {
         return this.repository.save(product);
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(Integer id) {
         try {
             repository.deleteById(id);
             return true;
@@ -49,7 +49,7 @@ public class ProductService {
         }
     }
 
-    public Product update(Long id, Product product) {
+    public Product update(Integer id, Product product) {
         try {
             Product productTemp = repository.getOne(id);
             productTemp.setBarCode(product.getBarCode());

@@ -17,7 +17,7 @@ public class PaymentMethodService {
         return this.repository.findAll();
     }
 
-    public PaymentMethod findById(Long id) {
+    public PaymentMethod findById(Integer id) {
         return this.repository.findById(id).get();
     }
 }

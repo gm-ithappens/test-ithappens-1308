@@ -11,6 +11,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear as informações dos pedidos de estoque
+ */
+
 @Entity
 @Table(name = "stock_order")
 public class StockOrder implements Serializable {
@@ -19,11 +26,10 @@ public class StockOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String note;
 
-    @JsonIgnore
     @ManyToOne
     private Subsidiary subsidiary;
 
@@ -39,10 +45,7 @@ public class StockOrder implements Serializable {
     @ManyToOne
     private Operation operation;
 
-    @OneToMany(mappedBy = "stockOrder")
-    private Set<OrderItem> orderItems = new HashSet<>();
-
-    public StockOrder(Long id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod, Operation operation) {
+    public StockOrder(Integer id, String note, Subsidiary subsidiary, Client client, Employee employee, PaymentMethod paymentMethod, Operation operation) {
         this.id = id;
         this.note = note;
         this.subsidiary = subsidiary;
@@ -55,11 +58,11 @@ public class StockOrder implements Serializable {
     public StockOrder() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -109,14 +112,6 @@ public class StockOrder implements Serializable {
 
     public void setOperation(Operation operation) {
         this.operation = operation;
-    }
-
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
     }
 
     @Override

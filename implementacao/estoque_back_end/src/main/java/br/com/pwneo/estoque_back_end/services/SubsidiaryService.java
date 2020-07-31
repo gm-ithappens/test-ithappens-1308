@@ -17,7 +17,7 @@ public class SubsidiaryService {
         return this.repository.findAll();
     }
 
-    public Subsidiary findById(Long id) {
+    public Subsidiary findById(Integer id) {
         return this.repository.findById(id).get();
     }
 

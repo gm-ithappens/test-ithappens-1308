@@ -24,7 +24,7 @@ public class StockResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Stock> findById(@PathVariable Long id) {
+    public ResponseEntity<Stock> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 }

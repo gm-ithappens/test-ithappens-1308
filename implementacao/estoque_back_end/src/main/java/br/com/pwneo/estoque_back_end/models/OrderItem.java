@@ -7,6 +7,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear as informações dos itens do pedido de estoque
+ */
+
 @Entity
 @Table(name = "order_item")
 public class OrderItem implements Serializable {
@@ -15,7 +22,7 @@ public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private Integer quantity;
 
@@ -28,14 +35,12 @@ public class OrderItem implements Serializable {
     @ManyToOne
     private StockProduct stockProduct;
 
-    @JsonIgnore
     @ManyToOne
     private StockOrder stockOrder;
 
-    public OrderItem(Long id, Integer quantity, Double total, Status status, StockProduct stockProduct, StockOrder stockOrder) {
+    public OrderItem(Integer id, Integer quantity, Status status, StockProduct stockProduct, StockOrder stockOrder) {
         this.id = id;
         this.quantity = quantity;
-        this.total = total;
         this.status = status;
         this.stockProduct = stockProduct;
         this.stockOrder = stockOrder;
@@ -44,11 +49,11 @@ public class OrderItem implements Serializable {
     public OrderItem() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -65,7 +70,7 @@ public class OrderItem implements Serializable {
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+        this.total = this.quantity * this.stockProduct.getPrice();
     }
 
     public Status getStatus() {
@@ -76,11 +81,11 @@ public class OrderItem implements Serializable {
         this.status = status;
     }
 
-    public StockProduct getStockItem() {
+    public StockProduct getStockProduct() {
         return stockProduct;
     }
 
-    public void setStockItem(StockProduct stockProduct) {
+    public void setStockProduct(StockProduct stockProduct) {
         this.stockProduct = stockProduct;
     }
 

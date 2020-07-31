@@ -24,7 +24,7 @@ public class OperationResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Operation> findById(@PathVariable Long id) {
+    public ResponseEntity<Operation> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 }

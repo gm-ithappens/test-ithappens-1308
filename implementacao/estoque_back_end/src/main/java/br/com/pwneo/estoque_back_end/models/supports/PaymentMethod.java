@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Paulo Weskley de Almeida Ferreira
  * @date 2020-07-29
  *
- * Classe responsável por mapear a Entidade responsável pelos tipos de pagamentos.
+ * Classe responsável por mapear a Entidade de tipos de pagamentos.
  */
 
 @Entity
@@ -19,11 +19,11 @@ public class PaymentMethod implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String description;
 
-    public PaymentMethod(Long id, String description) {
+    public PaymentMethod(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -31,11 +31,11 @@ public class PaymentMethod implements Serializable {
     public PaymentMethod() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear as informações dos produtos
+ */
+
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
@@ -12,14 +19,15 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "bar_code", nullable = false)
     private String barCode;
 
+    @Column(nullable = false, updatable = true)
     private String description;
 
-    public Product(Long id, String barCode, String description) {
+    public Product(Integer id, String barCode, String description) {
         this.id = id;
         this.barCode = barCode;
         this.description = description;
@@ -28,11 +36,11 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

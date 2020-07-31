@@ -1,44 +1,45 @@
 package br.com.pwneo.estoque_back_end.models.users;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import br.com.pwneo.estoque_back_end.models.StockOrder;
+import br.com.pwneo.estoque_back_end.models.supports.Address;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.persistence.criteria.Order;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-28
+ *
+ * Classe responsável por mapear as informações do cliente.
+ */
 
 @Entity
 @Table(name = "client")
 public class Client extends Person {
 
-    @Column(length = 11, nullable = false)
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
-    @Column(length = 7, nullable = false)
+    @Column(length = 7, nullable = false, unique = true)
     private String rg;
 
-    @Column(nullable = false)
-    private String street;
+    @Embedded
+    private Address address = new Address();
 
-    @Column(length = 10, nullable = false)
-    private String number;
 
-    @Column(nullable = false)
-    private String neighborhood;
-
-    @Column(nullable = false)
-    private String city;
-
-    @Column(nullable = false)
-    private String uf;
-
-    public Client(Long id, String name, String email, String password, String cpf, String rg, String street, String number, String neighborhood, String city, String uf) {
+    public Client(Integer id, String name, String email, String password, String cpf, String rg, String street, String number, String neighborhood, String city, String uf) {
         super(id, name, email, password);
         this.cpf = cpf;
         this.rg = rg;
-        this.street = street;
-        this.number = number;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.uf = uf;
+        this.address.setStreet(street);
+        this.address.setNumber(number);
+        this.address.setNeighborhood(neighborhood);
+        this.address.setCity(city);
+        this.address.setUf(uf);
     }
 
     public Client() {
@@ -61,45 +62,14 @@ public class Client extends Person {
         this.rg = rg;
     }
 
-    public String getStreet() {
-        return street;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getNeighborhood() {
-        return neighborhood;
-    }
-
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -109,16 +79,12 @@ public class Client extends Person {
         Client client = (Client) o;
         return Objects.equals(cpf, client.cpf) &&
                 Objects.equals(rg, client.rg) &&
-                Objects.equals(street, client.street) &&
-                Objects.equals(number, client.number) &&
-                Objects.equals(neighborhood, client.neighborhood) &&
-                Objects.equals(city, client.city) &&
-                Objects.equals(uf, client.uf);
+                Objects.equals(address, client.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cpf, rg, street, number, neighborhood, city, uf);
+        return Objects.hash(super.hashCode(), cpf, rg, address);
     }
 
     @Override
@@ -126,11 +92,7 @@ public class Client extends Person {
         return "Client{" +
                 "cpf='" + cpf + '\'' +
                 ", rg='" + rg + '\'' +
-                ", street='" + street + '\'' +
-                ", number='" + number + '\'' +
-                ", neighborhood='" + neighborhood + '\'' +
-                ", city='" + city + '\'' +
-                ", uf='" + uf + '\'' +
+                ", address=" + address +
                 '}';
     }
 }

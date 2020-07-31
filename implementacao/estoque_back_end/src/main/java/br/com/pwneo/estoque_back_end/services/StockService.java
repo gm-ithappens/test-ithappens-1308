@@ -17,7 +17,7 @@ public class StockService {
         return this.repository.findAll();
     }
 
-    public Stock findById(Long id) {
+    public Stock findById(Integer id) {
         return this.repository.findById(id).get();
     }
 }

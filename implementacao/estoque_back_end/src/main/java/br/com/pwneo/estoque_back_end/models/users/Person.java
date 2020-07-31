@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-30
+ *
+ * Classe abstrata que serve como base para Client e Employee
+ */
+
 @MappedSuperclass
 public abstract class Person implements Serializable {
 
@@ -11,13 +18,13 @@ public abstract class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
     private String email;
     private String password;
 
-    public Person(Long id, String name, String email, String password) {
+    public Person(Integer id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,11 +34,11 @@ public abstract class Person implements Serializable {
     public Person() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

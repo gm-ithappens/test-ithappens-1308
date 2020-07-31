@@ -1,16 +1,25 @@
 package br.com.pwneo.estoque_back_end.models.users;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
+
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-28
+ *
+ * Classe responsável por mapear as informações dos empregados
+ */
 
 @Entity
 @Table(name = "employee")
 public class Employee extends Person {
 
+    @Column(nullable = false, length = 20, unique = true)
     private String registration;
 
-    public Employee(Long id, String name, String email, String password, String registration) {
+    public Employee(Integer id, String name, String email, String password, String registration) {
         super(id, name, email, password);
         this.registration = registration;
     }

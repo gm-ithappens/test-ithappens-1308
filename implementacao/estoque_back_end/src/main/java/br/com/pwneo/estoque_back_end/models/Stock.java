@@ -6,6 +6,13 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear as informações dos estoques
+ */
+
 @Entity
 @Table(name = "stock")
 public class Stock implements Serializable {
@@ -14,14 +21,11 @@ public class Stock implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String description;
 
-    @OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
-    private Set<StockProduct> stockProducts = new HashSet<>();
-
-    public Stock(Long id, String description) {
+    public Stock(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -29,11 +33,11 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,14 +47,6 @@ public class Stock implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<StockProduct> getStockProducts() {
-        return stockProducts;
-    }
-
-    public void setStockProducts(Set<StockProduct> stockProducts) {
-        this.stockProducts = stockProducts;
     }
 
     @Override

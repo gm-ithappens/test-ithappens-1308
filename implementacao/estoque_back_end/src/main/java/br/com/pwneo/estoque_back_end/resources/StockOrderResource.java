@@ -1,6 +1,7 @@
 package br.com.pwneo.estoque_back_end.resources;
 
 import br.com.pwneo.estoque_back_end.models.StockOrder;
+import br.com.pwneo.estoque_back_end.models.dtos.StockOrderNewDTO;
 import br.com.pwneo.estoque_back_end.services.StockOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,13 @@ public class StockOrderResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<StockOrder> findById(@PathVariable Long id) {
+    public ResponseEntity<StockOrder> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<StockOrder> create(@RequestBody StockOrder stockOrder) {
-        stockOrder = this.service.create(stockOrder);
+    public ResponseEntity<StockOrder> create(@RequestBody StockOrderNewDTO stockOrderNewDTO) {
+        StockOrder stockOrder = this.service.create(stockOrderNewDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(stockOrder.getId()).toUri();
@@ -38,13 +39,8 @@ public class StockOrderResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         this.service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<StockOrder> update(@PathVariable Long id, @RequestBody StockOrder stockOrder) {
-        return ResponseEntity.ok().body(this.service.update(id, stockOrder));
     }
 }

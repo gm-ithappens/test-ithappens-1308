@@ -1,6 +1,7 @@
 package br.com.pwneo.estoque_back_end.resources;
 
 import br.com.pwneo.estoque_back_end.models.OrderItem;
+import br.com.pwneo.estoque_back_end.models.dtos.OrderItemDTO;
 import br.com.pwneo.estoque_back_end.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,18 +24,13 @@ public class OrderItemResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<OrderItem> findById(@PathVariable Long id) {
+    public ResponseEntity<OrderItem> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
-//    @GetMapping(value = "/product/{id}")
-//    public ResponseEntity<OrderItem> findByProductId(@PathVariable Long id) {
-//        return ResponseEntity.ok().body(this.service.findByItemId(id));
-//    }
-
     @PostMapping
-    public ResponseEntity<OrderItem> create(@RequestBody OrderItem orderItem) {
-        orderItem = this.service.create(orderItem);
+    public ResponseEntity<OrderItem> create(@RequestBody OrderItemDTO orderItemDTO) {
+        OrderItem orderItem = this.service.create(orderItemDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(orderItem.getId()).toUri();
@@ -42,13 +38,13 @@ public class OrderItemResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         this.service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<OrderItem> update(@PathVariable Long id, @RequestBody OrderItem orderItem) {
-        return ResponseEntity.ok().body(this.service.update(id, orderItem));
+    public ResponseEntity<OrderItem> update(@PathVariable Integer id, @RequestBody OrderItemDTO orderItemDTO) {
+        return ResponseEntity.ok().body(this.service.updateQuantity(id, orderItemDTO));
     }
 }

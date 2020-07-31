@@ -20,9 +20,15 @@ import org.springframework.context.annotation.Profile;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe de teste para inserir em hard code inicialmente alguns itens nas tabelas.
+ */
 
 @Configuration
 @Profile("test")
@@ -90,17 +96,17 @@ public class TestConfig implements CommandLineRunner {
         Stock stock4 = new Stock(null, "Estoque da Filial 4");
         this.stockRepository.saveAll(Arrays.asList(stock1, stock2, stock3, stock4));
 
-        Subsidiary sub1 = new Subsidiary(null, "Filial - Zona Norte", "1234567890", "Rua teste 1", "72",
-                "Imaginario 1", "Ficticia 1", "Maranhão", stock1);
+        Subsidiary sub1 = new Subsidiary(null, "Filial - Zona Norte", "12345678901", "Rua teste 1", "72",
+                "Imaginario 1", "Ficticia 1", "MA", stock1);
 
-        Subsidiary sub2 = new Subsidiary(null, "Filial - Zona Sul", "1234567891", "Rua teste 2", "73",
-                "Imaginario 2", "Ficticia 2", "Maranhão", stock2);
+        Subsidiary sub2 = new Subsidiary(null, "Filial - Zona Sul", "12345678902", "Rua teste 2", "73",
+                "Imaginario 2", "Ficticia 2", "MA", stock2);
 
-        Subsidiary sub3 = new Subsidiary(null, "Filial - Zona Leste", "1234567892", "Rua teste 3", "74",
-                "Imaginario 3", "Ficticia 3", "Maranhão", stock3);
+        Subsidiary sub3 = new Subsidiary(null, "Filial - Zona Leste", "12345678903", "Rua teste 3", "74",
+                "Imaginario 3", "Ficticia 3", "MA", stock3);
 
-        Subsidiary sub4 = new Subsidiary(null, "Filial - Zona Oeste", "1234567893", "Rua teste 4", "75",
-                "Imaginario 4", "Ficticia 4", "Maranhão", stock4);
+        Subsidiary sub4 = new Subsidiary(null, "Filial - Zona Oeste", "12345678904", "Rua teste 4", "75",
+                "Imaginario 4", "Ficticia 4", "MA", stock4);
         this.subsidiaryRepository.saveAll(Arrays.asList(sub1, sub2, sub3, sub4));
 
         StockProduct item1 = new StockProduct(null, notebook, 10, 4500.0, stock1);
@@ -126,26 +132,26 @@ public class TestConfig implements CommandLineRunner {
         StockProduct item17 = new StockProduct(null, miniMac, 4, 6000.0, stock1);
         StockProduct item18 = new StockProduct(null, miniMac, 1, 6000.0, stock2);
         StockProduct item19 = new StockProduct(null, miniMac, 5, 6000.0, stock3);
-        StockProduct item20 = new StockProduct(null, miniMac, 5, 6000.0, stock4);
+//        StockProduct item20 = new StockProduct(null, miniMac, 5, 6000.0, stock4);
 
         List<StockProduct> notebooks = Arrays.asList(item1, item2, item3, item4);
         List<StockProduct> backpacks = Arrays.asList(item5, item6, item7, item8);
         List<StockProduct> monitors = Arrays.asList(item9, item10, item11, item12);
         List<StockProduct> headphones = Arrays.asList(item13, item14, item15, item16);
-        List<StockProduct> miniMacs = Arrays.asList(item17, item18, item19, item20);
+        List<StockProduct> miniMacs = Arrays.asList(item17, item18, item19);
 
         List<StockProduct> stockProducts = Stream.of(notebooks, backpacks, monitors, headphones, miniMacs)
-                                                    .flatMap(Collection::stream)
-                                                    .collect(Collectors.toList());
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         this.stockProductRepository.saveAll(stockProducts);
 
         Client client1 = new Client(null, "Carlos", "carlos@gmail.com", "1234567891",
                 "12345678916", "556670", "Rua A", "17-B", "Aurora",
-                "São Luis", "Maranhão");
+                "São Luis", "MA");
         Client client2 = new Client(null, "Patricia", "carlos@gmail.com", "1234567890",
                 "12345678910", "5566789", "Rua B", "200", "Barreto",
-                "São Luis", "Maranhão");
+                "São Luis", "MA");
         clientRepository.saveAll(Arrays.asList(client1, client2));
 
         Employee employee1 = new Employee(null, "Paulo", "paulo@ithappens.com.br", "0987654321", "251201");
@@ -158,9 +164,9 @@ public class TestConfig implements CommandLineRunner {
 
         this.stockOrderRepository.saveAll(Arrays.asList(so1, so2));
 
-        OrderItem notebookItem = new OrderItem(null, 1, 4500.0, status1, item1, so1);
-        OrderItem miniMacItem = new OrderItem(null, 1, 6000.0, status1, item13, so1);
-        OrderItem backpackItem = new OrderItem(null, 1, 150.0, status1, item4, so2);
+        OrderItem notebookItem = new OrderItem(null, 1,  status1, item1, so1);
+        OrderItem miniMacItem = new OrderItem(null, 1, status1, item13, so1);
+        OrderItem backpackItem = new OrderItem(null, 1, status1, item4, so2);
 
         this.orderItemRepository.saveAll(Arrays.asList(notebookItem, backpackItem, miniMacItem));
     }

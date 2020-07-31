@@ -22,7 +22,7 @@ public class EmployeeService {
         return this.repository.findAll();
     }
 
-    public Employee findById(Long id) {
+    public Employee findById(Integer id) {
         return this.repository.findById(id).get();
     }
 
@@ -34,7 +34,7 @@ public class EmployeeService {
         return this.repository.save(employee);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -44,7 +44,7 @@ public class EmployeeService {
         }
     }
 
-    public Employee update(Long id, Employee employee) {
+    public Employee update(Integer id, Employee employee) {
         try {
             Employee employeeTemp = repository.getOne(id);
             employeeTemp.setName(employee.getName());

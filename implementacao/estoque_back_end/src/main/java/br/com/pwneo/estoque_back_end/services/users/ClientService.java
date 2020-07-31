@@ -22,7 +22,7 @@ public class ClientService {
         return this.repository.findAll();
     }
 
-    public Client findById(Long id) {
+    public Client findById(Integer id) {
         return this.repository.findById(id).get();
     }
 
@@ -38,7 +38,7 @@ public class ClientService {
         return this.repository.save(client);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -48,18 +48,18 @@ public class ClientService {
         }
     }
 
-    public Client update(Long id, Client client) {
+    public Client update(Integer id, Client client) {
         try {
             Client clientTemp = repository.getOne(id);
             clientTemp.setName(client.getName());
             clientTemp.setEmail(client.getEmail());
             clientTemp.setCpf(client.getCpf());
             clientTemp.setRg(client.getRg());
-            clientTemp.setStreet(client.getStreet());
-            clientTemp.setNumber(client.getNumber());
-            clientTemp.setNeighborhood(client.getNeighborhood());
-            clientTemp.setCity(client.getCity());
-            clientTemp.setUf(client.getUf());
+            clientTemp.getAddress().setStreet(client.getAddress().getStreet());
+            clientTemp.getAddress().setNumber(client.getAddress().getNumber());
+            clientTemp.getAddress().setNeighborhood(client.getAddress().getNeighborhood());
+            clientTemp.getAddress().setCity(client.getAddress().getCity());
+            clientTemp.getAddress().setUf(client.getAddress().getUf());
             return repository.save(clientTemp);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);

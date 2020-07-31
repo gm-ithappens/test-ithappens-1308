@@ -17,7 +17,7 @@ public class OperationService {
         return this.repository.findAll();
     }
 
-    public Operation findById(Long id) {
+    public Operation findById(Integer id) {
         return this.repository.findById(id).get();
     }
 }

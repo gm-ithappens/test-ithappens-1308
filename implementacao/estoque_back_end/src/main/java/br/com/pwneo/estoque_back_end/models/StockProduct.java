@@ -6,6 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * @author Paulo Weskley de Almeida Ferreira
+ * @date 2020-07-29
+ *
+ * Classe responsável por mapear as informações dos produtos existentes nos estoques
+ */
+
 @Entity
 @Table(name = "stock_product")
 public class StockProduct implements Serializable {
@@ -14,7 +21,7 @@ public class StockProduct implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -25,11 +32,10 @@ public class StockProduct implements Serializable {
     @ManyToOne
     private Product product;
 
-    @JsonIgnore
     @ManyToOne
     private Stock stock;
 
-    public StockProduct(Long id, Product product, Integer quantity, Double price, Stock stock) {
+    public StockProduct(Integer id, Product product, Integer quantity, Double price, Stock stock) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
@@ -40,11 +46,11 @@ public class StockProduct implements Serializable {
     public StockProduct() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

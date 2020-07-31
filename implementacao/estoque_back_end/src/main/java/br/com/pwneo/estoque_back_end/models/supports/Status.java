@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Paulo Weskley de Almeida Ferreira
  * @date 2020-07-29
  *
- * Classe responsável por mapear a entidade Status, que é uma coluna da entidade ItemPedido.
+ * Classe responsável por mapear a entidade Status, que é utilizada em OrderItem.
  */
 
 @Entity
@@ -19,11 +19,11 @@ public class Status implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String description;
 
-    public Status(Long id, String description) {
+    public Status(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -31,11 +31,11 @@ public class Status implements Serializable {
     public Status() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

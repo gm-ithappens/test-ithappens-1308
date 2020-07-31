@@ -24,7 +24,7 @@ public class PaymentMethodResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PaymentMethod> findById(@PathVariable Long id) {
+    public ResponseEntity<PaymentMethod> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 

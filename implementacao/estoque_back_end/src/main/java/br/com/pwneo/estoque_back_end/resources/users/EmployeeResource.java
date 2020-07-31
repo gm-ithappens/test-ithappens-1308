@@ -24,7 +24,7 @@ public class EmployeeResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Employee> findById(@PathVariable Long id) {
+    public ResponseEntity<Employee> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(this.service.findById(id));
     }
 
@@ -43,13 +43,13 @@ public class EmployeeResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         this.service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> update(@PathVariable Integer id, @RequestBody Employee employee) {
         return ResponseEntity.ok().body(this.service.update(id, employee));
     }
 }
