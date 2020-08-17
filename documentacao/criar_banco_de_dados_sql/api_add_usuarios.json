@@ -1,0 +1,52 @@
+[
+	{
+		"nome": "GIOVANNA CONVERSANO",
+		"cpf": "42782712047",
+		"senha": "1234"
+	},
+	{
+		"nome": "VANESSA ROSA",
+		"cpf": "18561523085",
+		"senha": "1234"
+	},
+	{
+		"nome": "VIVIANE LOPES",
+		"cpf": "57123919025",
+		"senha": "1234"
+	},
+	{
+		"nome": "ANDREA CRISTINA",
+		"cpf": "25486291043",
+		"senha": "1234"
+	},
+	{
+		"nome": "MARCIEL JUNIOR",
+		"cpf": "41276678002",
+		"senha": "1234"
+	},
+	{
+		"nome": "PEDRO MEDEIROS",
+		"cpf": "26186024040",
+		"senha": "1234"
+	},
+	{
+		"nome": "RAUL OTERO",
+		"cpf": "53367332020",
+		"senha": "1234"
+	},
+	{
+		"nome": "THIAGO DA SILVA",
+		"cpf": "97832759097",
+		"senha": "1234"
+	},
+	{
+		"nome": "THIAGO DE CARVALHO",
+		"cpf": "93471243038",
+		"senha": "1234"
+	},
+	{
+		"nome": "NIKOLLE MAHY",
+		"cpf": "33204561054",
+		"senha": "1234"
+	}
+]
