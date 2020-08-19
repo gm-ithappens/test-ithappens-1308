@@ -20,8 +20,9 @@ public class ItensPedido {
     @Column(nullable = false)
     private int quantidade;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private StatusPedido status;
 
     @Column(nullable = false)
     private BigDecimal valorTotal;
