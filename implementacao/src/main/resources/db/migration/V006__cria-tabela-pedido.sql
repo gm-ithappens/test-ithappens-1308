@@ -6,6 +6,7 @@ create table pedido
     id_forma_pagamento bigint,
     id_cliente         bigint         not null,
     id_tipo_pedido     bigint         not null,
+    obs_entrega        varchar(255),
 
     primary key (id),
 
