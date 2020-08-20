@@ -15,5 +15,10 @@ public class PedidoInput {
     @JsonProperty("obs_entrega")
     private String obsEntrega;
 
+    @JsonProperty("tipo_pedido")
+    private TipoPedidoIdInput tipoPedido;
+
     private List<ItemInput> itens;
+
+    private FilialIdInput filial;
 }

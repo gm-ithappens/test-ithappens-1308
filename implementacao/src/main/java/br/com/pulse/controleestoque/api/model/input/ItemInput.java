@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ItemInput {
 
-    private ProdutoIdInput produto;
+    private ProdutoInput produto;
 
     private int quantidade;
 

@@ -3,9 +3,9 @@ package br.com.pulse.controleestoque.api.model.input;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class ProdutoIdInput {
+@Getter
+public class FilialIdInput {
 
     private Long id;
 }
