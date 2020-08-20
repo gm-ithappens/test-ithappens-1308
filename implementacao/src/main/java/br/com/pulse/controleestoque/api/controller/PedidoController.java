@@ -1,7 +1,8 @@
 package br.com.pulse.controleestoque.api.controller;
 
 import br.com.pulse.controleestoque.api.assembler.PedidoInputDisassembler;
-import br.com.pulse.controleestoque.api.model.PedidoSaidaModel;
+import br.com.pulse.controleestoque.api.assembler.PedidoModelAssembler;
+import br.com.pulse.controleestoque.api.model.PedidoModel;
 import br.com.pulse.controleestoque.api.model.input.PedidoInput;
 import br.com.pulse.controleestoque.domain.model.Pedido;
 import br.com.pulse.controleestoque.domain.service.CadastroPedidoService;
@@ -16,13 +17,14 @@ public class PedidoController {
 
     private final CadastroPedidoService cadastraPedidoService;
     private final PedidoInputDisassembler pedidoInputDisassembler;
+    private final PedidoModelAssembler pedidoModelAssembler;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PedidoSaidaModel salvarSaida(@RequestBody PedidoInput pedidoInput) {
+    public PedidoModel salvar(@RequestBody PedidoInput pedidoInput) {
         Pedido pedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
+        Pedido pedidoSalvo = cadastraPedidoService.salvar(pedido);
 
-        cadastraPedidoService.salvar(pedido);
-        return null;
+        return pedidoModelAssembler.toModel(pedidoSalvo);
     }
 }

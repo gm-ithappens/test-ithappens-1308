@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Data
 public class ItensPedido {
 
+    @EqualsAndHashCode.Include
     @EmbeddedId
     private ItensPedidoPk id;
 

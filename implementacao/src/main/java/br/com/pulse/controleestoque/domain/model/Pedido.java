@@ -34,8 +34,16 @@ public class Pedido {
     private Cliente cliente;
 
     @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
+    @ManyToOne
     @JoinColumn(name = "id_tipo_pedido", nullable = false)
     private TipoPedido tipoPedido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_filial", nullable = false)
+    private Filial filial;
 
     private String obsEntrega;
 

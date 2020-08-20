@@ -18,6 +18,9 @@ public class PedidoInput {
     @JsonProperty("tipo_pedido")
     private TipoPedidoIdInput tipoPedido;
 
+    @JsonProperty("forma_pagamento")
+    private FormaPagamentoIdInput formaPagamento;
+
     private List<ItemInput> itens;
 
     private FilialIdInput filial;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 @Component
 public class PedidoInputDisassembler {
@@ -20,8 +19,22 @@ public class PedidoInputDisassembler {
         pedido.setObsEntrega(pedidoInput.getObsEntrega());
         pedido.setItensPedido(createItensPedidos(pedidoInput, pedido));
         pedido.setValorPedido(getValorTotal(pedido));
+        pedido.setFilial(createFilial(pedidoInput));
+        pedido.setFormaPagamento(createFormaPagamento(pedidoInput));
 
         return pedido;
+    }
+
+    private FormaPagamento createFormaPagamento(PedidoInput pedidoInput) {
+        FormaPagamento formaPagamento = new FormaPagamento();
+        formaPagamento.setId(pedidoInput.getFormaPagamento().getId());
+        return formaPagamento;
+    }
+
+    private Filial createFilial(PedidoInput pedidoInput) {
+        Filial filial = new Filial();
+        filial.setId(pedidoInput.getFilial().getId());
+        return filial;
     }
 
     private BigDecimal getValorTotal(Pedido pedido) {

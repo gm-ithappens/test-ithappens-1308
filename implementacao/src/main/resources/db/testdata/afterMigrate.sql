@@ -39,11 +39,13 @@ insert into produto (id, codigo_barras, descricao, valor) values (5, '6974613894
 insert into tipo_pedido (id, descricao) values (1, 'ENTRADA');
 insert into tipo_pedido (id, descricao) values (2, 'SAÍDA');
 
-insert into pedido (id, valor_pedido, data_criacao, id_forma_pagamento, id_cliente, id_tipo_pedido, obs_entrega) values (1, 7.8, CURRENT_TIMESTAMP(), 3, 1, 2, 'Minha casa tem um portão branco');
-
-insert into itens_pedido (id_pedido, id_produto, quantidade, status, valor_total) values (1, 3, 1, 'PROCESSADO', 7.8);
-
 insert into filial (id, descricao) values (1, 'Unidade do Cohatrac');
 insert into filial (id, descricao) values (2, 'Unidade do Centro');
 
+insert into pedido (id, valor_pedido, data_criacao, id_forma_pagamento, id_cliente, id_usuario, id_tipo_pedido, id_filial, obs_entrega) values (1, 7.8, CURRENT_TIMESTAMP(), 3, 1, 1, 2, 1, 'Minha casa tem um portão branco');
+
+insert into itens_pedido (id_pedido, id_produto, quantidade, status, valor_total) values (1, 3, 1, 'PROCESSADO', 7.8);
+
 insert into estoque (id_produto, id_filial, quantidade) values (1, 1, 1);
+insert into estoque (id_produto, id_filial, quantidade) values (2, 1, 5);
+insert into estoque (id_produto, id_filial, quantidade) values (3, 1, 3);

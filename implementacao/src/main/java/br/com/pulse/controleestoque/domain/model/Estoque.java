@@ -2,35 +2,29 @@ package br.com.pulse.controleestoque.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Estoque {
 
+    @EqualsAndHashCode.Include
     @EmbeddedId
     private EstoquePk id;
 
     @Column(nullable = false)
     private int quantidade;
 
-    @Getter
-    @Setter
-    @Embeddable
-    public class EstoquePk implements Serializable {
+    private void adicionar(int quantidade) {
+        this.quantidade =+ quantidade;
+    }
 
-        @ManyToOne
-        @JoinColumn(name = "id_produto", nullable = false)
-        private Produto produto;
-
-        @ManyToOne
-        @JoinColumn(name = "id_filial", nullable = false)
-        private Filial filial;
+    private void retirar(int quantidade) {
+        this.quantidade =- quantidade;
     }
 }
 
