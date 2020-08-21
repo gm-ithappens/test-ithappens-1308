@@ -35,18 +35,9 @@ public class CadastroPedidoService {
         TipoPedido tipoPedido = cadastroTipoPedido.buscarOuFalhar(tipoPedidoId);
         Filial filial = cadastroFilial.buscarOuFalhar(filialId);
 
-        List<ItensPedido> itensPedidos = pedido.getItensPedido().stream().map(itensPedido -> {
-            var novoItensPedido = new ItensPedido();
-            var itensPedidoPk = new ItensPedidoPk();
-            itensPedidoPk.setPedido(pedido);
-            itensPedidoPk.setProduto(cadastroProduto.buscarOuFalhar(itensPedido.getId().getProduto().getId()));
-            novoItensPedido.setId(itensPedidoPk);
-            novoItensPedido.setValorTotal(itensPedido.getValorTotal());
-            novoItensPedido.setStatus(itensPedido.getStatus());
-            novoItensPedido.setQuantidade(itensPedido.getQuantidade());
-
-            return novoItensPedido;
-        }).collect(Collectors.toList());
+        List<ItensPedido> itensPedidos = pedido.getItensPedido().stream()
+                .map(itensPedido -> createProduto(pedido, itensPedido))
+                .collect(Collectors.toList());
 
         pedido.setCliente(cliente);
         pedido.setUsuario(usuario);
@@ -56,6 +47,19 @@ public class CadastroPedidoService {
         pedido.setItensPedido(itensPedidos);
 
         return pedidoRepository.save(pedido);
+    }
+
+    private ItensPedido createProduto(Pedido pedido, ItensPedido itensPedido) {
+        var novoItensPedido = new ItensPedido();
+        var itensPedidoPk = new ItensPedidoPk();
+        itensPedidoPk.setPedido(pedido);
+        itensPedidoPk.setProduto(cadastroProduto.buscarOuFalhar(itensPedido.getId().getProduto().getId()));
+        novoItensPedido.setId(itensPedidoPk);
+        novoItensPedido.setValorTotal(itensPedido.getValorTotal());
+        novoItensPedido.setStatus(itensPedido.getStatus());
+        novoItensPedido.setQuantidade(itensPedido.getQuantidade());
+
+        return novoItensPedido;
     }
 
     public Pedido buscarOuFalhar(Long id) {

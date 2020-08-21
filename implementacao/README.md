@@ -1,5 +1,5 @@
-## SEU CÓDIGO DE IMPLEMENTAÇÃO AQUI NESTE DIRETÓRIO
+# Controle de Estoque API
 
-```java
-  System.out.println("Se preferir pode editar este arquivo!");
-```
+Link da documentação da API
+
+http://localhost:8080/swagger-ui.html
