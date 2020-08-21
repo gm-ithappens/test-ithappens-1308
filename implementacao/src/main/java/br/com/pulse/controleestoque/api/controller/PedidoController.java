@@ -5,11 +5,15 @@ import br.com.pulse.controleestoque.api.assembler.PedidoModelAssembler;
 import br.com.pulse.controleestoque.api.model.PedidoModel;
 import br.com.pulse.controleestoque.api.model.input.PedidoInput;
 import br.com.pulse.controleestoque.api.openapi.controller.PedidoControllerOpenApi;
+import br.com.pulse.controleestoque.domain.exception.EntidadeNaoEncontradaException;
+import br.com.pulse.controleestoque.domain.exception.NegocioException;
 import br.com.pulse.controleestoque.domain.model.Pedido;
 import br.com.pulse.controleestoque.domain.service.CadastroPedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,12 +24,18 @@ public class PedidoController implements PedidoControllerOpenApi {
     private final PedidoInputDisassembler pedidoInputDisassembler;
     private final PedidoModelAssembler pedidoModelAssembler;
 
+    @Override
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public PedidoModel salvar(@RequestBody PedidoInput pedidoInput) {
-        Pedido pedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
-        Pedido pedidoSalvo = cadastraPedidoService.salvar(pedido);
+    public PedidoModel salvar(@Valid @RequestBody PedidoInput pedidoInput) {
 
-        return pedidoModelAssembler.toModel(pedidoSalvo);
+        try {
+            Pedido pedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
+            Pedido pedidoSalvo = cadastraPedidoService.salvar(pedido);
+
+            return pedidoModelAssembler.toModel(pedidoSalvo);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 }
