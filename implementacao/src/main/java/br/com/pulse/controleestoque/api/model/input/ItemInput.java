@@ -14,7 +14,7 @@ public class ItemInput {
 
     @Valid
     @NotNull
-    private ProdutoInput produto;
+    private ProdutoResumoInput produto;
 
     @ApiModelProperty(example = "1", required = true)
     @Min(1)

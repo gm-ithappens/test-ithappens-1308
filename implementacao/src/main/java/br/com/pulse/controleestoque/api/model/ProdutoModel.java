@@ -17,7 +17,11 @@ public class ProdutoModel {
     @ApiModelProperty(example = "Arroz")
     private String descricao;
 
+    @JsonProperty("codigo_barras")
+    @ApiModelProperty(example = "123456789")
+    private String codigoBarras;
+
     @ApiModelProperty(example = "17.50")
     @JsonProperty("valor_unitario")
-    private BigDecimal valorUnitario;
+    private BigDecimal valor;
 }

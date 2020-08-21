@@ -1,7 +1,6 @@
 package br.com.pulse.controleestoque.core.modelmapper;
 
 import br.com.pulse.controleestoque.api.model.ItensPedidoModel;
-import br.com.pulse.controleestoque.api.model.ProdutoModel;
 import br.com.pulse.controleestoque.domain.model.ItensPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +21,14 @@ public class ModelMapperConfig {
         itensPedidoToItensPedidoModelTypeMap.<String>addMapping(
                 itensPedidoSrc -> itensPedidoSrc.getId().getProduto().getDescricao(),
                 (itensPedidoModelDest, value) -> itensPedidoModelDest.getProduto().setDescricao(value));
+
         itensPedidoToItensPedidoModelTypeMap.<BigDecimal>addMapping(
                 itensPedidoSrc -> itensPedidoSrc.getId().getProduto().getValor(),
-                (itensPedidoModelDest, value) -> itensPedidoModelDest.getProduto().setValorUnitario(value));
+                (itensPedidoModelDest, value) -> itensPedidoModelDest.getProduto().setValor(value));
+
+        itensPedidoToItensPedidoModelTypeMap.<String>addMapping(
+                itensPedidoSrc -> itensPedidoSrc.getId().getProduto().getCodigoBarras(),
+                (itensPedidoModelDest, value) -> itensPedidoModelDest.getProduto().setCodigoBarras(value));
 
         return modelMapper;
     }

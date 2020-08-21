@@ -57,7 +57,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                         URL.class, URI.class, URLStreamHandler.class, Resource.class,
                         File.class, InputStream.class)
                 .apiInfo(apiInfo())
-                .tags(new Tag("Pedido", "Gerencia os pedidos"));
+                .tags(new Tag("Pedido", "Gerencia os pedidos"),
+                        new Tag("Produto", "Gerencia os produtos"));
     }
 
     private List<ResponseMessage> globalGetResponseMessages() {
