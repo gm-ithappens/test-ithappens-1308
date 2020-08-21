@@ -1,0 +1,33 @@
+{
+  "cliente": {
+    "id": 1
+  },
+  "tipo_pedido": {
+    "id": 1
+  },
+  "filial": {
+    "id": 1
+  },
+  "forma_pagamento": {
+    "id": 1
+  },
+  "obs_entrega": "Perto do Bar da Jura",
+  "itens": [
+    {
+      "produto": {
+        "id": 1,
+        "valor": "5.50"
+      },
+      "quantidade": 1,
+      "status": "ATIVO"
+    },
+    {
+      "produto": {
+        "id": 2,
+        "valor": "7.80"
+      },
+      "quantidade": 3,
+      "status": "ATIVO"
+    }
+  ]
+}
