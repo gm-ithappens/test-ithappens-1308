@@ -1,0 +1,54 @@
+Para testar deve-se seguir a sequência dos modelos abaixo.
+
+Exemplo de post de Client:
+{
+  "name": "Jose Augusto",
+  "email": "jaugusto@gmail.com",
+  "password": "1234567893",
+  "cpf": "12345678914",
+  "rg": "556672",
+  "street": "Rua A",
+  "number": "20-B",
+  "neighborhood": "Aurora",
+  "city": "São Luis",
+  "uf": "Maranhão"
+}
+
+Exemplo de post de Product:
+{
+  "barCode": "12345678901010",
+  "description": "Notebook Dell Inspiron 15"
+}
+
+exemplo de post de StockProduct:
+{
+  "quantity": 10,
+  "price": 4500.0,
+  "product": 5,
+  "stock": 4
+}
+
+exemplo de post de StockOrder:
+
+{   
+  "note": "Deixar na porta, gritar e sair correndo!",
+  "subsidiary": 1,
+  "client": 1,
+  "employee": 3,  
+  "paymentMethod": 1,
+  "operation": 2
+}
+
+Exemplo de post de OrderItem:
+{
+  "product": 17,  
+  "quantity": 3,
+  "stockOrder": 1
+}
+
+Exemplo de post de Payment:
+{
+  "stockOrder": 1,
+  "paymentMethod": 1,
+  "status": 3
+}
