@@ -1,4 +1,4 @@
-# Controler de estoque API
+# Controle de estoque API
 > Essa é uma API pública de gerenciamento de controler de estoque
 
 ## Banco de dados
