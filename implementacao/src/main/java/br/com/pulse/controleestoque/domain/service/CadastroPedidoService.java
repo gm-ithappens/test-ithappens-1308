@@ -20,7 +20,7 @@ public class CadastroPedidoService {
     private final CadastroFormaPagamentoService cadastroFormaPagamento;
     private final CadastroTipoPedidoService cadastroTipoPedido;
     private final CadastroFilialService cadastroFilial;
-    private final cadastroProdutoService cadastroProduto;
+    private final CadastroProdutoService cadastroProduto;
 
     @Transactional
     public Pedido salvar(Pedido pedido) {
