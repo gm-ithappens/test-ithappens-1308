@@ -1,5 +1,5 @@
 # Controler de estoque API
-> Essa é uma API pública de gerenciamento de controler de estoque 
+> Essa é uma API pública de gerenciamento de controle de estoque 
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://github.com/wennersgc/rh-api)
@@ -11,6 +11,7 @@
 - Flyway
 - Spring Boot 2
 - Modelmapper
+- Docker
 
 ## Compilação e execução manual
 
