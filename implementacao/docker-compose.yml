@@ -1,0 +1,21 @@
+version: "3.2"
+services:
+  estoque-api:
+    image: implementacao_estoque-api
+    container_name: estoque-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - HOST_NAME_DB=dbestoque-mysql
+    depends_on:
+      - dbestoque-mysql
+    links:
+      - dbestoque-mysql
+  dbestoque-mysql:
+    container_name: dbestoque-mysql
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
