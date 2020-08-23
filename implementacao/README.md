@@ -13,6 +13,19 @@
 - Modelmapper
 - Docker
 
+## Executano o projeto com Docker
+Com o docker e o docker-composer instalando na maquina execute o seguinte comando:
+
+```shell script
+docker-compose build
+```
+
+quando finalizar o camando anterior execute:
+
+```shell script
+docker-compose up -d
+```
+
 ## Compilação e execução manual
 
 Entre na diretório raiz da API e execute o comando:
