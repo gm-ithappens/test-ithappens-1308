@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Filial;
 use App\Produto;
 use App\User;
 use Faker\Generator as Faker;
@@ -31,5 +32,12 @@ $factory->define(Produto::class, function (Faker $faker) {
     return [
         'nome' => $faker->name,
         'ean' => $faker->ean13,
+    ];
+});
+
+$factory->define(Filial::class, function (Faker $faker) {
+    $faker->locale = 'pt_BR';
+    return [
+        'nome' => $faker->name,
     ];
 });
