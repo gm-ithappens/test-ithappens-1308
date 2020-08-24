@@ -24,3 +24,6 @@ help:
 
 s:
 	@php -S localhost:8000 -t public
+
+test:
+	@php ./vendor/bin/phpunit --stop-on-error --no-coverage --testdox -v
