@@ -26,4 +26,4 @@ s:
 	@php -S localhost:8000 -t public
 
 test:
-	@php ./vendor/bin/phpunit --stop-on-error --no-coverage --testdox -v
+	@php ./vendor/bin/phpunit --stop-on-defect --no-coverage --testdox -v
