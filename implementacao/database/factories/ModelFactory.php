@@ -2,42 +2,37 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Cliente;
 use App\Filial;
 use App\Produto;
 use App\User;
-use Faker\Generator as Faker;
+use Faker\Factory as Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+$faker = Factory::create('pt_BR');
 
-
-$factory->define(User::class, function (Faker $faker) {
-    $faker->locale = 'pt_BR';
+$factory->define(User::class, function () use ($faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
     ];
 });
 
-$factory->define(Produto::class, function (Faker $faker) {
-    $faker->locale = 'pt_BR';
+$factory->define(Produto::class, function () use ($faker) {
     return [
         'nome' => $faker->name,
         'ean' => $faker->ean13,
     ];
 });
 
-$factory->define(Filial::class, function (Faker $faker) {
-    $faker->locale = 'pt_BR';
+$factory->define(Filial::class, function () use ($faker) {
     return [
         'nome' => $faker->name,
+    ];
+});
+
+$factory->define(Cliente::class, function () use ($faker) {
+    return [
+        'nome' => $faker->name,
+        'cpf' => $faker->unique()->cpf,
     ];
 });

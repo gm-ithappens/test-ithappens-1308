@@ -24,3 +24,10 @@ $router->group(['prefix' => 'filiais'], function () use ($router) {
     $router->post('/', ['uses' => 'FilialController@store' , 'as' => 'filiais.store']);
     $router->patch('/{id}', ['uses' => 'FilialController@update' , 'as' => 'filiais.update']);
 });
+
+$router->group(['prefix' => 'clientes'], function () use ($router) {
+    $router->get('/', ['uses' => 'ClienteController@index' , 'as' => 'clientes.index']);
+    $router->get('/{id}', ['uses' => 'ClienteController@show' , 'as' => 'clientes.show']);
+    $router->post('/', ['uses' => 'ClienteController@store' , 'as' => 'clientes.store']);
+    $router->patch('/{id}', ['uses' => 'ClienteController@update' , 'as' => 'clientes.update']);
+});
