@@ -8,7 +8,8 @@ before_script:
   - psql -c "CREATE DATABASE pulse;" -U postgres
   - psql -c "CREATE USER admin WITH PASSWORD 'pulse';" -U postgres
   - cd implementacao
-  - make install
+  - cp .env.travis .env
+  - composer install
   - php artisan migrate:refresh
 script:
   - cd implementacao
