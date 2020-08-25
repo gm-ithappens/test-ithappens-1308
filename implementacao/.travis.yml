@@ -1,0 +1,13 @@
+os: linux
+dist: bionic
+language: php
+php: "7.4"
+services: postgresql
+
+before_script:
+  - psql -c "CREATE DATABASE pulse;" -U postgres
+  - psql -c "CREATE USER admin WITH PASSWORD 'pulse';" -U postgres
+  - make install
+  - php artisan migrate:refresh
+script:
+  - make test
