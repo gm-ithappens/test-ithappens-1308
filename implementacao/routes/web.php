@@ -31,3 +31,12 @@ $router->group(['prefix' => 'clientes'], function () use ($router) {
     $router->post('/', ['uses' => 'ClienteController@store' , 'as' => 'clientes.store']);
     $router->patch('/{id}', ['uses' => 'ClienteController@update' , 'as' => 'clientes.update']);
 });
+
+$router->group(['prefix' => 'pedidos'], function () use ($router) {
+    $router->post('/', ['uses' => 'PedidoController@store' , 'as' => 'pedidos.store']);
+});
+
+$router->group(['prefix' => 'itens'], function () use ($router) {
+    $router->post('/', ['uses' => 'ItemController@store' , 'as' => 'itens.store']);
+    $router->get('/cancel/{id}', ['uses' => 'ItemController@cancel' , 'as' => 'itens.cancel']);
+});
