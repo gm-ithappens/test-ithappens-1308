@@ -36,6 +36,8 @@ http://localhost:8000/db
 
 ## Competência banco de dados
 
+[<< diagrama do banco >>](https://github.com/gigante/test-pulse-1308/blob/master/documentacao/diagrama.pdf)
+
 ```sql
 -- Escrever uma consulta que retorne todos os produtos com quantidade maior ou igual a 100
 select * from produtos p
