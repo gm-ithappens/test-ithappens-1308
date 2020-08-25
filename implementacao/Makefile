@@ -1,4 +1,4 @@
-.PHONY: s
+.PHONY: s db test
 
 BLACK        := $(shell tput -Txterm setaf 0)
 RED          := $(shell tput -Txterm setaf 1)
@@ -20,10 +20,16 @@ help:
 	@echo "                  -'           "
 	@echo "Available target rules"
 	@echo
-	@echo "${GREEN}s          artisan serve${RESET}"
+	@echo "${GREEN}s       artisan serve${RESET}"
+	@echo "${GREEN}db      run migrations and seeders${RESET}"
+	@echo "${GREEN}test    run tests${RESET}"
 
 s:
 	@php -S localhost:8000 -t public
+
+db:
+	@php artisan migrate:refresh
+	@php artisan db:seed
 
 test:
 	@php ./vendor/bin/phpunit --stop-on-defect --stop-on-error --no-coverage --testdox -v
