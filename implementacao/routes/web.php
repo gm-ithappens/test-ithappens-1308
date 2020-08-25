@@ -34,6 +34,7 @@ $router->group(['prefix' => 'clientes'], function () use ($router) {
 
 $router->group(['prefix' => 'pedidos'], function () use ($router) {
     $router->post('/', ['uses' => 'PedidoController@store' , 'as' => 'pedidos.store']);
+    $router->get('/process{id}', ['uses' => 'PedidoController@process' , 'as' => 'pedidos.process']);
 });
 
 $router->group(['prefix' => 'itens'], function () use ($router) {
