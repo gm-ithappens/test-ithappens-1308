@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: fapema/nginx
+    image: dkimg/nginx:1.18.0
     container_name: pulse_nginx
     restart: unless-stopped
     tty: true
@@ -9,7 +9,6 @@ services:
       - app
     ports:
       - "8000:80"
-      - "443:443"
     volumes:
       - .:/var/www/html
       - ./storage/logs/:/var/log/nginx
@@ -17,7 +16,7 @@ services:
     networks:
       - pulse-network
   app:
-    image: fapema/php
+    image: dkimg/php:7.4
     container_name: pulse_app
     restart: unless-stopped
     tty: true
@@ -36,7 +35,7 @@ services:
     restart: always
     tty: true
     volumes:
-      - ./.dbdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: pulse
       POSTGRES_USER: admin
