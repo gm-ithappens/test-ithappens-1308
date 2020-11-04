@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  docker-app:
+    build: .
+    container_name: api-test-1308-pulse
+    ports:
+      - "8080:8080"
+    depends_on:
+      - docker-mysql
+    networks:
+      -  spring-mysql-net
+  docker-mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mateusdb'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 's9cst0sf'
+      MYSQL_ROOT_PASSWORD: 's9cst0sf'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+    networks:
+      - spring-mysql-net
+networks:
+  spring-mysql-net:
+    driver: bridge
+volumes:
+  my-db:
