@@ -1,19 +1,16 @@
-package br.com.felipeomachado.apitest1308pulse.entities;
+package br.com.felipeomachado.apitest1308pulse.product.entities;
 
-import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.StockOrderIn;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.br.CNPJ;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Provider {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +18,12 @@ public class Provider {
     @NotBlank
     private String name;
 
-    @NotBlank
-    @CNPJ
-    private String cnpj;
+    private String description;
+
+    @NotNull
+    private Double price;
+
+    private String barcode;
 
     @PastOrPresent
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -31,20 +31,19 @@ public class Provider {
     @PastOrPresent
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "provider")
-    private List<StockOrderIn> orders = new ArrayList<>();
-
     @Deprecated
-    public Provider() {};
+    public Product() {
+    }
 
-    public Provider(Long id) {
+    public Product(Long id) {
         this.id = id;
     }
 
-    public Provider(@NotNull @NotBlank String name, @NotNull @NotBlank @CNPJ String cnpj) {
+    public Product(String name, String description, Double price, String barcode) {
         this.name = name;
-        this.cnpj = cnpj;
+        this.description = description;
+        this.price = price;
+        this.barcode = barcode;
     }
 
     public Long getId() {
@@ -63,12 +62,28 @@ public class Provider {
         this.name = name;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -87,19 +102,16 @@ public class Provider {
         this.updatedAt = updatedAt;
     }
 
-    public List<StockOrderIn> getOrders() {
-        return orders;
-    }
-
     @Override
     public String toString() {
-        return "Provider{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cnpj='" + cnpj + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", barcode='" + barcode + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", orders=" + orders +
                 '}';
     }
 }

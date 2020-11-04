@@ -1,18 +1,17 @@
-package br.com.felipeomachado.apitest1308pulse.entities;
+package br.com.felipeomachado.apitest1308pulse.paymentMethod.entities;
 
-import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.StockOrderOut;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.felipeomachado.apitest1308pulse.paymentMethod.enums.PaymentType;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Customer {
-
+public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,27 +19,34 @@ public class Customer {
     @NotBlank
     private String name;
 
+    private Integer type;
+
     @PastOrPresent
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @PastOrPresent
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer")
-    private List<StockOrderOut> orders = new ArrayList<>();
-
     @Deprecated
-    public Customer() {
+    public PaymentMethod() {
     }
 
-    public Customer(Long id) {
+    public PaymentMethod(Long id) {
         this.id = id;
     }
 
-    public Customer(Long id, String name) {
-        this.id = id;
+    public PaymentMethod(@NotBlank String name, PaymentType type) {
         this.name = name;
+        setType(type);
+    }
+
+    public PaymentType getType() {
+        return PaymentType.valueOf(this.type);
+    }
+
+    public void setType(PaymentType type) {
+        if ( type != null)
+            this.type = type.getCode();
     }
 
     public Long getId() {
@@ -59,6 +65,10 @@ public class Customer {
         this.name = name;
     }
 
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -73,19 +83,5 @@ public class Customer {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public List<StockOrderOut> getOrders() {
-        return orders;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }
