@@ -159,7 +159,7 @@ $ docker-compose up
 ```
 
 ## Melhorias
-**Aplicar CDD nas classes de Serviços**
-**Refatorar as Validations**
-**Escrever os testes**
-**Fixar o link no Docker entre os containers**
+**Aplicar CDD nas classes de Serviços**<br />
+**Refatorar as Validations**<br />
+**Escrever os testes**<br />
+**Fixar o link no Docker entre os containers**<br />
