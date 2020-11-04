@@ -1,4 +1,4 @@
-package br.com.felipeomachado.apitest1308pulse.stockOrder.entities;
+package br.com.felipeomachado.apitest1308pulse.stock.entities;
 
 import br.com.felipeomachado.apitest1308pulse.entities.Branch;
 import br.com.felipeomachado.apitest1308pulse.product.entities.Product;

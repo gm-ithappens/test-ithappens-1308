@@ -18,11 +18,11 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> findByBarcode(String barcode) {
+    public Optional<Product> findByBarcode(String barcode) {
         return productRepository.findByBarcode(barcode);
     }
 
-    public List<Product> findByDescription(String description) {
+    public Optional<Product> findByDescription(String description) {
         return productRepository.findByDescription(description);
     }
 }

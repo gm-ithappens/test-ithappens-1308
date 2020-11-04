@@ -1,6 +1,15 @@
 version: '3.3'
 services:
-  db:
+  docker-app:
+    build: .
+    container_name: api-test-1308-pulse
+    ports:
+      - "8080:8080"
+    depends_on:
+      - docker-mysql
+    networks:
+      -  spring-mysql-net
+  docker-mysql:
     image: mysql:5.7
     restart: always
     environment:
@@ -14,6 +23,10 @@ services:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
-# Names our volume
+    networks:
+      - spring-mysql-net
+networks:
+  spring-mysql-net:
+    driver: bridge
 volumes:
   my-db:

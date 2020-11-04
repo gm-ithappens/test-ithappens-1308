@@ -33,12 +33,24 @@ public class ProductController {
     }
 
     @GetMapping(value = "/barcode/{barcode}")
-    public ResponseEntity<List<Product>> findByBarcode(@PathVariable String barcode) {
-        return ResponseEntity.ok().body(productService.findByBarcode(barcode));
+    public ResponseEntity<Product> findByBarcode(@PathVariable String barcode) {
+        Optional<Product> optionalProduct = productService.findByBarcode(barcode);
+
+        if(optionalProduct.isPresent()){
+            return ResponseEntity.ok().body(optionalProduct.get());
+        }
+
+        throw new EntityNotFoundException("Product not found!");
     }
 
     @GetMapping(value = "/description/{description}")
-    public ResponseEntity<List<Product>> findByDescription(@PathVariable String description) {
-        return ResponseEntity.ok().body(productService.findByDescription(description));
+    public ResponseEntity<Product> findByDescription(@PathVariable String description) {
+        Optional<Product> optionalProduct = productService.findByDescription(description);
+
+        if(optionalProduct.isPresent()){
+            return ResponseEntity.ok().body(optionalProduct.get());
+        }
+
+        throw new EntityNotFoundException("Product not found!");
     }
 }

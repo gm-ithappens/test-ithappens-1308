@@ -1,13 +1,13 @@
 package br.com.felipeomachado.apitest1308pulse.stockOrder.services;
 
-import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.Stock;
+import br.com.felipeomachado.apitest1308pulse.stock.entities.Stock;
 import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.StockOrder;
 import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.StockOrderItem;
-import br.com.felipeomachado.apitest1308pulse.stockOrder.entities.StockPK;
+import br.com.felipeomachado.apitest1308pulse.stock.entities.StockPK;
 import br.com.felipeomachado.apitest1308pulse.stockOrder.enums.OrderItemStatus;
 import br.com.felipeomachado.apitest1308pulse.stockOrder.repositories.StockOrderItemRepository;
 import br.com.felipeomachado.apitest1308pulse.stockOrder.repositories.StockOrderRepository;
-import br.com.felipeomachado.apitest1308pulse.stockOrder.repositories.StockRepository;
+import br.com.felipeomachado.apitest1308pulse.stock.repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
