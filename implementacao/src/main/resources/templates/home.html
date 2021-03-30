@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{componentes/layout}"
+	  xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>Controle de Estoque</title>
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+	
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span>Início</span>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container">
+			<div class="row" style="justify-content: center;">
+				<h3>Desafio 1308</h3>
+			</div>
+			<div class="row" style="justify-content: center;">
+				<img style="border-radius: 50%;margin:20px 0" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgWFBUWGCAbGBYVDRsgIRsWIB0iIiAdHx8kKDQsJCYxJx8fLTItMT1AMDA6IytKTT81QDQ5QzUBCgoKCA0NGg8NDysZHxkrKysrKysrKysrKysrNysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAMgAyAMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAAAwcEBQYCAQj/xABEEAACAQIDBgIFBQ8DBQAAAAAAAQIDBAUGEQcSEzFTkiFRMkFhcbEWInKBkQgUIyQ0NjdSYnN0obPB0UKClDVDVFVj/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCmePV6r7mOPV6r7mRgqJOPV6r7mOPV6r7mRgCTj1eq+5jj1eq+5kYAk49XqvuY49XqvuZGAJOPV6r7mOPV6r7mRgCTj1eq+5jj1eq+5kYAk49XqvuY49XqvuZGAJOPV6r7mOPV6r7mRgCTj1eq+5jj1eq+5kYAk49XqvuY49XqvuZGAJOPV6r7mOPV6r7mRgCTj1eq+5jj1eq+5kYAk49XqvuYIwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMmxsLzEasqVhaTqyScmqdNyaiubaXqAxgAAAAAAAAAABZGxjK+DZmu8Up43Z8RU4wcfws46Nt6+i15HbYjlrZPhl7UssQVOnUj6UJXtfVarVf6vJogoEF4Zv2X5fvMszxfJy0lGG/FRrSnGrBeLS1bevlo/Z7q32a4JbZhzlY4ff096k95zW81qlBvmvHnoBy4LC2y5fwTLeLYfZ4HZ8Pepuc/ws5a6y0XpN6eizZbGMoYFmayxSpjdjxHCUVF8acdE09fRa8iisbRKV1RUl4by+Jeu2rAsHw7Jir4fhVClPjQW9TtoRemkvDVIqHMVlb4dnS/srOnu06dxKMY6t6RU9EtX4su7bx+Yq/fQ+EiD86AszZDkCyzTC5xPGd50YS3IwjJrenom9WvHRJrl5+w6mvhOx23r1KNadNSi9Gvvu4fiufipAUUDudptvkygsN+RcovXf4u7VqS/V3fTb0/1cjN2TbP6Oa518RxZy+96b3VGL0dSemrWvqSTXLzKK5BftXLuySlfuxqOkqiluOLvq3hPXTTXe05nFbW9n9vlWVviWEb3AqPdcZS13J6apJ82mk+fkQVueqcJ1JxhTi229EkvFvyR5O12Wxha4nieOVoJqztqlWOq8OLpuwX82UcdXo1betKjcUnGS8HGUWmn7UyzNmN98ncs18Zh4SrXtC310/wC2mpzS96bNRtHm8UwzLGYp+M7ig4VJaelUoy3XJ+16/wAj5fTdnsowRQ8HUvKlT64R3QNJnmxjhucMYtKcdIxrS3V5Rb1S+xo0R2e1+CWfsQrQ5VI05r3OnH++pyTtLlWyunby3NdN/ce7r5a8gIQAAAAAAAXB9zr+X439Cn8ZHIbXv0i4x74f0oHX/c6/l+N/Qp/GRt887Jr3MWZ7rF7PE6cVV3W4zhLWOkVHw058tfURWz2D16lbIrp1XqoVpxjr+rpGXxkzg9jNGnR2l3VKHKMKqj9UkvgWVvYbstyHwZXKlKKk46+Dq135Ly5e5IpLZnjlPBc8WF9eVNISbhUk3yU01q/Ym0/qA6Hb/r8tbbX/AMaOnfM6X7nX/p2NfTh8JHQbSdnXy0u7O9tr9Upwi4vWnqpQ11XJ+pt/aZezTJNbJdtfUa97GrxZRacYNaaJr1v2gURnH9IWLfxU/wCoy5tvH5ir99D4SKZzj+kLFv4qf9RlzbePzFX76HwkEcdsWzzheBWdzg2M1uEpVN+FRr5urSTjJ+r0U9eXM391sqyhj9Wrc4HjLTk29KdeFSK18lz/AJlfbP8AZ9POlhfV6OJKlKlJLR0d5S1TfPVacvadfgGxnFsNxuzvamNU1GnNS1pqe80nrouWmvIDgs+ZHv8AJl5Shc1VUp1NeHVitNdOaa9T8V5l2bHKcKWzWwnCSi5Oo5S8nxJLX7EjlvuhcUtJWeGYVConVU3Ukk/GMd3Ra+Wuv8ifYPma0q4TVy5d1UqkZOVNN+nCXi0vNp6vTyfsYVppbPMkTk5Sz7Sbfi27ijz7jotqmOYBdbO61hbY3Rr1Vw1HcuISlJqS1lom/VvGkxbYddyxCrPCcVpqk3rGNSMtYry8NddPPwOUz5s7rZMw20urjEY1XUnu7saTSWi111b8fsCMLCcpW+O4Q6uCYsql1CLlO0lQcZNLnw5a6TenqMzC6VXCdmOO3daDi7qtSoQ1Wjag3Oens9X1HH2d1cWN1SurOtKE4PWMoy0afsZn49mPGMwzpTxm/lV3FpFPRJeeiSS+so6LEPxvZFhNboXlSn7lOO+M5fi+RMlWf/zrVH/vqJr+4wD8d2XZmtV4ujVo1kvpPcb+xDal+L3WAYb0LGlGS/babf8AYgyM92U8YzBlWNHndWlstf2pNxM/MOeZ4VnC7wmNFVMPpL73dr4brpxW7Jr9reTaZucqULfEcMyrmetNcPD6VaNxq1810/Gmve95Mp27rzurqtc1n86cnJ+9vVgbPMlDAaVzTnly8qVISTbjVo7rp+PhHVPSXvNOAUAAAAAFwfc6/l+N/Qp/GRpdpmZsdwrPuMW+HYvWpw1h8yFeSS/Bw5LXwOHwvGMTwiVSWFX9Si5eEnTquOqXLXQgvby5v7qd1fXEqk5elOc229FotW/YiD1f395iNfj4hdzqy/WqVHJ/azGAKNnQzDjltRhRt8ZuIRS0UY3U0kvYkyT5UZh/99c/8yp/k1AAkq161avK4rVZSm3q5Sk22/NvzMu9xvFr+jwb/FK1WOuu7UuJyWvno2YAAy7DE7/DZOeHX1Sk3zdOtKPwZsp5yzPODhLMNzp/Fz/yaIAe6tSdapKpVm5N+Lberb9rPMZOElKD0a8U0z4AN7SzjmejTVOnj9ykvV99T/ya7EMVxHE5KWJX9Ws1ydStKWnu1ZhgAAAOkyRmK3y/fXUcRtXWt69J06tNPRuL8U17U/izDzdjk8yZivcWqU93iP5sdfRgklFfYkacAe41qkaU6UajUXzSk9Hpy1R4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAk4FXpPtY4FXpPtYADgVek+1jgVek+1gAOBV6T7WOBV6T7WAA4FXpPtY4FXpPtYADgVek+1jgVek+1gAOBV6T7WOBV6T7WAA4FXpPtY4FXpPtYADgVek+1jgVek+1gAOBV6T7WOBV6T7WAA4FXpPtY4FXpPtYADgVek+1jgVek+1gAOBV6T7WOBV6T7WAA4FXpPtYAA/9k=" alt="">
+			</div>
+			<div class="row" style="justify-content: center;">
+				<h3>Agostinho Jardim Matos Júnior</h3>
+			</div>
+			<div class="row" style="justify-content: center;">
+				<p>Aplicação de teste técnico</p>
+			</div>
+
+		</div>
+		
+	</section>		
+	
+
+</body>
+</html>
