@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="project-pulse:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/project_pulse_jar</output-path>
+    <root id="archive" name="project-pulse.jar">
+      <element id="module-output" name="project-pulse" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../java-libs/javadbc-conectors/dom4j-1.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../java-libs/javadbc-conectors/mysql-connector-java-8.0.23.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
